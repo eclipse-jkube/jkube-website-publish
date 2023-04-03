@@ -259,7 +259,7 @@ Open the <code>build.gradle</code> file and add the plugin in the <code>plugins<
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">plugins {
    id 'java'
    id 'io.quarkus'
-   id 'org.eclipse.jkube.kubernetes' version '1.11.0'
+   id 'org.eclipse.jkube.kubernetes' version '1.12.0'
 }</code></pre>
 </div>
 </div>
@@ -385,7 +385,7 @@ Hello RESTEasy</code></pre>
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">plugins {
    id 'java'
    id 'io.quarkus'
-   id 'org.eclipse.jkube.kubernetes' version '1.11.0'
+   id 'org.eclipse.jkube.kubernetes' version '1.12.0'
 }</code></pre>
 </div>
 </div>
@@ -480,7 +480,7 @@ Hello RESTEasy</code></pre>
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">plugins {
    id 'java'
    id 'io.quarkus'
-   id 'org.eclipse.jkube.kubernetes' version '1.11.0'
+   id 'org.eclipse.jkube.kubernetes' version '1.12.0'
 }</code></pre>
 </div>
 </div>
@@ -594,7 +594,7 @@ Hello RESTEasy</code></pre>
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">plugins {
    id 'java'
    id 'io.quarkus'
-   id 'org.eclipse.jkube.kubernetes' version '1.11.0'
+   id 'org.eclipse.jkube.kubernetes' version '1.12.0'
 }</code></pre>
 </div>
 </div>
@@ -721,7 +721,7 @@ Hello RESTEasy</code></pre>
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">plugins {
    id 'java'
    id 'io.quarkus'
-   id 'org.eclipse.jkube.kubernetes' version '1.11.0'
+   id 'org.eclipse.jkube.kubernetes' version '1.12.0'
 }</code></pre>
 </div>
 </div>
@@ -1182,7 +1182,7 @@ You can get started simply by adding the plugin to your build.gradle file:</p>
 <div class="title">Example for setting up the kubernetes-gradle-plugin in build.gradle</div>
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">plugins {
-  id 'org.eclipse.jkube.kubernetes' version '1.11.0'
+  id 'org.eclipse.jkube.kubernetes' version '1.12.0'
 }</code></pre>
 </div>
 </div>
@@ -1381,10 +1381,8 @@ You can see configuration options regarding Kubernetes resource validation in <a
 <p>This task is for creating
 <a href="https://helm.sh/docs/topics/charts">Helm charts</a>
 for your Gradle project so that you can install, update or delete your app in Kubernetes
-using <a href="https://github.com/helm/helm">Helm</a>.</p>
-</div>
-<div class="paragraph">
-<p>For creating a Helm chart you simply call <code>k8sHelm</code> task on the command line:</p>
+using <a href="https://github.com/helm/helm">Helm</a>.
+For creating a Helm chart you simply call <code>k8sHelm</code> task on the command line:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1434,41 +1432,38 @@ If you have already built the resource then you can omit this task.</p>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>chart</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The Chart name.</p>
-<p class="tableblock">Defaults to project name.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Chart name</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.helm.chart</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>version</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The Chart SemVer version.</p>
-<p class="tableblock">Defaults to project version</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Chart SemVer version</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.helm.version</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>description</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The Chart single-sentence description.</p>
-<p class="tableblock">Defaults to project description.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Chart single-sentence description</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.helm.description</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>home</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The Chart URL for this project&#8217;s home page.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Chart URL for this project&#8217;s home page</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.helm.home</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>sources</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The Chart list of URLs to source code for this project.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Chart list of URLs to source code for this project</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong><a href="#helm-maintainers">maintainers</a></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The Chart list of maintainers (name+email).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Chart list of maintainers (name+email)</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>icon</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The Chart URL to an SVG or PNG image to be used as an icon, default is extracted from the kubernetes manifest
-  (<code>kubernetes.yml</code>) <code>jkube.io/iconUrl</code> annotation if not provided.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Chart URL to an SVG or PNG image to be used as an icon , default is extracted from the kubernetes manifest
+(<code>kubernetes.yml</code>) <code>jkube.eclipse.org/iconUrl</code> annotation if not provided.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.helm.icon</code></p></td>
 </tr>
 <tr>
@@ -1484,32 +1479,38 @@ If you have already built the resource then you can omit this task.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>additionalFiles</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The list of additional files to be included in the Chart archive. Any file named <code>README</code> or <code>LICENSE</code> will <strong>always</strong>
-  be included by default.</p></td>
+be included by default.</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>type</strong> / <strong>types</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Platform for which to generate the chart. By default this is <code>kubernetes</code>, but can be also <code>openshift</code> for using
-  OpenShift specific resources in the chart. You can also add both values as a comma separated list.</p>
+OpenShift specific resources in the chart. You can also add both values as a comma separated list.</p>
 <p class="tableblock">  <em>Please note that there is no OpenShift support yet for charts, so this is experimental.</em></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.helm.type</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>sourceDir</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Where to find the resource descriptors generated with <code>k8sResource</code>.
-  By default this is <code>${basedir}/build/classes/java/main/classes/META-INF/jkube</code>, which is also the output directory used by <code>k8sResource</code>.</p></td>
+By default this is <code>${basedir}/build/classes/java/main/classes/META-INF/jkube</code>, which is also the output directory used by <code>k8sResource</code>.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.helm.sourceDir</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>outputDir</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Where to create the Helm chart, which is <code>${basedir}/build/jkube/helm</code> by default for Kubernetes
-  and <code>${basedir}/build/jkube/helmshift</code> for OpenShift.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Where to create the Helm chart, which is <code>${basedir}/build/jkube/helm/${chartName}/kubernetes</code> by default for Kubernetes
+and <code>${basedir}/build/jkube/helms/${chartName}/openshift</code> for OpenShift.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.helm.outputDir</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>tarballOutputDir</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Where to create the the Helm chart archive, which is <code>${basedir}/build</code> if not provided.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Where to create the the Helm chart archive, which is same as <code>outputDir</code> if not provided.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.helm.tarballOutputDir</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>tarFileClassifier</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A string at the end of Helm archive filename as a classifier.</p>
+<p class="tableblock">Defaults to empty string.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.helm.tarFileClassifier</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>chartExtension</strong></p></td>
@@ -1601,7 +1602,7 @@ If you have already built the resource then you can omit this task.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>name</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The name of the interpolatable parameter. Will be used to replace placeholders
-  (<code>${name}</code>) in the provided YAML fragments. And to generate the <code>values.yaml</code> file.</p></td>
+(<code>${name}</code>) in the provided YAML fragments. And to generate the <code>values.yaml</code> file.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>required</strong></p></td>
@@ -1632,14 +1633,13 @@ If you have already built the resource then you can omit this task.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>In addition, this task will also create a tar-archive below <code>${basedir}/build</code> which contains the chart with its template.
-This tar is added as an artifact with classifier <code>helm</code> to the build (<code>helmshift</code> for the OpenShift mode).</p>
+<p>In addition, this task will also create a tar-archive below <code>outputDir</code> which contains the chart with its template.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="jkubeHelmPush">4.1.6. <strong>k8sHelmPush</strong></h4>
 <div class="paragraph">
-<p>This task is for pushing
+<p>This goal is for pushing
 <a href="https://helm.sh/docs/topics/charts">Helm charts</a>
 in a remote repository [Artifactory, Chartmuseum, Nexus].</p>
 </div>
@@ -1653,7 +1653,7 @@ in a remote repository [Artifactory, Chartmuseum, Nexus].</p>
 </div>
 <div class="paragraph">
 <p>The <code>k8sResource</code> and the <code>k8sHelm</code> tasks are required to create the resource descriptors which are included in the Helm chart and the Helm chart itself.
-If you have already built the resource and create the chart, then you can omit these tasks.</p>
+If you have already built the resource and create the chart, then you can omit these goals.</p>
 </div>
 <div class="paragraph">
 <p>The configuration is defined in a <code>helm</code> section within the plugin&#8217;s configuration:</p>
@@ -1726,7 +1726,7 @@ If you have already built the resource and create the chart, then you can omit t
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>name</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The name (id) of the server configuration.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The name (id) of the server configuration. It can select the maven server by this ID.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.helm.stableRepository.name</code></p></td>
 </tr>
 <tr>
@@ -1736,12 +1736,12 @@ If you have already built the resource and create the chart, then you can omit t
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>username</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The username of the repository. Optional.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The username of the repository. Optional. If a maven server ID is specified, the username is taken from there.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.helm.stableRepository.username</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>password</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The password of the repository. Optional.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The password of the repository. Optional. If a maven server ID is specified, the password is taken from there.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.helm.stableRepository.password</code></p></td>
 </tr>
 <tr>
@@ -1768,7 +1768,7 @@ If you have already built the resource and create the chart, then you can omit t
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>name</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The name (id) of the server configuration.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The name (id) of the server configuration. It can select the maven server by this ID.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.helm.snapshotRepository.name</code></p></td>
 </tr>
 <tr>
@@ -1778,12 +1778,12 @@ If you have already built the resource and create the chart, then you can omit t
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>username</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The username of the repository. Optional.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The username of the repository. Optional. If a maven server ID is specified, the username is taken from there.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.helm.snapshotRepository.username</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>password</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The password of the repository. Optional.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The password of the repository. Optional. If a maven server ID is specified, the password is taken from there.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.helm.snapshotRepository.password</code></p></td>
 </tr>
 <tr>
@@ -3588,7 +3588,7 @@ or <a href="https://docs.docker.com/reference/builder/#cmd">cmd</a> for a contai
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">entryPoint {
     // Shell Form
-    shell = 'java -jar maven/hello-world-1.11.0.jar'
+    shell = 'java -jar maven/hello-world-1.12.0.jar'
 }</code></pre>
 </div>
 </div>
@@ -3600,7 +3600,7 @@ or <a href="https://docs.docker.com/reference/builder/#cmd">cmd</a> for a contai
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">entryPoint {
     // exec form
-    exec = ['java','-jar','maven/hello-world-1.11.0.jar']
+    exec = ['java','-jar','maven/hello-world-1.12.0.jar']
 }</code></pre>
 </div>
 </div>
@@ -3760,6 +3760,9 @@ or <a href="https://docs.docker.com/reference/builder/#cmd">cmd</a> for a contai
 <li>
 <p><a href="https://kubernetes.io/docs/concepts/workloads/controllers/job/">Job</a></p>
 </li>
+<li>
+<p><a href="https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/">CronJob</a></p>
+</li>
 </ul>
 </div>
 <div class="paragraph">
@@ -3770,11 +3773,11 @@ or <a href="https://docs.docker.com/reference/builder/#cmd">cmd</a> for a contai
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">kubernetes {
     resources {
-        env { <i class="conum" data-value="1"></i><b>(1)</b>
-            organization = 'Eclipse Foundation'
-            projectname = 'jkube'
-        }
         controller {
+            env { <i class="conum" data-value="1"></i><b>(1)</b>
+                organization = 'Eclipse Foundation'
+                projectname = 'jkube'
+            }
             controllerName = 'my-deploymentname' <i class="conum" data-value="2"></i><b>(2)</b>
             containerPrivileged = 'true' <i class="conum" data-value="3"></i><b>(3)</b>
             imagePullPolicy = 'Always' <i class="conum" data-value="4"></i><b>(4)</b>
@@ -3796,6 +3799,16 @@ or <a href="https://docs.docker.com/reference/builder/#cmd">cmd</a> for a contai
                 medium = 'Memory'
                 mounts = ['/var/scratch']
             }]
+            containerResources {
+                requests { <i class="conum" data-value="9"></i><b>(9)</b>
+                    cpu = '250m'
+                    memory = '32Mi'
+                }
+                limits { <i class="conum" data-value="10"></i><b>(10)</b>
+                    cpu = '500m'
+                    memory = '64Mi'
+                }
+            }
         }
     }
 }</code></pre>
@@ -3835,6 +3848,14 @@ or <a href="https://docs.docker.com/reference/builder/#cmd">cmd</a> for a contai
 <td><i class="conum" data-value="8"></i><b>8</b></td>
 <td>Mounting an EmptyDir Volume to your application pods</td>
 </tr>
+<tr>
+<td><i class="conum" data-value="9"></i><b>9</b></td>
+<td>Requests describe the minimum amount of compute resources required. See <a href="https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/">Kubernetes Resource Management Documentation</a> for more info.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="10"></i><b>10</b></td>
+<td>Limits describe the maximum amount of compute resources allowed. See <a href="https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/">Kubernetes Resource Management Documentation</a> for more info.</td>
+</tr>
 </table>
 </div>
 <div class="paragraph">
@@ -3858,54 +3879,12 @@ or <a href="https://docs.docker.com/reference/builder/#cmd">cmd</a> for a contai
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configuration element for changing various aspects of generated Controller.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>env</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Deprecated: Use same field inside <a href="#generated-controller-resource-configuration"><code>controller</code></a></em></p>
-<p class="tableblock">Environment variables which will be added to containers in Pod template spec.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#volume-resource-configuration"><code>volumes</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Deprecated: Use same field inside <a href="#generated-controller-resource-configuration"><code>controller</code></a></em></p>
-<p class="tableblock">Configuration element for adding volume mounts to containers in Pod template spec</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>controllerName</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Deprecated: Use same field inside <a href="#generated-controller-resource-configuration"><code>controller</code></a></em></p>
-<p class="tableblock">Name of the controller resource(i.e. <code>Deployment</code>, <code>ReplicaSet</code>, <code>StatefulSet</code> etc) generated</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#probe-resources-configuration"><code>liveness</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Deprecated: Use same field inside <a href="#generated-controller-resource-configuration"><code>controller</code></a></em></p>
-<p class="tableblock">Configuration element for adding a liveness probe</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#probe-resources-configuration"><code>readiness</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Deprecated: Use same field inside <a href="#generated-controller-resource-configuration"><code>controller</code></a></em></p>
-<p class="tableblock">Configuration element for adding readiness probe</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>containerPrivileged</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Deprecated: Use same field inside <a href="#generated-controller-resource-configuration"><code>controller</code></a></em></p>
-<p class="tableblock">Run container in privileged mode. Sets <code>privileged: true</code> in generated Controller&#8217;s PodTemplateSpec</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>imagePullPolicy</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Deprecated: Use same field inside <a href="#generated-controller-resource-configuration"><code>controller</code></a></em></p>
-<p class="tableblock">How images should be pulled (maps to ImagePullPolicy).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>replicas</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Deprecated: Use same field inside <a href="#generated-controller-resource-configuration"><code>controller</code></a></em></p>
-<p class="tableblock">Number of replicas to create</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>restartPolicy</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Deprecated: Use same field inside <a href="#generated-controller-resource-configuration"><code>controller</code></a></em></p>
-<p class="tableblock">Pod&#8217;s restart policy.</p>
-<p class="tableblock">For <code>Job</code>, this defaults to <code>OnFailure</code>. For others, it&#8217;s not provided (Kubernetes assumes it to be <code>Always</code>)</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>serviceAccount</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ServiceAccount name which will be used by pods created by controller resources(e.g. <code>Deployment</code>, <code>ReplicaSet</code> etc)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>useLegacyJKubePrefix</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Use old <code>jkube.io/</code> annotation prefix instead of <code>jkube.eclipse.org/</code> annotation prefix</p></td>
 </tr>
 </tbody>
 </table>
@@ -3972,6 +3951,14 @@ or <a href="https://docs.docker.com/reference/builder/#cmd">cmd</a> for a contai
 <td class="tableblock halign-left valign-top"><p class="tableblock">Pod&#8217;s restart policy.</p>
 <p class="tableblock">For <code>Job</code>, this defaults to <code>OnFailure</code>. For others, it&#8217;s not provided (Kubernetes assumes it to be <code>Always</code>)</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#container-resources-configuration"><code>containerResources</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configure Controller&#8217;s compute resource requirements</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>schedule</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Schedule for <em>CronJob</em> written in <a href="https://en.wikipedia.org/wiki/Cron">Cron</a> syntax.</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -4017,6 +4004,32 @@ or <a href="https://docs.docker.com/reference/builder/#cmd">cmd</a> for a contai
 </tbody>
 </table>
 </div>
+<div class="sect4">
+<h5 id="container-resources-configuration">Container Resource Groovy DSL configuration</h5>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 25. containerResources fields for specifying compute resource requirements</caption>
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 83.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Element</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>requests</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The minimum amount of compute resources required. See <a href="https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/">Kubernetes Resource Management Documentation</a> for more info.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>limits</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The maximum amount of compute resources allowed. See <a href="https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/">Kubernetes Resource Management Documentation</a> for more info.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <div class="sect3">
 <h4 id="probe-resources-configuration">5.5.3. Probe Configuration</h4>
@@ -4024,7 +4037,7 @@ or <a href="https://docs.docker.com/reference/builder/#cmd">cmd</a> for a contai
 <p>Probe configuration is used for configuring <a href="https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#configure-probes">liveness and readiness probes</a> for containers. Both <code>liveness</code> and <code>readiness</code> probes the following options:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 25. Groovy DSL Probe configuration</caption>
+<caption class="title">Table 26. Groovy DSL Probe configuration</caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -4089,7 +4102,7 @@ or <a href="https://docs.docker.com/reference/builder/#cmd">cmd</a> for a contai
 <p>Here are the options supported by a single <code>volume</code> :</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 26. Groovy DSL <code>volume</code> configuration</caption>
+<caption class="title">Table 27. Groovy DSL <code>volume</code> configuration</caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -4360,7 +4373,7 @@ type: kubernetes.io/dockercfg</code></pre>
 <p><strong>Groovy DSL Configuration</strong></p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 27. Fields supported in <code>resources</code></caption>
+<caption class="title">Table 28. Fields supported in <code>resources</code></caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -4449,7 +4462,7 @@ type: kubernetes.io/dockercfg</code></pre>
 <p>Here are the supported options while providing <code>ingress</code> in Groovy DSL configuration</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 28. <code>ingress</code> configuration</caption>
+<caption class="title">Table 29. <code>ingress</code> configuration</caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -4478,7 +4491,7 @@ type: kubernetes.io/dockercfg</code></pre>
 <p>Here are the supported options while providing <code>ingressRules</code> in Groovy DSL configuration</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 29. <code>ingressRule</code> configuration</caption>
+<caption class="title">Table 30. <code>ingressRule</code> configuration</caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -4507,7 +4520,7 @@ type: kubernetes.io/dockercfg</code></pre>
 <p>Here are the supported options while providing <code>paths</code> in Groovy DSL configuration</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 30. IngressRule <code>path</code> Groovy DSL configuration</caption>
+<caption class="title">Table 31. IngressRule <code>path</code> Groovy DSL configuration</caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -4548,7 +4561,7 @@ type: kubernetes.io/dockercfg</code></pre>
 <p>Here are the supported options while providing <code>resource</code> in IngressRule&#8217;s path Groovy DSL configuration</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 31. IngressRule Path <code>resource</code> Groovy DSL configuration</caption>
+<caption class="title">Table 32. IngressRule Path <code>resource</code> Groovy DSL configuration</caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -4581,7 +4594,7 @@ type: kubernetes.io/dockercfg</code></pre>
 <p>Here are the supported options while providing <code>ingressTlsConfigs</code> in IngressRule&#8217;s path Groovy DSL configuration</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 32. IngressTls <code>ingressTlsConfig</code> Groovy DSL configuration</caption>
+<caption class="title">Table 33. IngressTls <code>ingressTlsConfig</code> Groovy DSL configuration</caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -4704,7 +4717,7 @@ metadata:
 <p>Resource goal also validates the generated resource descriptors using API specification of <a href="https://raw.githubusercontent.com/kubernetes/kubernetes/master/api/openapi-spec/swagger.json">Kubernetes</a>.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 33. Validation Configuration</caption>
+<caption class="title">Table 34. Validation Configuration</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -4790,7 +4803,7 @@ The following sub-elements are supported:</td>
 </table>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 34. Generator configuration</caption>
+<caption class="title">Table 35. Generator configuration</caption>
 <colgroup>
 <col style="width: 14.2857%;">
 <col style="width: 85.7143%;">
@@ -4857,7 +4870,7 @@ The following sub-elements are supported:</td>
 <p>All default generators examine the build information for certain aspects and generate a Docker build configuration on the fly. They can be configured to a certain degree, where the configuration is generator specific.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 35. Default Generators</caption>
+<caption class="title">Table 36. Default Generators</caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 16.6666%;">
@@ -4917,7 +4930,7 @@ The following sub-elements are supported:</td>
 <p>There are some configuration options which are shared by all generators:</p>
 </div>
 <table id="generator-options-common" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 36. Common generator options</caption>
+<caption class="title">Table 37. Common generator options</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -5003,7 +5016,7 @@ If no main class is configured as well as no fat jar being detected, then this <
 <p>It will use the following base image by default, but as explained <a href="#generator-options-common">above</a> and can be changed with the <code>from</code> configuration.</p>
 </div>
 <table id="generator-java-exec-from" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 37. Java Base Images</caption>
+<caption class="title">Table 38. Java Base Images</caption>
 <colgroup>
 <col style="width: 7.6923%;">
 <col style="width: 30.7692%;">
@@ -5040,7 +5053,7 @@ By default, <code>fromMode = "docker"</code> which use the a plain Docker image 
 the following additional configuration options are recognized:</p>
 </div>
 <table id="generator-java-exec-options" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 38. Java Application configuration options</caption>
+<caption class="title">Table 39. Java Application configuration options</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -5111,7 +5124,7 @@ These will be added with mode <code>0644</code>, while everything in <code>src/m
 <p>Beside the  <a href="#generator-options-common">common generator options</a> and the <a href="#generator-java-exec-options">java-exec options</a> the following additional configuration is recognized:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 39. Spring-Boot configuration options</caption>
+<caption class="title">Table 40. Spring-Boot configuration options</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -5244,7 +5257,7 @@ In particular, the following steps are performed:</p>
 <p>The base images chosen are:</p>
 </div>
 <table id="generator-webapp-from" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 40. Webapp Base Images</caption>
+<caption class="title">Table 41. Webapp Base Images</caption>
 <colgroup>
 <col style="width: 11.1111%;">
 <col style="width: 44.4444%;">
@@ -5279,7 +5292,7 @@ In particular, the following steps are performed:</p>
 <p>In addition to the  <a href="#generator-options-common">common generator options</a> this generator can be configured with the following options:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 41. Webapp configuration options</caption>
+<caption class="title">Table 42. Webapp configuration options</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -5367,7 +5380,7 @@ In particular, the following steps are performed:</p>
 <p>The base images chosen are:</p>
 </div>
 <table id="generator-quarkus-from" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 42. Webapp Base Images</caption>
+<caption class="title">Table 43. Webapp Base Images</caption>
 <colgroup>
 <col style="width: 11.1111%;">
 <col style="width: 44.4444%;">
@@ -5468,7 +5481,7 @@ Interface; You can create new generators by implementing this interface. Please 
 <p>The <a href="#generator-example">Generator example</a> is a good blueprint, simply replace <code>generator</code> with <code>enricher</code>. The configuration is structural identical:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 43. Enricher configuration</caption>
+<caption class="title">Table 44. Enricher configuration</caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 75%;">
@@ -5514,7 +5527,7 @@ metadata extracted from the given build information.</p>
 </ul>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 44. Default Enrichers Overview</caption>
+<caption class="title">Table 45. Default Enrichers Overview</caption>
 <colgroup>
 <col style="width: 22.2222%;">
 <col style="width: 77.7778%;">
@@ -5575,6 +5588,10 @@ by other enrichers, Groovy DSL configuration or fragment.</p></td>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#jkube-name">jkube-name</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Add a default name to every object which misses a name.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#jkube-persistentvolumeclaim-storageclass">jkube-persistentvolumeclaim-storageclass</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Add name of StorageClass required by PersistentVolumeClaim either in metadata or in spec.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#jkube-pod-annotation">jkube-pod-annotation</a></p></td>
@@ -5678,7 +5695,7 @@ If you set <code>name</code> tag then this is used as key instead of the filenam
 <p>Here are the supported options while providing <code>configMap</code> in Groovy DSL configuration</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 45. Groovy DSL configmap configuration <code>configMap</code></caption>
+<caption class="title">Table 46. Groovy DSL configmap configuration <code>configMap</code></caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -5707,7 +5724,7 @@ If you set <code>name</code> tag then this is used as key instead of the filenam
 <p><code>entries</code> is a list of <code>entry</code> configuration objects. Here are the supported options while providing <code>entry</code> in Groovy DSL configuration</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 46. Groovy DSL configmap entry configuration <code>entry</code></caption>
+<caption class="title">Table 47. Groovy DSL configmap entry configuration <code>entry</code></caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -5775,7 +5792,7 @@ See <a href="https://kubernetes.io/docs/concepts/workloads/controllers/">Kuberne
 <p>The following configuration parameters can be used to influence the behaviour of this enricher:</p>
 </div>
 <table id="enricher-jkube-controller" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 47. Default controller enricher</caption>
+<caption class="title">Table 48. Default controller enricher</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -5806,7 +5823,7 @@ See <a href="https://kubernetes.io/docs/concepts/workloads/controllers/">Kuberne
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>type</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Type of Controller to create. One of: <em>ReplicationController</em>, <em>ReplicaSet</em>, <em>Deployment</em>, <em>DeploymentConfig</em>,
-  <em>StatefulSet</em>, <em>DaemonSet</em>, <em>Job</em>.</p>
+  <em>StatefulSet</em>, <em>DaemonSet</em>, <em>Job</em>, <em>CronJob</em>.</p>
 <p class="tableblock">  Defaults to <code>Deployment</code>.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.enricher.jkube-controller.type</code></p></td>
 </tr>
@@ -5815,6 +5832,11 @@ See <a href="https://kubernetes.io/docs/concepts/workloads/controllers/">Kuberne
 <td class="tableblock halign-left valign-top"><p class="tableblock">Number of replicas for the container.</p>
 <p class="tableblock">  Defaults to <code>1</code>.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.enricher.jkube-controller.replicaCount</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>schedule</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Schedule for <em>CronJob</em> written in <a href="https://en.wikipedia.org/wiki/Cron">Cron</a> syntax.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.enricher.jkube-controller.schedule</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"></td>
@@ -5920,7 +5942,7 @@ Groovy DSL configuration or YAML fragment will override the one defined by the g
 </ul>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 48. Configuration options</caption>
+<caption class="title">Table 49. Configuration options</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -5955,34 +5977,47 @@ Groovy DSL configuration or YAML fragment will override the one defined by the g
 <p>Enricher that adds info from <code>.git</code> directory as annotations. These are explained in the table below:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 49. Annotations added via Git enricher</caption>
+<caption class="title">Table 50. Annotations added via Git enricher</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
 </colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Annotation</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.io/git-branch</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Annotation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.eclipse.org/git-branch</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Current Git Branch</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.io/git-commit</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.eclipse.org/git-commit</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Latest commit of current branch</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.io/git-url</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.eclipse.org/git-url</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">URL of your configured git remote</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.io/git-branch</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Deprecated: Use <code>jkube.eclipse.org/</code> annotation prefix.</em></p>
+<p class="tableblock">Current Git Branch</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.io/git-commit</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Deprecated: Use <code>jkube.eclipse.org/</code> annotation prefix.</em></p>
+<p class="tableblock">Latest commit of current branch</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.io/git-url</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Deprecated: Use <code>jkube.eclipse.org/</code> annotation prefix.</em></p>
+<p class="tableblock">URL of your configured git remote</p></td>
 </tr>
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 50. Supported Configuration options</caption>
+<caption class="title">Table 51. Supported Configuration options</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -6031,7 +6066,7 @@ configuration is set, the default is <code>IfNotPresent</code> for release versi
 <p>Any already configured container in the pod spec is updated if the property is not set.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 51. Configuration options</caption>
+<caption class="title">Table 52. Configuration options</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -6064,7 +6099,7 @@ JKube generates Ingress only for Services which have either <code>expose=true</c
 <p>For more information, check out <a href="#ingress-generation">Ingress Generation</a> section.</p>
 </div>
 <table id="enricher-jkube-ingress" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 52. Ingress enricher</caption>
+<caption class="title">Table 53. Ingress enricher</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -6124,7 +6159,7 @@ resources in case they don&#8217;t already have one configured (see the <code>fo
 <p>The following configuration parameters can be used to influence the behaviour of this enricher:</p>
 </div>
 <table id="enricher-jkube-namespace" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 53. Default namespace enricher</caption>
+<caption class="title">Table 54. Default namespace enricher</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -6176,7 +6211,7 @@ resources in case they don&#8217;t already have one configured (see the <code>fo
 <p>Enricher for adding a "name" to the metadata to various objects we create.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 54. Supported Configuration options</caption>
+<caption class="title">Table 55. Supported Configuration options</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -6211,7 +6246,7 @@ container Pod template spec&#8217;s metadata.</p>
 <p>This enricher uses a given set of well known ports:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 55. Default Port Mappings</caption>
+<caption class="title">Table 56. Default Port Mappings</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -6303,10 +6338,44 @@ been replaced by the <code>app</code> label in newer versions of the plugin.</p>
 </div>
 </div>
 <div class="sect4">
+<h5 id="jkube-persistentvolumeclaim-storageclass">jkube-persistentvolumeclaim-storageclass</h5>
+<div class="paragraph">
+<p>Enricher which fixes adds name of StorageClass required by PersistentVolumeClaim either in metadata or in spec.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 57. Supported properties</caption>
+<colgroup>
+<col style="width: 12.5%;">
+<col style="width: 75%;">
+<col style="width: 12.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Option</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Property</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>defaultStorageClass</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PersistentVolume storage class.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.enricher.jkube-volume-permission.defaultStorageClass</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>useStorageClassAnnotation</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If enabled, storage class would be added to PersistentVolumeClaim metadata as <code>volume.beta.kubernetes.io/storage-class=&lt;storageClassName&gt;</code> annotation rather than <code>.spec.storageClassName</code></p>
+<p class="tableblock">Defaults to <code>false</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.enricher.jkube-volume-permission.useStorageClassAnnotation</code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
 <h5 id="jkube-replicas">jkube-replicas</h5>
 <div class="paragraph">
 <p>This enricher overrides the number of replicas for <strong>every</strong> controller
-(<em>DaemonSet</em>, <em>Deployment</em>, <em>DeploymentConfig</em>, <em>Job</em>, <em>ReplicationController</em>, <em>ReplicaSet</em>, <em>StatefulSet</em>)
+(<em>DaemonSet</em>, <em>Deployment</em>, <em>DeploymentConfig</em>, <em>Job</em>, <em>CronJob</em>, <em>ReplicationController</em>, <em>ReplicaSet</em>, <em>StatefulSet</em>)
 generated or processed by JKube (including those from <a href="#jkube-dependency">dependencies</a>).</p>
 </div>
 <div class="paragraph">
@@ -6338,7 +6407,7 @@ For more information read <a href="https://kubernetes.io/docs/concepts/workloads
 <p>The following configuration parameters can be used to influence the behaviour of this enricher:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 56. Default revision history enricher</caption>
+<caption class="title">Table 58. Default revision history enricher</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 40%;">
@@ -6421,7 +6490,7 @@ An explicit configuration always takes precedence over auto detection. For enric
 <p>The following configuration parameters can be used to influence the behaviour of this enricher:</p>
 </div>
 <table id="enricher-jkube-service" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 57. Default service enricher</caption>
+<caption class="title">Table 59. Default service enricher</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -6650,7 +6719,7 @@ Assuming that the image exposes ports <code>8080</code> and <code>8778</code> (e
 <p>This enricher is also used by <code>resources</code> Groovy DSL configuration to generate Service configured via Groovy DSL. Here are the fields supported in <code>resources</code> which work with this enricher:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 58. Fields supported in <code>resources</code></caption>
+<caption class="title">Table 60. Fields supported in <code>resources</code></caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -6672,7 +6741,7 @@ Assuming that the image exposes ports <code>8080</code> and <code>8778</code> (e
 <p><code>services</code> is a list of <code>service</code> configuration objects. Here are the supported options while providing <code>service</code> in Groovy DSL configuration</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 59. Groovy DSL <code>service</code> configuration</caption>
+<caption class="title">Table 61. Groovy DSL <code>service</code> configuration</caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -6717,7 +6786,7 @@ Assuming that the image exposes ports <code>8080</code> and <code>8778</code> (e
 <p><code>ports</code> is a list of <code>port</code> configuration objects. Here are the supported options while providing <code>port</code> in Groovy DSL configuration</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 60. Groovy DSL service port configuration</caption>
+<caption class="title">Table 62. Groovy DSL service port configuration</caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -6762,7 +6831,7 @@ Assuming that the image exposes ports <code>8080</code> and <code>8778</code> (e
 <p>The following configuration parameters can be used to influence the behaviour of this enricher:</p>
 </div>
 <table id="enricher-jkube-serviceaccount" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 61. ServiceAccountEnricher configuration options</caption>
+<caption class="title">Table 63. ServiceAccountEnricher configuration options</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -6816,7 +6885,7 @@ Assuming that the image exposes ports <code>8080</code> and <code>8778</code> (e
 <p>Enricher which fixes the permission of persistent volume mount with the help of an init container.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 62. Supported properties</caption>
+<caption class="title">Table 64. Supported properties</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -6844,12 +6913,14 @@ Assuming that the image exposes ports <code>8080</code> and <code>8778</code> (e
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>defaultStorageClass</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">PersistentVolume storage class.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Deprecated: Use <a href="#jkube-persistentvolumeclaim-storageclass">PersistentVolumeClaimStorageClassEnricher</a>'s defaultStorageClass field</em></p>
+<p class="tableblock">PersistentVolume storage class.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.enricher.jkube-volume-permission.defaultStorageClass</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>useStorageClassAnnotation</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">If enabled, storage class would be added to PersistentVolumeClaim metadata as <code>volume.beta.kubernetes.io/storage-class=&lt;storageClassName&gt;</code> annotation rather than <code>.spec.storageClassName</code></p>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Deprecated: Use <a href="#jkube-persistentvolumeclaim-storageclass">PersistentVolumeClaimStorageClassEnricher</a>'s defaultStorageClass field</em></p>
+<p class="tableblock">If enabled, storage class would be added to PersistentVolumeClaim metadata as <code>volume.beta.kubernetes.io/storage-class=&lt;storageClassName&gt;</code> annotation rather than <code>.spec.storageClassName</code></p>
 <p class="tableblock">Defaults to <code>false</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.enricher.jkube-volume-permission.useStorageClassAnnotation</code></p></td>
 </tr>
@@ -6904,7 +6975,7 @@ Assuming that the image exposes ports <code>8080</code> and <code>8778</code> (e
 <p>You can configure the different aspects of the probes.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 63. OpenLiberty HealthCheck Enricher probe configuration</caption>
+<caption class="title">Table 65. OpenLiberty HealthCheck Enricher probe configuration</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 62.5%;">
@@ -7267,7 +7338,7 @@ configuration file. JKube uses the following properties to resolve the health ch
 <p>You can configure the different aspects of the probes.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 64. Micronaut HealthCheck Enricher probe configuration</caption>
+<caption class="title">Table 66. Micronaut HealthCheck Enricher probe configuration</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 62.5%;">
@@ -7524,7 +7595,7 @@ The overriding rules are:
 liveness probes or be specific to one.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 65. Vert.x HealthCheck Enricher probe configuration</caption>
+<caption class="title">Table 67. Vert.x HealthCheck Enricher probe configuration</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 62.5%;">
@@ -7587,7 +7658,7 @@ liveness probes or be specific to one.</p>
 <p>When using HTTP <code>GET</code> requests to determine readiness or liveness, several aspects can be configured. HTTP probes are used by default. To be more specific set the <code>type</code> attribute to <code>http</code>.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 66. Vert.x HealthCheck Enricher HTTP probe configuration</caption>
+<caption class="title">Table 68. Vert.x HealthCheck Enricher HTTP probe configuration</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 62.5%;">
@@ -7670,7 +7741,7 @@ liveness probes or be specific to one.</p>
 <p>You can also configure the probes to just open a socket on a specific port. The <code>type</code> attribute must be set to <code>tcp</code>.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 67. Vert.x HealthCheck Enricher TCP probe configuration</caption>
+<caption class="title">Table 69. Vert.x HealthCheck Enricher TCP probe configuration</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 62.5%;">
@@ -7797,7 +7868,7 @@ configured using project&#8217;s properties. An empty command disables the check
 <p>You can configure the different aspects of the probes.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 68. SmallRye HealthCheck Enricher probe configuration</caption>
+<caption class="title">Table 70. SmallRye HealthCheck Enricher probe configuration</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 62.5%;">
