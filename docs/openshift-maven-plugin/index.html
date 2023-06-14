@@ -383,7 +383,7 @@ prepared for Kubernetes. The full example can be found in directory
 
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;jkube-maven-sample-zero-config&lt;/artifactId&gt;
-  &lt;version&gt;1.12.0&lt;/version&gt;
+  &lt;version&gt;1.13.0&lt;/version&gt;
   &lt;packaging&gt;jar&lt;/packaging&gt;
 
   &lt;parent&gt;
@@ -408,7 +408,7 @@ prepared for Kubernetes. The full example can be found in directory
       &lt;plugin&gt;
         &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
         &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt; <i class="conum" data-value="4"></i><b>(4)</b>
-        &lt;version&gt;1.12.0&lt;/version&gt;
+        &lt;version&gt;1.13.0&lt;/version&gt;
       &lt;/plugin&gt;
     &lt;/plugins&gt;
   &lt;/build&gt;
@@ -891,7 +891,7 @@ Welcome! See 'oc help' to get started.</code></pre>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
     &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.12.0&lt;/version&gt;
+    &lt;version&gt;1.13.0&lt;/version&gt;
 &lt;/plugin&gt;</code></pre>
 </div>
 </div>
@@ -945,7 +945,7 @@ Welcome! See 'oc help' to get started.</code></pre>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
     &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.12.0&lt;/version&gt;
+    &lt;version&gt;1.13.0&lt;/version&gt;
 &lt;/plugin&gt;</code></pre>
 </div>
 </div>
@@ -1027,7 +1027,7 @@ Welcome! See 'oc help' to get started.</code></pre>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
     &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.12.0&lt;/version&gt;
+    &lt;version&gt;1.13.0&lt;/version&gt;
 &lt;/plugin&gt;</code></pre>
 </div>
 </div>
@@ -1118,7 +1118,7 @@ Welcome! See 'oc help' to get started.</code></pre>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
     &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.12.0&lt;/version&gt;
+    &lt;version&gt;1.13.0&lt;/version&gt;
 &lt;/plugin&gt;</code></pre>
 </div>
 </div>
@@ -1273,7 +1273,7 @@ available goals are described below.</p>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.12.0&lt;/version&gt;
+  &lt;version&gt;1.13.0&lt;/version&gt;
 
   &lt;configuration&gt;
      ....
@@ -2800,7 +2800,7 @@ While each router may make its own decisions on which ports to expose, this is n
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.12.0&lt;/version&gt;
+  &lt;version&gt;1.13.0&lt;/version&gt;
   &lt;configuration&gt;
     &lt;enricher&gt;
       &lt;config&gt;
@@ -2827,7 +2827,7 @@ While each router may make its own decisions on which ports to expose, this is n
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.12.0&lt;/version&gt;
+  &lt;version&gt;1.13.0&lt;/version&gt;
   &lt;configuration&gt;
     &lt;enricher&gt;
       &lt;config&gt;
@@ -3184,7 +3184,7 @@ The access parameters are described in <a href="#access-configuration">Access Co
 Possible values are <code>docker</code> and <code>jib</code> out of which <code>docker</code> is default.</p>
 </div>
 <div class="paragraph">
-<p>If the effective <a href="#build-mode">mode</a> is <code>openshift</code> an additional <code>s2i</code> option is available
+<p>If the build is performed in an OpenShift cluster an additional <code>s2i</code> option is available
 and selected by default.</p>
 </div>
 <div class="paragraph">
@@ -3201,12 +3201,6 @@ and selected by default.</p>
 </ul>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.build.strategy</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>apiVersion</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Use this variable if you are using an older version of docker not compatible with the current default use to
-  communicate with the server.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.docker.apiVersion</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>authConfig</strong></p></td>
@@ -3240,7 +3234,7 @@ and selected by default.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>buildRecreate</strong></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>If the effective <a href="#build-mode">mode</a> is <code>openshift</code> then this option decides how the OpenShift resource objects
+<p>If the build is performed in an OpenShift cluster then this option decides how the OpenShift resource objects
    associated with the build should be treated when they already exist:</p>
 </div>
 <div class="ulist">
@@ -4745,12 +4739,6 @@ more details.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.deploy.jsonLogDir</code></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>waitSeconds</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">How many seconds to wait for a URL to be generated for a service.</p>
-<p class="tableblock">  Defaults to <code>5</code>.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.serviceUrl.waitSeconds</code></p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>resourceDir</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Folder where to find project specific files.</p>
 <p class="tableblock">  Defaults to <code>${basedir}/src/main/jkube</code>.</p></td>
@@ -4792,7 +4780,24 @@ For creating a Helm chart you simply call <code>oc:helm</code> goal on the comma
 If you have already built the resource then you can omit this goal.</p>
 </div>
 <div class="paragraph">
-<p>The configuration is defined in a <code>helm</code> section within the plugin&#8217;s configuration:</p>
+<p>There are multiple ways to configure the generated Helm Chart:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>By providing a <code>Chart.helm.yaml</code> fragment in <code>src/main/jkube</code> directory.</p>
+</li>
+<li>
+<p>Through the <code>helm</code> section in the openshift-maven-plugin XML configuration.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>When using the fragment approach, you simply need to create a <code>Chart.helm.yaml</code> file in the <code>src/main/jkube</code> directory with the fields you want to override.
+JKube will take care of merging this fragment with the opinionated and configured defaults.</p>
+</div>
+<div class="paragraph">
+<p>The XML configuration is defined in a <code>helm</code> section within the plugin&#8217;s configuration:</p>
 </div>
 <div class="listingblock">
 <div class="title">Example Helm configuration</div>
@@ -5384,7 +5389,7 @@ section of the <code>openshift-maven-plugin</code> section of your <code>pom.xml
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.12.0&lt;/version&gt;
+  &lt;version&gt;1.13.0&lt;/version&gt;
 
   &lt;!-- Connect oc:resource, oc:build and oc:helm to lifecycle phases --&gt;
   &lt;executions&gt;
@@ -5422,7 +5427,7 @@ section of the <code>openshift-maven-plugin</code> section of your <code>pom.xml
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
     &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.12.0&lt;/version&gt;
+    &lt;version&gt;1.13.0&lt;/version&gt;
     &lt;configuration&gt;
         &lt;enricher&gt;
             &lt;excludes&gt;
@@ -5770,7 +5775,7 @@ The <code>jkube.debug.suspend</code> flag will disable readiness probes in the K
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.12.0&lt;/version&gt;
+  &lt;version&gt;1.13.0&lt;/version&gt;
   &lt;configuration&gt;
     &lt;remoteDevelopment&gt;
       &lt;localServices&gt;
@@ -7089,7 +7094,7 @@ option <em>-Dmaven.repo.local=/deployments/&lt;repo directory name&gt;</em> is a
 </table>
 <div class="paragraph">
 <p>This plugin comes with a set of default enrichers.
-In addition custom enrichers can be easily added by providing implementation of the <a href="#enricher-api">Enricher API</a> and adding these as a dependency to the build.</p>
+In addition, custom enrichers can be easily added by providing implementation of the <a href="#enricher-api">Enricher API</a> and adding these as a dependency to the build.</p>
 </div>
 <div class="sect2">
 <h3 id="enrichers-default">8.1. Default Enrichers</h3>
@@ -7217,6 +7222,10 @@ by other enrichers, XML configuration or fragment.</p></td>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#jkube-secret-file">jkube-secret-file</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Add Secret elements defined as annotation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#jkube-security-hardening">jkube-security-hardening</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enforces best practice and recommended security rules for Kubernetes and OpenShift resources.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#jkube-service">jkube-service</a></p></td>
@@ -7887,7 +7896,7 @@ a JKS-format Java keystore ready for consumption in Java services.</p>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.12.0&lt;/version&gt;
+  &lt;version&gt;1.13.0&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;goals&gt;
@@ -8377,6 +8386,43 @@ spec:
 <div class="paragraph">
 <p>This creates a <code>Secret</code> data with the key <code>application.properties</code> (part defined after <code>secret</code>) and value content of
 <code>src/test/resources/test-application.properties</code> file (base64 encoded).</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="jkube-security-hardening">jkube-security-hardening</h5>
+<div class="paragraph">
+<p>This enricher enforces security best practices and recommendations for Kubernetes objects
+such as Deployments, ReplicaSets, Jobs, CronJobs, and so on.</p>
+</div>
+<div class="paragraph">
+<p>The enricher is not included in the <code>default</code> <a href="#profiles">profile</a>.
+However, you can easily enable it by <a href="#profiles-using">leveraging</a> the <code>security-hardening</code>
+profile.</p>
+</div>
+<div class="paragraph">
+<p>These are <strong>some</strong> of the rules enforces by this enricher:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Disables the auto-mounting of the service account token.</p>
+</li>
+<li>
+<p>Prevents containers from running in privileged mode.</p>
+</li>
+<li>
+<p>Ensures containers do not allow privilege escalation.</p>
+</li>
+<li>
+<p>Prevents containers from running as the root user.</p>
+</li>
+<li>
+<p>Configures the container to run as a user with a high UID to avoid host conflict.</p>
+</li>
+<li>
+<p>Ensures the container&#8217;s seccomp is set to Runtime/Default.</p>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect4">
@@ -9261,7 +9307,7 @@ The scheme will use HTTPS if <code>server.ssl.key-store</code> option is in use,
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.12.0&lt;/version&gt;
+  &lt;version&gt;1.13.0&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;id&gt;jkube&lt;/id&gt;
@@ -9332,7 +9378,7 @@ has been enabled in Thorntail</p>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.12.0&lt;/version&gt;
+  &lt;version&gt;1.13.0&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;id&gt;jkube&lt;/id&gt;
@@ -9451,7 +9497,7 @@ configuration file. JKube uses the following properties to resolve the health ch
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.12.0&lt;/version&gt;
+  &lt;version&gt;1.13.0&lt;/version&gt;
   &lt;configuration&gt;
     &lt;enricher&gt;
       &lt;config&gt;
@@ -9596,7 +9642,7 @@ However, by default, no health check will be added to your deployment unless con
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.12.0&lt;/version&gt;
+  &lt;version&gt;1.13.0&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;id&gt;jkube&lt;/id&gt;
@@ -9655,7 +9701,7 @@ path <code>/health</code>. The defaults are:</p>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.12.0&lt;/version&gt;
+  &lt;version&gt;1.13.0&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;id&gt;jkube&lt;/id&gt;
@@ -9700,7 +9746,7 @@ vertx.health.liveness.path = /ready</code></pre>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.12.0&lt;/version&gt;
+  &lt;version&gt;1.13.0&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;id&gt;jkube&lt;/id&gt;
@@ -10248,7 +10294,7 @@ configured using project&#8217;s properties. An empty command disables the check
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.12.0&lt;/version&gt;
+  &lt;version&gt;1.13.0&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;id&gt;jkube&lt;/id&gt;
@@ -10342,7 +10388,7 @@ If <em>&lt;cloud&gt;</em> item has not been defined, you can still enforce the g
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.12.0&lt;/version&gt;
+  &lt;version&gt;1.13.0&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;id&gt;jkube&lt;/id&gt;
@@ -10519,8 +10565,9 @@ Interface; You can create new enrichers by implementing this interface.</p>
 <p>Profiles can be used to combine a set of enrichers and generators and to give this combination a referable name.</p>
 </div>
 <div class="paragraph">
-<p>Profiles are defined in YAML. The following example shows a simple profiles which uses only the
-<a href="#generator-spring-boot">Spring Boot generator</a> and some enrichers adding for adding default resources:</p>
+<p>Profiles are defined in YAML. The following example shows a simple profile which uses only the
+<a href="#generator-spring-boot">Spring Boot generator</a> and a few enrichers to add a Kubernetes
+Deployment and a Service:</p>
 </div>
 <div class="listingblock">
 <div class="title">Profile Definition</div>
@@ -10562,11 +10609,11 @@ Interface; You can create new enrichers by implementing this interface.</p>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>List of enricher to <strong>include</strong> in that given order</td>
+<td>List of enrichers to <strong>include</strong> in that given order</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>List of enricher to <strong>exclude</strong></td>
+<td>List of enrichers to <strong>exclude</strong> (especially useful when extending profiles)</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="6"></i><b>6</b></td>
@@ -10596,8 +10643,13 @@ Interface; You can create new enrichers by implementing this interface.</p>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>name</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Profile name. This plugin comes with a set of <a href="#profiles-predefined">predefined profiles</a>. Those profiles can be
-  extended by defining a custom profile with the same name of the profile to extend.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Profile name.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>extends</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This plugin comes with a set of <a href="#profiles-predefined">predefined profiles</a>.
+  These profiles can be extended by defining a custom profile that references the name of the
+  profile to extend in the <code>extends</code> field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>generator</strong></p></td>
@@ -10619,7 +10671,7 @@ Interface; You can create new enrichers by implementing this interface.</p>
 <p>The definition of generators and enrichers in the profile follows the same format:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 91. Generator and Enericher definition</caption>
+<caption class="title">Table 91. Generator and Enricher definition</caption>
 <colgroup>
 <col style="width: 14.2857%;">
 <col style="width: 85.7143%;">
@@ -10649,7 +10701,7 @@ Interface; You can create new enrichers by implementing this interface.</p>
 <div class="sect2">
 <h3 id="profiles-lookup-order">9.2. Lookup order</h3>
 <div class="paragraph">
-<p>Profiles can be defined externally either directly as a build resource in <code>src/main/jkube/profiles.yml</code> or provided as part of a plugin&#8217;s dependency where it is supposed to be included as <code>META-INF/jkube/profiles.yml</code>. Multiple profiles can be include in these <code>profiles.yml</code> descriptors as a list:</p>
+<p>Profiles can be defined externally either directly as a build resource in <code>src/main/jkube/profiles.yml</code> or provided as part of a plugin&#8217;s dependency where it is supposed to be included as <code>META-INF/jkube/profiles.yml</code>. Multiple profiles can be included in these <code>profiles.yml</code> descriptors as a list:</p>
 </div>
 <div class="paragraph">
 <p>If a profile is <a href="#profiles-using">used</a> then it is looked up from various places in the following order:</p>
@@ -10668,10 +10720,13 @@ Interface; You can create new enrichers by implementing this interface.</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>When multiple profiles of the same name are found, then these profiles are merged. If profile have an order number, then the <em>higher</em> order takes precedences when merging profiles.</p>
+<p>When multiple profiles of the same name are found, then these profiles are merged.
+If the profiles have an order number, then the profile with <em>higher</em> order takes precedence
+when merging.</p>
 </div>
 <div class="paragraph">
-<p>For <em>includes</em> of the same processors, the processor is moved to the earliest position. E.g consider the following two profiles with the name <code>my-profile</code></p>
+<p>For <em>includes</em> of the same processors, the processor is moved to the earliest position.
+e.g. consider the following two profiles with the name <code>my-profile</code></p>
 </div>
 <div class="listingblock">
 <div class="title">Profile A</div>
@@ -10735,47 +10790,54 @@ order: 10</code></pre>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Name which select the profile from the <code>profiles.yml</code></td>
+<td>Name which selects the profile from the <code>profiles.yml</code> or <code>profiles-default.yml</code> file.</td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<div class="title">Profile as system property</div>
-<p>Alternatively a profile can be also specified on the command line when calling Maven:</p>
+<div class="title">Profile as property</div>
+<p>Alternatively a profile can be also specified on the command line or as a project property:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-sh" data-lang="sh">mvn -Djkube.profile=my-spring-boot-apps oc:build oc:deploy</code></pre>
+<pre class="highlight"><code class="language-sh" data-lang="sh">mvn -Djkube.profile=my-spring-boot-apps oc:build oc:apply</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>If a configuration for enrichers and generators are provided as part of the plugin&#8217;s <code>&lt;configuration&gt;</code> then this takes precedence over any profile specified.</p>
+<p>If a configuration for enrichers and generators is provided as part of the project plugin&#8217;s configuration then this takes precedence and overrides any of the defaults provided by the selected profile.</p>
 </div>
 <div id="profiles-resource-fragments" class="paragraph">
 <div class="title">Profiles for resource fragments</div>
-<p>Profiles are also very useful when used together with resource fragments in <code>src/main/jkube</code>. By default the resource objects defined here are enriched with the configured profile (if any). A different profile can be selected easily by using a sub directory within <code>src/main/jkube</code>. The name of each sub directory is interpreted as a profile name and all resource definition files found in this sub directory are enhanced with the enhancers defined in this profile.</p>
+<p>Profiles are also very useful when used together with resource fragments in <code>src/main/jkube</code>.
+By default, the resource objects defined here are enriched with the configured profile (if any).
+A different profile can be selected easily by using a subdirectory within <code>src/main/jkube</code>.
+The name of each subdirectory is interpreted as a profile name and all resource definition files found in this subdirectory are enhanced with the enhancers defined in this profile.</p>
 </div>
 <div class="paragraph">
 <p>For example, consider the following directory layout:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>src/main/oc:
-  app-rc.yml
-  app-svc.yml
-  raw/ --&gt;
-    couchbase-rc.yml
-    couchbase-svc.yml</code></pre>
+<pre class="highlight"><code>.
+├── src/main/jkube
+  ├── app-rc.yml
+  ├── app-svc.yml
+  └── raw
+    ├── couchbase-rc.yml
+    └── couchbase-svc.yml</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Here, the resource descriptors <code>app-rc.yml</code> and <code>app-svc.yml</code> are enhanced with the enrichers defined in the main configuration. The files two files <code>couchbase-rc.yml</code> and <code>couchbase-svc.yml</code> in the sub directory <code>raw/</code> instead are enriched with the profile <strong>raw</strong>. This is a predefined profile which includes no enricher at all, so the couchbase resource objects are not enriched and taken over literally. This is an easy way how you can fine tune enrichment for different object set.</p>
+<p>Here, the resource descriptors <code>app-rc.yml</code> and <code>app-svc.yml</code> are enhanced with the enrichers defined in the main configuration.
+The two  files <code>couchbase-rc.yml</code> and <code>couchbase-svc.yml</code> in the subdirectory <code>raw/</code> are enriched with the profile <strong>raw</strong> instead.
+This is a predefined profile which includes no enricher at all, so the couchbase resource objects are not enriched and taken over literally.
+This is an easy way how you can fine tune enrichment for different object set.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="profiles-predefined">9.4. Predefined Profiles</h3>
 <div class="paragraph">
-<p>This plugin comes with a list of the following predefined profiles:</p>
+<p>This plugin comes with the following predefined profiles:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 92. Predefined Profiles</caption>
@@ -10808,11 +10870,12 @@ order: 10</code></pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>internal-microservice</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Do not expose a port for the service to generate. Otherwise the same as the <em>default</em> profile.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>default</em> profile extension that prevents services from being externally exposed.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>osio</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Includes everything in the <em>default</em> profile, plus additional enrichers and generators relevant only to <a href="https://openshift.io">OpenShift.io</a>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>security-hardening</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>default</em> profile extension that enables the <a href="#jkube-security-hardening">security-hardening</a>
+  enricher.</p></td>
 </tr>
 </tbody>
 </table>
@@ -10820,118 +10883,20 @@ order: 10</code></pre>
 <div class="sect2">
 <h3 id="profiles-extended">9.5. Extending Profiles</h3>
 <div class="paragraph">
-<p>A profile can also extend another profile to avoid repetition e.g of generators if the profile is only about including certain enrichers. For example, for a profile like:</p>
+<p>A profile can also extend another profile to avoid repetition.
+This is useful to add optional enrichers/generators to a given profile or to partially exclude enrichers/generators from another.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-yaml" data-lang="yaml">- name: minimal
-   extends: default
-   enricher:
-     includes:
-      - jkube-name
-      - jkube-controller
-      - jkube-service
-      - jkube-image
-      - jkube-project-label
-      - jkube-debug
-      - jkube-namespace
-      - jkube-metadata
-      - jkube-controller-from-configuration
-      - jkube-openshift-deploymentconfig
-      - jkube-openshift-project
-      - jkube-openshift-route</code></pre>
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">- name: security-hardening
+  extends: default
+  enricher:
+    includes:
+      - jkube-security-hardening</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>one then would not need to repeat all generators as they are inherited from the <code>default</code> profile.</p>
-</div>
-<div id="profiles-default" class="listingblock">
-<div class="title">Default Profile</div>
-<div class="content">
-<pre class="highlight"><code class="language-yaml" data-lang="yaml"># Default profile which is always activated
-- name: default
-  enricher:
-    # The order given in "includes" is the order in which enrichers are called
-    includes:
-    - jkube-metadata
-    - jkube-controller
-    - jkube-controller-from-configuration
-    - jkube-service
-    - jkube-namespace
-    - jkube-image
-    - jkube-portname
-    - jkube-project-label
-    - jkube-dependency
-    - jkube-pod-annotations
-    - jkube-git
-    - jkube-maven-scm
-    - jkube-serviceaccount
-    - jkube-maven-issue-mgmt
-    # TODO: Documents and verify enrichers below
-    - jkube-debug
-    - jkube-volume-permission
-    - jkube-persistentvolumeclaim-storageclass
-    - jkube-configmap-file
-    - jkube-secret-file
-
-    # Route exposure
-    - jkube-openshift-route
-    - jkube-openshift-project
-
-    # Ingress
-    - jkube-ingress
-
-    # -----------------------------------------
-    # TODO: Document and verify enrichers below
-    # Health checks
-    - jkube-healthcheck-quarkus
-    - jkube-healthcheck-spring-boot
-    - jkube-healthcheck-thorntail-v2
-    - jkube-healthcheck-wildfly-jar
-    - jkube-healthcheck-karaf
-    - jkube-healthcheck-vertx
-    - jkube-healthcheck-docker
-    - jkube-healthcheck-webapp
-    - jkube-healthcheck-micronaut
-    - jkube-healthcheck-openliberty
-    - jkube-healthcheck-smallrye
-    - jkube-prometheus
-    - jkube-service-discovery
-
-    # Value merge enrichers
-    - jkube-container-env-java-options
-
-    # Dependencies shouldn't be enriched anymore, therefore it's last in the list
-    - jkube-dependency
-    - jkube-revision-history
-    - jkube-docker-registry-secret
-    - jkube-triggers-annotation
-    - jkube-openshift-imageChangeTrigger
-
-    - jkube-name
-    # ReplicaCountEnricher overrides .spec.replicas field of any resource (even dependencies)
-    - jkube-replicas
-    # ImagePullPolicyEnricher overrides .spec.containers[0].imagePullPolicy for controllers
-    - jkube-imagepullpolicy
-
-  generator:
-    # The order given in "includes" is the order in which generators are called
-    includes:
-    - quarkus
-    - spring-boot
-    - thorntail-v2
-    - wildfly-jar
-    - openliberty
-    - karaf
-    - vertx
-    - micronaut
-    - java-exec
-    - webapp
-  watcher:
-    includes:
-    - spring-boot
-    - docker-image</code></pre>
-</div>
+<p>For example, this profiles includes the optional <code>jkube-security-hardening</code> enricher to the default profile.</p>
 </div>
 </div>
 </div>
