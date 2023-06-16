@@ -382,7 +382,7 @@ prepared for Kubernetes. The full example can be found in directory
 
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;jkube-maven-sample-zero-config&lt;/artifactId&gt;
-  &lt;version&gt;1.13.0&lt;/version&gt;
+  &lt;version&gt;1.13.1&lt;/version&gt;
   &lt;packaging&gt;jar&lt;/packaging&gt;
 
   &lt;parent&gt;
@@ -407,7 +407,7 @@ prepared for Kubernetes. The full example can be found in directory
       &lt;plugin&gt;
         &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
         &lt;artifactId&gt;kubernetes-maven-plugin&lt;/artifactId&gt; <i class="conum" data-value="4"></i><b>(4)</b>
-        &lt;version&gt;1.13.0&lt;/version&gt;
+        &lt;version&gt;1.13.1&lt;/version&gt;
       &lt;/plugin&gt;
     &lt;/plugins&gt;
   &lt;/build&gt;
@@ -885,7 +885,7 @@ Open the <code>pom.xml</code> file and add the plugin in the <code>&lt;plugins&g
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
     &lt;artifactId&gt;kubernetes-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.13.0&lt;/version&gt;
+    &lt;version&gt;1.13.1&lt;/version&gt;
 &lt;/plugin&gt;</code></pre>
 </div>
 </div>
@@ -1011,7 +1011,7 @@ Hello RESTEasy</code></pre>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
     &lt;artifactId&gt;kubernetes-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.13.0&lt;/version&gt;
+    &lt;version&gt;1.13.1&lt;/version&gt;
 &lt;/plugin&gt;</code></pre>
 </div>
 </div>
@@ -1106,7 +1106,7 @@ Hello RESTEasy</code></pre>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
     &lt;artifactId&gt;kubernetes-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.13.0&lt;/version&gt;
+    &lt;version&gt;1.13.1&lt;/version&gt;
 &lt;/plugin&gt;</code></pre>
 </div>
 </div>
@@ -1223,7 +1223,7 @@ Hello RESTEasy</code></pre>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
     &lt;artifactId&gt;kubernetes-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.13.0&lt;/version&gt;
+    &lt;version&gt;1.13.1&lt;/version&gt;
 &lt;/plugin&gt;</code></pre>
 </div>
 </div>
@@ -1349,7 +1349,7 @@ Hello RESTEasy</code></pre>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
     &lt;artifactId&gt;kubernetes-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.13.0&lt;/version&gt;
+    &lt;version&gt;1.13.1&lt;/version&gt;
 &lt;/plugin&gt;</code></pre>
 </div>
 </div>
@@ -1539,7 +1539,7 @@ available goals are described below.</p>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;kubernetes-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.13.0&lt;/version&gt;
+  &lt;version&gt;1.13.1&lt;/version&gt;
 
   &lt;configuration&gt;
      ....
@@ -5266,7 +5266,7 @@ section of the <code>kubernetes-maven-plugin</code> section of your <code>pom.xm
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;kubernetes-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.13.0&lt;/version&gt;
+  &lt;version&gt;1.13.1&lt;/version&gt;
 
   &lt;!-- Connect k8s:resource, k8s:build and k8s:helm to lifecycle phases --&gt;
   &lt;executions&gt;
@@ -5304,7 +5304,7 @@ section of the <code>kubernetes-maven-plugin</code> section of your <code>pom.xm
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
     &lt;artifactId&gt;kubernetes-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.13.0&lt;/version&gt;
+    &lt;version&gt;1.13.1&lt;/version&gt;
     &lt;configuration&gt;
         &lt;enricher&gt;
             &lt;excludes&gt;
@@ -5652,7 +5652,7 @@ The <code>jkube.debug.suspend</code> flag will disable readiness probes in the K
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;kubernetes-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.13.0&lt;/version&gt;
+  &lt;version&gt;1.13.1&lt;/version&gt;
   &lt;configuration&gt;
     &lt;remoteDevelopment&gt;
       &lt;localServices&gt;
@@ -8895,7 +8895,7 @@ The scheme will use HTTPS if <code>server.ssl.key-store</code> option is in use,
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;kubernetes-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.13.0&lt;/version&gt;
+  &lt;version&gt;1.13.1&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;id&gt;jkube&lt;/id&gt;
@@ -8966,7 +8966,7 @@ has been enabled in Thorntail</p>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;kubernetes-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.13.0&lt;/version&gt;
+  &lt;version&gt;1.13.1&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;id&gt;jkube&lt;/id&gt;
@@ -9085,7 +9085,7 @@ configuration file. JKube uses the following properties to resolve the health ch
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;kubernetes-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.13.0&lt;/version&gt;
+  &lt;version&gt;1.13.1&lt;/version&gt;
   &lt;configuration&gt;
     &lt;enricher&gt;
       &lt;config&gt;
@@ -9230,7 +9230,7 @@ However, by default, no health check will be added to your deployment unless con
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;kubernetes-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.13.0&lt;/version&gt;
+  &lt;version&gt;1.13.1&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;id&gt;jkube&lt;/id&gt;
@@ -9289,7 +9289,7 @@ path <code>/health</code>. The defaults are:</p>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;kubernetes-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.13.0&lt;/version&gt;
+  &lt;version&gt;1.13.1&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;id&gt;jkube&lt;/id&gt;
@@ -9334,7 +9334,7 @@ vertx.health.liveness.path = /ready</code></pre>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;kubernetes-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.13.0&lt;/version&gt;
+  &lt;version&gt;1.13.1&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;id&gt;jkube&lt;/id&gt;
@@ -9882,7 +9882,7 @@ configured using project&#8217;s properties. An empty command disables the check
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;kubernetes-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.13.0&lt;/version&gt;
+  &lt;version&gt;1.13.1&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;id&gt;jkube&lt;/id&gt;
@@ -9976,7 +9976,7 @@ If <em>&lt;cloud&gt;</em> item has not been defined, you can still enforce the g
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;kubernetes-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.13.0&lt;/version&gt;
+  &lt;version&gt;1.13.1&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;id&gt;jkube&lt;/id&gt;
