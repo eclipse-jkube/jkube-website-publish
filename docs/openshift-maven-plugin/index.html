@@ -173,14 +173,12 @@
 <li><a href="#generator-quarkus">7.1.6. Quarkus</a></li>
 <li><a href="#generator-openliberty">7.1.7. Open Liberty</a></li>
 <li><a href="#generator-micronaut">7.1.8. Micronaut Generator</a></li>
+<li><a href="#generator-helidon">7.1.9. Helidon</a></li>
+<li><a href="#generator-karaf">7.1.10. Karaf</a></li>
+<li><a href="#generator-wildfly-jar">7.1.11. Wildfly JAR Generator</a></li>
 </ul>
 </li>
-<li><a href="#generators-api">7.2. Generator API</a>
-<ul class="sectlevel3">
-<li><a href="#generator-karaf">7.2.1. Karaf</a></li>
-<li><a href="#generator-wildfly-jar">7.2.2. Wildfly JAR Generator</a></li>
-</ul>
-</li>
+<li><a href="#generators-api">7.2. Generator API</a></li>
 </ul>
 </li>
 <li><a href="#enrichers">8. Enrichers</a>
@@ -241,10 +239,10 @@
 </li>
 </ul>
 </li>
-<li><a href="#appendix">17. Appendix</a>
+<li><a href="#kind-filename-mapping">17. Kind/Filename Mapping</a>
 <ul class="sectlevel2">
-<li><a href="#_kindfilename_type_mapping">17.1. Kind/Filename Type Mapping</a></li>
-<li><a href="#_custom_kindfilename_mapping">17.2. Custom Kind/Filename Mapping</a></li>
+<li><a href="#default-kind-filename-mapping">17.1. Default Kind/Filename Mapping</a></li>
+<li><a href="#custom-kind-mapping">17.2. Custom Kind/Filename Mapping</a></li>
 </ul>
 </li>
 </ul>
@@ -383,7 +381,7 @@ prepared for Kubernetes. The full example can be found in directory
 
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;jkube-maven-sample-zero-config&lt;/artifactId&gt;
-  &lt;version&gt;1.13.1&lt;/version&gt;
+  &lt;version&gt;1.14.0&lt;/version&gt;
   &lt;packaging&gt;jar&lt;/packaging&gt;
 
   &lt;parent&gt;
@@ -408,7 +406,7 @@ prepared for Kubernetes. The full example can be found in directory
       &lt;plugin&gt;
         &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
         &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt; <i class="conum" data-value="4"></i><b>(4)</b>
-        &lt;version&gt;1.13.1&lt;/version&gt;
+        &lt;version&gt;1.14.0&lt;/version&gt;
       &lt;/plugin&gt;
     &lt;/plugins&gt;
   &lt;/build&gt;
@@ -780,7 +778,7 @@ The resource fragments are in <code>src/main/jkube</code>.</p>
 <div class="paragraph">
 <p>As you can see, there is no <code>metadata</code> section as would be expected for Kubernetes resources because it will be automatically added by the <code>openshift-maven-plugin</code>. The object&#8217;s <code>Kind</code>, if not given, is automatically derived from the
 filename. In this case, the <code>openshift-maven-plugin</code> will create a <code>Deployment</code> because the file is called <code>deployment.yml</code>. Similar mappings between file names and resource type exist for each supported resource kind, the
-complete list of which (along with associated abbreviations) can be found in the <a href="#appendix-kind-mapping">Appendix</a>.</p>
+complete list of which (along with associated abbreviations) can be found in the <a href="#default-kind-filename-mapping">Kind Filename Mapping</a> section.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -891,7 +889,7 @@ Welcome! See 'oc help' to get started.</code></pre>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
     &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.13.1&lt;/version&gt;
+    &lt;version&gt;1.14.0&lt;/version&gt;
 &lt;/plugin&gt;</code></pre>
 </div>
 </div>
@@ -945,7 +943,7 @@ Welcome! See 'oc help' to get started.</code></pre>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
     &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.13.1&lt;/version&gt;
+    &lt;version&gt;1.14.0&lt;/version&gt;
 &lt;/plugin&gt;</code></pre>
 </div>
 </div>
@@ -1027,7 +1025,7 @@ Welcome! See 'oc help' to get started.</code></pre>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
     &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.13.1&lt;/version&gt;
+    &lt;version&gt;1.14.0&lt;/version&gt;
 &lt;/plugin&gt;</code></pre>
 </div>
 </div>
@@ -1118,7 +1116,7 @@ Welcome! See 'oc help' to get started.</code></pre>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
     &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.13.1&lt;/version&gt;
+    &lt;version&gt;1.14.0&lt;/version&gt;
 &lt;/plugin&gt;</code></pre>
 </div>
 </div>
@@ -1273,7 +1271,7 @@ available goals are described below.</p>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.13.1&lt;/version&gt;
+  &lt;version&gt;1.14.0&lt;/version&gt;
 
   &lt;configuration&gt;
      ....
@@ -2800,7 +2798,7 @@ While each router may make its own decisions on which ports to expose, this is n
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.13.1&lt;/version&gt;
+  &lt;version&gt;1.14.0&lt;/version&gt;
   &lt;configuration&gt;
     &lt;enricher&gt;
       &lt;config&gt;
@@ -2827,7 +2825,7 @@ While each router may make its own decisions on which ports to expose, this is n
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.13.1&lt;/version&gt;
+  &lt;version&gt;1.14.0&lt;/version&gt;
   &lt;configuration&gt;
     &lt;enricher&gt;
       &lt;config&gt;
@@ -3611,7 +3609,8 @@ linking images together or for specifying it with the global <strong>image</stro
 <p>The <code>&lt;build&gt;</code> section is mandatory and is explained in <a href="#build-configuration">below</a>.</p>
 </div>
 <div id="image-name" class="paragraph">
-<p>When specifying the image name in the configuration with the <code>&lt;name&gt;</code> field you can use several placeholders which are replaced during runtime by this plugin. In addition you can use regular Maven properties which are resolved by Maven itself.</p>
+<p>When specifying the image name in the configuration with the <code>name</code> field, then you can use several placeholders.
+These placeholders are replaced during the execution by this plugin.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 24. Image Names</caption>
@@ -3628,23 +3627,37 @@ linking images together or for specifying it with the global <strong>image</stro
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>%g</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The last part of the Maven group name, sanitized so that it can be used as username on GitHub. Only the part after the last dot is used. E.g. for a group id <code>org.eclipse.jkube</code> this placeholder would insert <code>jkube</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The last part of the maven     group name.
+The name gets sanitized, so that it can be used as username on GitHub.
+Only the part after the last dot is used.
+For example, given the group id <code>org.eclipse.jkube</code>, this placeholder would insert <code>jkube</code>.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>%a</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A sanitized version of the artefact id so that it can be used as part of an Docker image name. I.e. it is converted to all lower case (as required by Docker)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A sanitized version of the artefact id, so that it can be used as part of a Docker image name.
+This means primarily, that it is converted to all lower case (as required by Docker).</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>%v</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The project version. Synonym to <code>${project.version}</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A sanitized version of the project version. Replaces <code>+</code> with <code>-</code> in <code>${project.version}</code> to comply with the Docker tag convention.
+(A different replacement symbol can be defined by setting the <code>jkube.image.tag.semver_plus_substitution</code> property.)
+For example, the version '1.2.3b' becomes the exact same Docker tag, '1.2.3b'.
+But '1.2.3+internal' becomes the <code>1.2.3-internal</code> Docker tag.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>%l</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">If the project version ends with <code>-SNAPSHOT</code> then this placeholder is <code>latest</code>, otherwise its the full version (same as <code>%v</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If the <a href="https://semver.org/spec/v2.0.0.html#spec-item-9">pre-release part</a> of the project version ends with <code>-SNAPSHOT</code>, then this placeholder resolves to <code>latest</code>.
+Otherwise, it&#8217;s the same as <code>%v</code>.</p>
+<p class="tableblock">If the <code>${project.version}</code> contains a <a href="https://semver.org/spec/v2.0.0.html#spec-item-10">build metadata part</a> (i.e. everything after the <code>+</code>), then the <code>+</code> is substituted and the rest is appended.
+For example, the project version <code>1.2.3-SNAPSHOT+internal</code> becomes the <code>latest-internal</code> Docker tag.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>%t</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">If the project version ends with <code>-SNAPSHOT</code> this placeholder resolves to <code>snapshot-&lt;timestamp&gt;</code> where timestamp has the date format <code>yyMMdd-HHmmss-SSSS</code> (eg <code>snapshot-</code>). This feature is especially useful during development in oder to avoid conflicts when images are to be updated which are still in use. You need to take care yourself of cleaning up old images afterwards, though.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If the project version ends with <code>-SNAPSHOT</code>, this placeholder resolves to <code>snapshot-&lt;timestamp&gt;</code> where timestamp has the date format <code>yyMMdd-HHmmss-SSSS</code> (eg <code>snapshot-</code>).
+This feature is especially useful during development in order to avoid conflicts when images are to be updated which are still in use.
+You need to take care yourself of cleaning up old images afterwards, though.</p>
+<p class="tableblock">If the <code>${project.version}</code> contains a <a href="https://semver.org/spec/v2.0.0.html#spec-item-10">build metadata part</a> (i.e. everything after the <code>+</code>), then the <code>+</code> is substituted and the rest is appended.
+For example, the project version <code>1.2.3-SNAPSHOT+internal</code> becomes the <code>snapshot-221018-113000-0000-internal</code> Docker tag.</p></td>
 </tr>
 </tbody>
 </table>
@@ -4998,6 +5011,14 @@ and <code>${basedir}/target/jkube/helm/${chartName}/openshift</code> for OpenShi
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>repository</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">URL pointing to a chart repository.</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>condition</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional reference to a boolean value that toggles the inclusion of the dependency.  IE <code>subchart.enabled</code>. For more information see helm <a href="https://helm.sh/docs/topics/charts/#tags-and-condition-fields-in-dependencies">documentation</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>alias</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional reference to the map that will be passed as the value scope for the subchart. For more information see helm <a href="https://helm.sh/docs/topics/charts/#alias-field-in-dependencies">documentation</a>.</p></td>
+</tr>
 </tbody>
 </table>
 <table id="helm-parameters" class="tableblock frame-all grid-all stretch">
@@ -5389,7 +5410,7 @@ section of the <code>openshift-maven-plugin</code> section of your <code>pom.xml
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.13.1&lt;/version&gt;
+  &lt;version&gt;1.14.0&lt;/version&gt;
 
   &lt;!-- Connect oc:resource, oc:build and oc:helm to lifecycle phases --&gt;
   &lt;executions&gt;
@@ -5427,7 +5448,7 @@ section of the <code>openshift-maven-plugin</code> section of your <code>pom.xml
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
     &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.13.1&lt;/version&gt;
+    &lt;version&gt;1.14.0&lt;/version&gt;
     &lt;configuration&gt;
         &lt;enricher&gt;
             &lt;excludes&gt;
@@ -5775,7 +5796,7 @@ The <code>jkube.debug.suspend</code> flag will disable readiness probes in the K
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.13.1&lt;/version&gt;
+  &lt;version&gt;1.14.0&lt;/version&gt;
   &lt;configuration&gt;
     &lt;remoteDevelopment&gt;
       &lt;localServices&gt;
@@ -6395,6 +6416,11 @@ The following sub-elements are supported:</td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>wildfly-jar</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Generator for WildFly Bootable JAR applications</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#generator-helidon">Helidon</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>helidon</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Generator for Helidon based apps</p></td>
+</tr>
 </tbody>
 </table>
 <div class="paragraph">
@@ -6908,20 +6934,49 @@ In particular, the following steps are performed:</p>
 of its configuration values.</p>
 </div>
 </div>
-</div>
-<div class="sect2">
-<h3 id="generators-api">7.2. Generator API</h3>
+<div class="sect3">
+<h4 id="generator-helidon">7.1.9. Helidon</h4>
 <div class="paragraph">
-<p>It&#8217;s possible to extend Eclipse JKube&#8217;s Generator API to define your own custom Generators as per use case. Please refer to the <a href="https://github.com/eclipse/jkube/blob/master/jkube-kit/generator/api/src/main/java/org/eclipse/jkube/generator/api/Generator.java">Generator</a>
-Interface; You can create new generators by implementing this interface. Please check out <a href="https://github.com/eclipse/jkube/blob/master/quickstarts/kit/custom-foo-generator/foo-generator">Custom Foo generator</a> quickstart for detailed example.</p>
+<p>The <code>Helidon</code> generator tries to detect Helidon based projects looking at project <code>pom.xml</code>:</p>
+</div>
+<div class="paragraph">
+<p>The base images chosen are the following, however, these can be overridden using <code>jkube.generator.from</code> property:</p>
+</div>
+<table id="generator-helidon-from" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 55. Webapp Base Images</caption>
+<colgroup>
+<col style="width: 11.1111%;">
+<col style="width: 44.4444%;">
+<col style="width: 44.4445%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"></th>
+<th class="tableblock halign-left valign-top">Docker Build</th>
+<th class="tableblock halign-left valign-top">S2I Build</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Native</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>registry.access.redhat.com/ubi8/ubi-minimal:8.7</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>registry.access.redhat.com/ubi8/ubi-minimal:8.7</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Normal Build</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quay.io/jkube/jkube-java</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quay.io/jkube/jkube-java</code></p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect3">
-<h4 id="generator-karaf">7.2.1. Karaf</h4>
+<h4 id="generator-karaf">7.1.10. Karaf</h4>
 <div class="paragraph">
 <p>This generator named <code>karaf</code> kicks in when the build uses a <code>karaf-maven-plugin</code>. By default the following base images are used:</p>
 </div>
 <table id="generator-karaf-from" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 55. Karaf Base Images</caption>
+<caption class="title">Table 56. Karaf Base Images</caption>
 <colgroup>
 <col style="width: 7.6923%;">
 <col style="width: 30.7692%;">
@@ -6953,7 +7008,7 @@ Interface; You can create new generators by implementing this interface. Please 
 <p>In addition to the  <a href="#generator-options-common">common generator options</a> this generator can be configured with the following options:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 56. Karaf configuration options</caption>
+<caption class="title">Table 57. Karaf configuration options</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -6985,7 +7040,7 @@ expose a port.</p>
 </table>
 </div>
 <div class="sect3">
-<h4 id="generator-wildfly-jar">7.2.2. Wildfly JAR Generator</h4>
+<h4 id="generator-wildfly-jar">7.1.11. Wildfly JAR Generator</h4>
 <div class="paragraph">
 <p>The Wildfly JAR generator detects a WildFly Bootable JAR build and disables the Jolokia and Prometheus Java agent.</p>
 </div>
@@ -7038,6 +7093,13 @@ option <em>-Dmaven.repo.local=/deployments/&lt;repo directory name&gt;</em> is a
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="generators-api">7.2. Generator API</h3>
+<div class="paragraph">
+<p>It&#8217;s possible to extend Eclipse JKube&#8217;s Generator API to define your own custom Generators as per use case. Please refer to the <a href="https://github.com/eclipse/jkube/blob/master/jkube-kit/generator/api/src/main/java/org/eclipse/jkube/generator/api/Generator.java">Generator</a>
+Interface; You can create new generators by implementing this interface. Please check out <a href="https://github.com/eclipse/jkube/blob/master/quickstarts/kit/custom-foo-generator/foo-generator">Custom Foo generator</a> quickstart for detailed example.</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -7066,7 +7128,7 @@ option <em>-Dmaven.repo.local=/deployments/&lt;repo directory name&gt;</em> is a
 <p>The <a href="#generator-example">Generator example</a> is a good blueprint, simply replace <code>generator</code> with <code>enricher</code>. The configuration is structural identical:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 57. Enricher configuration</caption>
+<caption class="title">Table 58. Enricher configuration</caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 75%;">
@@ -7113,7 +7175,7 @@ metadata extracted from the given build information.</p>
 </ul>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 58. Default Enrichers Overview</caption>
+<caption class="title">Table 59. Default Enrichers Overview</caption>
 <colgroup>
 <col style="width: 22.2222%;">
 <col style="width: 77.7778%;">
@@ -7325,7 +7387,7 @@ If you set <code>name</code> tag then this is used as key instead of the filenam
 <p>Here are the supported options while providing <code>configMap</code> in XML configuration</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 59. XML configmap configuration <code>configMap</code></caption>
+<caption class="title">Table 60. XML configmap configuration <code>configMap</code></caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -7354,7 +7416,7 @@ If you set <code>name</code> tag then this is used as key instead of the filenam
 <p><code>entries</code> is a list of <code>entry</code> configuration objects. Here are the supported options while providing <code>entry</code> in XML configuration</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 60. XML configmap entry configuration <code>entry</code></caption>
+<caption class="title">Table 61. XML configmap entry configuration <code>entry</code></caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -7422,7 +7484,7 @@ See <a href="https://kubernetes.io/docs/concepts/workloads/controllers/">Kuberne
 <p>The following configuration parameters can be used to influence the behaviour of this enricher:</p>
 </div>
 <table id="enricher-jkube-controller" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 61. Default controller enricher</caption>
+<caption class="title">Table 62. Default controller enricher</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -7581,7 +7643,7 @@ XML configuration or YAML fragment will override the one defined by the generato
 </ul>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 62. Configuration options</caption>
+<caption class="title">Table 63. Configuration options</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -7616,7 +7678,7 @@ XML configuration or YAML fragment will override the one defined by the generato
 <p>Enricher that adds info from <code>.git</code> directory as annotations. These are explained in the table below:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 63. Annotations added via Git enricher</caption>
+<caption class="title">Table 64. Annotations added via Git enricher</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -7664,7 +7726,7 @@ XML configuration or YAML fragment will override the one defined by the generato
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 64. Supported Configuration options</caption>
+<caption class="title">Table 65. Supported Configuration options</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -7713,7 +7775,7 @@ configuration is set, the default is <code>IfNotPresent</code> for release versi
 <p>Any already configured container in the pod spec is updated if the property is not set.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 65. Configuration options</caption>
+<caption class="title">Table 66. Configuration options</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -7746,7 +7808,7 @@ JKube generates Ingress only for Services which have either <code>expose=true</c
 <p>For more information, check out <a href="#ingress-generation">Ingress Generation</a> section.</p>
 </div>
 <table id="enricher-jkube-ingress" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 66. Ingress enricher</caption>
+<caption class="title">Table 67. Ingress enricher</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -7806,7 +7868,7 @@ resources in case they don&#8217;t already have one configured (see the <code>fo
 <p>The following configuration parameters can be used to influence the behaviour of this enricher:</p>
 </div>
 <table id="enricher-jkube-namespace" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 67. Default namespace enricher</caption>
+<caption class="title">Table 68. Default namespace enricher</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -7858,7 +7920,7 @@ resources in case they don&#8217;t already have one configured (see the <code>fo
 <p>Enricher for adding a "name" to the metadata to various objects we create.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 68. Supported Configuration options</caption>
+<caption class="title">Table 69. Supported Configuration options</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -7896,7 +7958,7 @@ a JKS-format Java keystore ready for consumption in Java services.</p>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.13.1&lt;/version&gt;
+  &lt;version&gt;1.14.0&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;goals&gt;
@@ -8011,7 +8073,7 @@ a JKS-format Java keystore ready for consumption in Java services.</p>
 <p>Note that this won&#8217;t be enabled if you&#8217;ve set <code>jkube.build.switchToDeployment</code> to <code>true</code> or you&#8217;ve configured <a href="#jkube-controller">DefaultControllerEnricher</a> to generate a controller of type <code>DeploymentConfig</code></p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 69. Supported configuration options for this enricher</caption>
+<caption class="title">Table 70. Supported configuration options for this enricher</caption>
 <colgroup>
 <col style="width: 14.2857%;">
 <col style="width: 85.7143%;">
@@ -8045,7 +8107,7 @@ a JKS-format Java keystore ready for consumption in Java services.</p>
 <p>It is only applicable in case of OpenShift.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 70. Supported configuration options for this enricher</caption>
+<caption class="title">Table 71. Supported configuration options for this enricher</caption>
 <colgroup>
 <col style="width: 14.2857%;">
 <col style="width: 85.7143%;">
@@ -8099,7 +8161,7 @@ a JKS-format Java keystore ready for consumption in Java services.</p>
 <p>This is only applicable to OpenShift.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 71. Supported configuration options for this enricher</caption>
+<caption class="title">Table 72. Supported configuration options for this enricher</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -8150,7 +8212,7 @@ container Pod template spec&#8217;s metadata.</p>
 <p>This enricher uses a given set of well known ports:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 72. Default Port Mappings</caption>
+<caption class="title">Table 73. Default Port Mappings</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -8247,7 +8309,7 @@ been replaced by the <code>app</code> label in newer versions of the plugin.</p>
 <p>Enricher which fixes adds name of StorageClass required by PersistentVolumeClaim either in metadata or in spec.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 73. Supported properties</caption>
+<caption class="title">Table 74. Supported properties</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -8316,7 +8378,7 @@ For more information read <a href="https://kubernetes.io/docs/concepts/workloads
 <p>The following configuration parameters can be used to influence the behaviour of this enricher:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 74. Default revision history enricher</caption>
+<caption class="title">Table 75. Default revision history enricher</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 40%;">
@@ -8436,7 +8498,7 @@ An explicit configuration always takes precedence over auto detection. For enric
 <p>The following configuration parameters can be used to influence the behaviour of this enricher:</p>
 </div>
 <table id="enricher-jkube-service" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 75. Default service enricher</caption>
+<caption class="title">Table 76. Default service enricher</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -8668,7 +8730,7 @@ Assuming that the image exposes ports <code>8080</code> and <code>8778</code> (e
 <p>This enricher is also used by <code>resources</code> XML configuration to generate Service configured via XML. Here are the fields supported in <code>resources</code> which work with this enricher:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 76. Fields supported in <code>resources</code></caption>
+<caption class="title">Table 77. Fields supported in <code>resources</code></caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -8690,7 +8752,7 @@ Assuming that the image exposes ports <code>8080</code> and <code>8778</code> (e
 <p><code>services</code> is a list of <code>service</code> configuration objects. Here are the supported options while providing <code>service</code> in XML configuration</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 77. XML <code>service</code> configuration</caption>
+<caption class="title">Table 78. XML <code>service</code> configuration</caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -8735,7 +8797,7 @@ Assuming that the image exposes ports <code>8080</code> and <code>8778</code> (e
 <p><code>ports</code> is a list of <code>port</code> configuration objects. Here are the supported options while providing <code>port</code> in XML configuration</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 78. XML service port configuration</caption>
+<caption class="title">Table 79. XML service port configuration</caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -8780,7 +8842,7 @@ Assuming that the image exposes ports <code>8080</code> and <code>8778</code> (e
 <p>The following configuration parameters can be used to influence the behaviour of this enricher:</p>
 </div>
 <table id="enricher-jkube-serviceaccount" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 79. ServiceAccountEnricher configuration options</caption>
+<caption class="title">Table 80. ServiceAccountEnricher configuration options</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -8834,7 +8896,7 @@ Assuming that the image exposes ports <code>8080</code> and <code>8778</code> (e
 <p>Enricher which fixes the permission of persistent volume mount with the help of an init container.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 80. Supported properties</caption>
+<caption class="title">Table 81. Supported properties</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -8915,7 +8977,7 @@ These metadata will be added only if <a href="https://maven.apache.org/pom.html#
 <p>The following annotations will be added to the objects that supports annotations,</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 81. Maven SCM Enrichers Annotation Mapping</caption>
+<caption class="title">Table 82. Maven SCM Enrichers Annotation Mapping</caption>
 <colgroup>
 <col style="width: 28.5714%;">
 <col style="width: 28.5714%;">
@@ -9016,7 +9078,7 @@ information is available in the <code>pom.xml</code> of the Maven project.</p>
 <p>The following annotations will be added to the objects that support these annotations,</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 82. Maven Issue Tracker Enrichers Annotation Mapping</caption>
+<caption class="title">Table 83. Maven Issue Tracker Enrichers Annotation Mapping</caption>
 <colgroup>
 <col style="width: 28.5714%;">
 <col style="width: 28.5714%;">
@@ -9130,7 +9192,7 @@ You can force the plugin to add annotations by setting enricher&#8217;s config <
 <p>You can configure the different aspects of the probes.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 83. OpenLiberty HealthCheck Enricher probe configuration</caption>
+<caption class="title">Table 84. OpenLiberty HealthCheck Enricher probe configuration</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 62.5%;">
@@ -9307,7 +9369,7 @@ The scheme will use HTTPS if <code>server.ssl.key-store</code> option is in use,
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.13.1&lt;/version&gt;
+  &lt;version&gt;1.14.0&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;id&gt;jkube&lt;/id&gt;
@@ -9378,7 +9440,7 @@ has been enabled in Thorntail</p>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.13.1&lt;/version&gt;
+  &lt;version&gt;1.14.0&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;id&gt;jkube&lt;/id&gt;
@@ -9497,7 +9559,7 @@ configuration file. JKube uses the following properties to resolve the health ch
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.13.1&lt;/version&gt;
+  &lt;version&gt;1.14.0&lt;/version&gt;
   &lt;configuration&gt;
     &lt;enricher&gt;
       &lt;config&gt;
@@ -9537,7 +9599,7 @@ configuration file. JKube uses the following properties to resolve the health ch
 <p>You can configure the different aspects of the probes.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 84. Micronaut HealthCheck Enricher probe configuration</caption>
+<caption class="title">Table 85. Micronaut HealthCheck Enricher probe configuration</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 62.5%;">
@@ -9642,7 +9704,7 @@ However, by default, no health check will be added to your deployment unless con
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.13.1&lt;/version&gt;
+  &lt;version&gt;1.14.0&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;id&gt;jkube&lt;/id&gt;
@@ -9701,7 +9763,7 @@ path <code>/health</code>. The defaults are:</p>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.13.1&lt;/version&gt;
+  &lt;version&gt;1.14.0&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;id&gt;jkube&lt;/id&gt;
@@ -9746,7 +9808,7 @@ vertx.health.liveness.path = /ready</code></pre>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.13.1&lt;/version&gt;
+  &lt;version&gt;1.14.0&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;id&gt;jkube&lt;/id&gt;
@@ -9835,7 +9897,7 @@ The overriding rules are:
 liveness probes or be specific to one.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 85. Vert.x HealthCheck Enricher probe configuration</caption>
+<caption class="title">Table 86. Vert.x HealthCheck Enricher probe configuration</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 62.5%;">
@@ -9898,7 +9960,7 @@ liveness probes or be specific to one.</p>
 <p>When using HTTP <code>GET</code> requests to determine readiness or liveness, several aspects can be configured. HTTP probes are used by default. To be more specific set the <code>type</code> attribute to <code>http</code>.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 86. Vert.x HealthCheck Enricher HTTP probe configuration</caption>
+<caption class="title">Table 87. Vert.x HealthCheck Enricher HTTP probe configuration</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 62.5%;">
@@ -9980,7 +10042,7 @@ liveness probes or be specific to one.</p>
 <p>You can also configure the probes to just open a socket on a specific port. The <code>type</code> attribute must be set to <code>tcp</code>.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 87. Vert.x HealthCheck Enricher TCP probe configuration</caption>
+<caption class="title">Table 88. Vert.x HealthCheck Enricher TCP probe configuration</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 62.5%;">
@@ -10104,7 +10166,7 @@ configured using project&#8217;s properties. An empty command disables the check
 <p>You can configure the different aspects of the probes.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 88. SmallRye HealthCheck Enricher probe configuration</caption>
+<caption class="title">Table 89. SmallRye HealthCheck Enricher probe configuration</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 62.5%;">
@@ -10225,6 +10287,149 @@ configured using project&#8217;s properties. An empty command disables the check
 </div>
 </div>
 <div class="sect4">
+<h5 id="jkube-healthcheck-helidon">jkube-healthcheck-helidon</h5>
+<div class="paragraph">
+<p>This enricher adds kubernetes readiness and liveness and startup probes for Helidon based projects. Note that Kubernetes startup probes are only added in projects using MicroProfile 3.1 and later.</p>
+</div>
+<div class="paragraph">
+<p>The application should be configured as follows to enable the enricher (i.e. <code>io.helidon.health:helidon-health</code> dependency is found in project dependencies)</p>
+</div>
+<div class="listingblock">
+<div class="title">pom.xml</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;dependency&gt;
+    &lt;groupId&gt;io.helidon.health&lt;/groupId&gt;
+    &lt;artifactId&gt;helidon-health&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_probe_configuration_5">Probe configuration</h6>
+<div class="paragraph">
+<p>You can configure the different aspects of the probes.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 90. Helidon HealthCheck Enricher probe configuration</caption>
+<colgroup>
+<col style="width: 12.5%;">
+<col style="width: 62.5%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Element</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Property</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>scheme</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Scheme to use for connecting to the host.</p>
+<p class="tableblock">  Defaults to <code>HTTP</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.enricher.jkube-healthcheck-helidon.scheme</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>port</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Port number to access the container.</p>
+<p class="tableblock">  Defaults to <code>8080</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.enricher.jkube-healthcheck-helidon.port</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>livenessFailureThreshold</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configures <code>failureThreshold</code> field in <code>.livenessProbe</code> . Minimum consecutive failures for the probes to be considered failed after having succeeded.</p>
+<p class="tableblock">Defaults to <code>3</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.enricher.jkube-healthcheck-helidon.livenessFailureThreshold</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>livenessSuccessThreshold</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configures <code>successThreshold</code> field in <code>.livenessProbe</code>. Minimum consecutive successes for the probes to be considered successful after having failed.</p>
+<p class="tableblock">  Defaults to <code>1</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.enricher.jkube-healthcheck-helidon.livenessSuccessThreshold</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>livenessInitialDelay</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configures <code>initialDelaySeconds</code> field in <code>.livenessProbe</code>. Number of seconds after the container has started before liveness or readiness probes are initiated.</p>
+<p class="tableblock">Defaults to <code>0</code> seconds.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.enricher.jkube-healthcheck-helidon.livenessInitialDelay</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>livenessPeriodSeconds</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configures <code>periodSeconds</code> field in <code>.livenessProbe</code>. How often (in seconds) to perform the liveness probe.</p>
+<p class="tableblock">Defaults to <code>10</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.enricher.jkube-healthcheck-helidon.livenessPeriodSeconds</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>livenessPath</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Path to access on the application server.</p>
+<p class="tableblock">Defaults to <code>/health/live</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.enricher.jkube-healthcheck-helidon.livenessPath</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>readinessFailureThreshold</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configures <code>failureThreshold</code> field in <code>.readinessProbe</code> . Minimum consecutive failures for the probes to be considered failed after having succeeded.</p>
+<p class="tableblock">Defaults to <code>3</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.enricher.jkube-healthcheck-helidon.readinessFailureThreshold</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>readinessSuccessThreshold</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configures <code>successThreshold</code> field in <code>.readinessProbe</code>. Minimum consecutive successes for the probes to be considered successful after having failed.</p>
+<p class="tableblock">Defaults to <code>1</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.enricher.jkube-healthcheck-helidon.readinessSuccessThreshold</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>readinessInitialDelay</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configures <code>initialDelaySeconds</code> field in <code>.readinessProbe</code>. Number of seconds after the container has started before liveness or readiness probes are initiated.</p>
+<p class="tableblock">Defaults to <code>0</code> seconds.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.enricher.jkube-healthcheck-helidon.readinessInitialDelay</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>readinessPeriodSeconds</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configures <code>periodSeconds</code> field in <code>.readinessProbe</code>. How often (in seconds) to perform the liveness probe.</p>
+<p class="tableblock">Defaults to <code>10</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.enricher.jkube-healthcheck-helidon.readinessPeriodSeconds</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>readinessPath</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Path to access on the application server.</p>
+<p class="tableblock">Defaults to <code>/health/ready</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.enricher.jkube-healthcheck-helidon.readinessPath</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>startupFailureThreshold</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configures <code>failureThreshold</code> field in <code>.startupProbe</code> . Minimum consecutive failures for the probes to be considered failed after having succeeded.</p>
+<p class="tableblock">Defaults to <code>3</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.enricher.jkube-healthcheck-helidon.startupFailureThreshold</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>startupSuccessThreshold</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configures <code>successThreshold</code> field in <code>.startupProbe</code>. Minimum consecutive successes for the probes to be considered successful after having failed.</p>
+<p class="tableblock">Defaults to <code>1</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.enricher.jkube-healthcheck-helidon.startupSuccessThreshold</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>startupInitialDelay</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configures <code>initialDelaySeconds</code> field in <code>.startupProbe</code>. Number of seconds after the container has started before liveness or startup probes are initiated.</p>
+<p class="tableblock">Defaults to <code>0</code> seconds.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.enricher.jkube-healthcheck-helidon.startupInitialDelay</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>startupPeriodSeconds</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configures <code>periodSeconds</code> field in <code>.startupProbe</code>. How often (in seconds) to perform the liveness probe.</p>
+<p class="tableblock">Defaults to <code>10</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.enricher.jkube-healthcheck-helidon.startupPeriodSeconds</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>startupPath</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Path to access on the application server.</p>
+<p class="tableblock">Defaults to <code>/health/started</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.enricher.jkube-healthcheck-helidon.startupPath</code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect4">
 <h5 id="jkube-healthcheck-karaf">jkube-healthcheck-karaf</h5>
 <div class="paragraph">
 <p>This enricher adds kubernetes readiness and liveness probes with Apache Karaf. This requires that
@@ -10294,7 +10499,7 @@ configured using project&#8217;s properties. An empty command disables the check
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.13.1&lt;/version&gt;
+  &lt;version&gt;1.14.0&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;id&gt;jkube&lt;/id&gt;
@@ -10388,7 +10593,7 @@ If <em>&lt;cloud&gt;</em> item has not been defined, you can still enforce the g
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.13.1&lt;/version&gt;
+  &lt;version&gt;1.14.0&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;id&gt;jkube&lt;/id&gt;
@@ -10455,7 +10660,7 @@ label and annotations:</p>
 <p>The following configuration parameters can be used to override the behavior of this enricher:</p>
 </div>
 <table id="enricher-jkube-service-discovery" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 89. JKube service discovery enricher</caption>
+<caption class="title">Table 91. JKube service discovery enricher</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -10629,7 +10834,7 @@ Deployment and a Service:</p>
 <p>Each <code>profiles.yml</code> has a list of profiles which are defined with these elements:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 90. Profile elements</caption>
+<caption class="title">Table 92. Profile elements</caption>
 <colgroup>
 <col style="width: 14.2857%;">
 <col style="width: 85.7143%;">
@@ -10671,7 +10876,7 @@ Deployment and a Service:</p>
 <p>The definition of generators and enrichers in the profile follows the same format:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 91. Generator and Enricher definition</caption>
+<caption class="title">Table 93. Generator and Enricher definition</caption>
 <colgroup>
 <col style="width: 14.2857%;">
 <col style="width: 85.7143%;">
@@ -10840,7 +11045,7 @@ This is an easy way how you can fine tune enrichment for different object set.</
 <p>This plugin comes with the following predefined profiles:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 92. Predefined Profiles</caption>
+<caption class="title">Table 94. Predefined Profiles</caption>
 <colgroup>
 <col style="width: 14.2857%;">
 <col style="width: 85.7143%;">
@@ -11418,7 +11623,7 @@ For a more complete, robust and reliable authentication experience, you can add 
 <p>openshift-maven-plugin supports volume configuration in XML format in pom.xml. These are the volume types which are supported:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 93. Supported Volume Types</caption>
+<caption class="title">Table 95. Supported Volume Types</caption>
 <colgroup>
 <col style="width: 4.3478%;">
 <col style="width: 95.6522%;">
@@ -11611,7 +11816,7 @@ into any docker daemon afterwards. You may also push the image to your specified
 <p>The above will generate an environment variable <code>$FOO</code> of value <code>bar</code></p>
 </div>
 <div class="paragraph">
-<p>For a full list of the environments used in java base images, <a href="https://hub.docker.com/r/jkube.java-jboss-openjdk8-jdk">see this list</a></p>
+<p>For a full list of the environments used in java base images, <a href="https://github.com/jkubeio/jkube-images#available-imagesk">see this list</a></p>
 </div>
 </div>
 <div class="sect3">
@@ -11620,7 +11825,7 @@ into any docker daemon afterwards. You may also push the image to your specified
 <p>The simplest way is to add system properties to the <code>JAVA_OPTIONS</code> environment variable.</p>
 </div>
 <div class="paragraph">
-<p>For a full list of the environments used in java base images, <a href="https://hub.docker.com/r/jkube.java-jboss-openjdk8-jdk">see this list</a></p>
+<p>For a full list of the environments used in java base images, <a href="https://github.com/jkubeio/jkube-images#available-images">see this list</a></p>
 </div>
 <div class="paragraph">
 <p>e.g. add a <code>src/main/jkube/deployment.yml</code> file to your project containing something like:</p>
@@ -11749,7 +11954,7 @@ suffix, it would be appended to your service name for host value.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>You can find an example in our <a href="https://github.com/eclipse/jkube/tree/master/quickstarts/maven/spring-boot">spring-boot</a>
+<p>You can find an example in our link: <a href="https://github.com/eclipse/jkube/tree/master/quickstarts/maven/spring-boot">spring-boot</a>
 quickstart in <code>kubernetes-with-ingress</code> profile.</p>
 </div>
 </div>
@@ -11760,13 +11965,7 @@ quickstart in <code>kubernetes-with-ingress</code> profile.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>[INFO] ------------------------------------------------------------------------
-[INFO] BUILD FAILURE
-[INFO] ------------------------------------------------------------------------
-[INFO] Total time:  2.045 s
-[INFO] Finished at: 2021-10-07T11:02:15+02:00
-[INFO] ------------------------------------------------------------------------
-[ERROR] Failed to execute goal org.eclipse.jkube:kubernetes-maven-plugin:1.4.0:build (default-cli) on project live-stream-question: Execution default-cli of goal org.eclipse.jkube:kubernetes-maven-plugin:1.4.0:build failed: No &lt;dockerHost&gt; given, no DOCKER_HOST environment variable, no read/writable '/var/run/docker.sock' or '//./pipe/docker_engine' and no external provider like Docker machine configured -&gt; [Help 1]</pre>
+<pre>No &lt;dockerHost&gt; given, no DOCKER_HOST environment variable, no read/writable '/var/run/docker.sock' or '//./pipe/docker_engine' and no external provider like Docker machine configured -&gt; [Help 1]</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -11791,19 +11990,19 @@ podman system service --time=0 unix:/run/user/$(id -u)/podman/podman.sock &amp;<
 <p>If you&#8217;re using <a href="#zero-config">zero configuration mode</a>, which means you depend on Eclipse JKube <a href="#generators">Generators</a> to generate an opinionated image, you will be able to do it using <code>jkube.generator.name</code> maven property.</p>
 </li>
 <li>
-<p>If you&#8217;re providing <a href="#config-image">XML image configuration</a>, image name would be picked from <code>&lt;name&gt;</code> tag like in this example:</p>
+<p>If you&#8217;re providing <a href="#config-image">XML image configuration</a>, image name would be picked from <code>name</code> tag like in this example:</p>
 </li>
 </ul>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>&lt;image&gt;
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;image&gt;
   &lt;name&gt;myusername/myimagename:latest&lt;/name&gt; &lt;!-- Your image name --&gt;
   &lt;build&gt;
       &lt;from&gt;openjdk:latest&lt;/from&gt;
       &lt;cmd&gt;java -jar maven/${project.artifactId}-${project.version}.jar&lt;/cmd&gt;
   &lt;/build&gt;
-&lt;/image&gt;</pre>
+&lt;/image&gt;</code></pre>
 </div>
 </div>
 <div class="ulist">
@@ -11818,11 +12017,11 @@ podman system service --time=0 unix:/run/user/$(id -u)/podman/podman.sock &amp;<
 </div>
 </div>
 <div class="sect1">
-<h2 id="appendix">17. Appendix</h2>
+<h2 id="kind-filename-mapping">17. Kind/Filename Mapping</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_kindfilename_type_mapping">17.1. Kind/Filename Type Mapping</h3>
-<table id="appendix-kind-mapping" class="tableblock frame-all grid-all stretch">
+<h3 id="default-kind-filename-mapping">17.1. Default Kind/Filename Mapping</h3>
+<table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -11978,7 +12177,7 @@ podman system service --time=0 unix:/run/user/$(id -u)/podman/podman.sock &amp;<
 </table>
 </div>
 <div class="sect2">
-<h3 id="_custom_kindfilename_mapping">17.2. Custom Kind/Filename Mapping</h3>
+<h3 id="custom-kind-mapping">17.2. Custom Kind/Filename Mapping</h3>
 <div class="paragraph">
 <p>You can add your custom <code>Kind/Filename</code> mappings.
 To do it you have two approaches:</p>
@@ -11986,11 +12185,11 @@ To do it you have two approaches:</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Setting an environment variable or system property called <code>jkube.mapping</code> pointing out to a <code>.properties</code> files with pairs <code>&lt;kind&gt;&#8658;filename1&gt;, &lt;filename2&gt;</code>
-By default if no environment variable nor system property is set, scan for a file located at classpath <code>/META-INF/jkube.kind-filename-type-mapping-default.properties</code>.</p>
+<p>Setting an environment variable or system property called <code>jkube.mapping</code> pointing out to a <code>.properties</code> files with pairs <code>&lt;kind&gt;&#8658;&lt;filename1&gt;, &lt;filename2&gt;</code>
+By default if no environment variable nor system property is set, JKube looks for a file located at classpath <code>/META-INF/jkube.kind-filename-type-mapping-default.properties</code>.</p>
 </li>
 <li>
-<p>By embedding in MOJO configuration the mapping:</p>
+<p>By defining the Mapping in the plugin&#8217;s configuration</p>
 </li>
 </ul>
 </div>
@@ -12002,13 +12201,30 @@ By default if no environment variable nor system property is set, scan for a fil
   &lt;configuration&gt;
     &lt;mappings&gt;
       &lt;mapping&gt;
-        &lt;kind&gt;Var&lt;/kind&gt;
-        &lt;filenameTypes&gt;foo, bar&lt;/filenameTypes&gt;
+        &lt;kind&gt;Var&lt;/kind&gt; <i class="conum" data-value="1"></i><b>(1)</b>
+        &lt;filenameTypes&gt;foo, bar&lt;/filenameTypes&gt; <i class="conum" data-value="2"></i><b>(2)</b>
+        &lt;apiVersion&gt;api.example.com/v1&lt;/apiVersion&gt; <i class="conum" data-value="3"></i><b>(3)</b>
       &lt;/mapping&gt;
     &lt;/mappings&gt;
   &lt;/configuration&gt;
 &lt;/plugin&gt;</code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The kind name (mandatory)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The filename types (mandatory), a comma-separated list of filenames to map to the specified kind</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The apiVersion (optional)</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
