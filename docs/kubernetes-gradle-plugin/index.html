@@ -92,7 +92,9 @@
 <li><a href="#jkubeResource">4.1.3. <strong>k8sResource</strong></a></li>
 <li><a href="#jkubeApply">4.1.4. <strong>k8sApply</strong></a></li>
 <li><a href="#jkubeHelm">4.1.5. <strong>k8sHelm</strong></a></li>
-<li><a href="#jkubeHelmPush">4.1.6. <strong>k8sHelmPush</strong></a></li>
+<li><a href="#_helm_specific_fragments">4.1.6. Helm-specific fragments</a></li>
+<li><a href="#_installing_the_generated_helm_chart">4.1.7. Installing the generated Helm chart</a></li>
+<li><a href="#jkubeHelmPush">4.1.8. <strong>k8sHelmPush</strong></a></li>
 </ul>
 </li>
 <li><a href="#task-overview-develop">4.2. Development Tasks</a>
@@ -108,7 +110,11 @@
 </li>
 <li><a href="#groovy-configuration">5. Gradle Groovy DSL Configuration</a>
 <ul class="sectlevel2">
-<li><a href="#global-configuration">5.1. Global Configuration</a></li>
+<li><a href="#global-configuration">5.1. Global Configuration</a>
+<ul class="sectlevel3">
+<li><a href="#cluster-access-configuration">5.1.1. Kubernetes Access Configuration</a></li>
+</ul>
+</li>
 <li><a href="#_image_configuration">5.2. Image Configuration</a>
 <ul class="sectlevel3">
 <li><a href="#build-configuration">5.2.1. Build Configuration</a></li>
@@ -284,7 +290,7 @@ Open the <code>build.gradle</code> file and add the plugin in the <code>plugins<
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">plugins {
    id 'java'
    id 'io.quarkus'
-   id 'org.eclipse.jkube.kubernetes' version '1.14.0'
+   id 'org.eclipse.jkube.kubernetes' version '1.15.0'
 }</code></pre>
 </div>
 </div>
@@ -410,7 +416,7 @@ Hello RESTEasy</code></pre>
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">plugins {
    id 'java'
    id 'io.quarkus'
-   id 'org.eclipse.jkube.kubernetes' version '1.14.0'
+   id 'org.eclipse.jkube.kubernetes' version '1.15.0'
 }</code></pre>
 </div>
 </div>
@@ -505,7 +511,7 @@ Hello RESTEasy</code></pre>
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">plugins {
    id 'java'
    id 'io.quarkus'
-   id 'org.eclipse.jkube.kubernetes' version '1.14.0'
+   id 'org.eclipse.jkube.kubernetes' version '1.15.0'
 }</code></pre>
 </div>
 </div>
@@ -619,7 +625,7 @@ Hello RESTEasy</code></pre>
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">plugins {
    id 'java'
    id 'io.quarkus'
-   id 'org.eclipse.jkube.kubernetes' version '1.14.0'
+   id 'org.eclipse.jkube.kubernetes' version '1.15.0'
 }</code></pre>
 </div>
 </div>
@@ -746,7 +752,7 @@ Hello RESTEasy</code></pre>
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">plugins {
    id 'java'
    id 'io.quarkus'
-   id 'org.eclipse.jkube.kubernetes' version '1.14.0'
+   id 'org.eclipse.jkube.kubernetes' version '1.15.0'
 }</code></pre>
 </div>
 </div>
@@ -1207,7 +1213,7 @@ You can get started simply by adding the plugin to your build.gradle file:</p>
 <div class="title">Example for setting up the kubernetes-gradle-plugin in build.gradle</div>
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">plugins {
-  id 'org.eclipse.jkube.kubernetes' version '1.14.0'
+  id 'org.eclipse.jkube.kubernetes' version '1.15.0'
 }</code></pre>
 </div>
 </div>
@@ -1405,18 +1411,27 @@ You can see configuration options regarding Kubernetes resource validation in <a
 <div class="paragraph">
 <p>This task is for creating
 <a href="https://helm.sh/docs/topics/charts">Helm charts</a>
-for your Gradle project so that you can install, update or delete your app in Kubernetes
+for your Gradle project so that you can install, update, or delete your app in Kubernetes
 using <a href="https://github.com/helm/helm">Helm</a>.
-For creating a Helm chart you simply call <code>k8sHelm</code> task on the command line:</p>
+To generate the Helm chart you simply need to call <code>k8sHelm</code> task on the command line:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-sh" data-lang="sh">gradle k8sResource k8sHelm</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>The <code>k8sResource</code> goal is required to create the resource descriptors which are included in the Helm chart.
-If you have already built the resource then you can omit this task.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The <code>k8sResource</code> goal is required to create the resource descriptors that are included in the Helm chart.
+If you have already generated the resources in a previous step then you can omit this task.
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>There are multiple ways to configure the generated Helm Chart:</p>
@@ -1472,6 +1487,11 @@ JKube will take care of merging this fragment with the opinionated and configure
 </tr>
 </thead>
 <tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>apiVersion</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The apiVersion of Chart.yaml schema, defaults to v1.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.helm.apiVersion</code></p></td>
+</tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>chart</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The Chart name</p></td>
@@ -1662,10 +1682,29 @@ and <code>${basedir}/build/jkube/helms/${chartName}/openshift</code> for OpenShi
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>value</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">In case we are generating a <code>.Values</code> variable, the default value.</p>
 <p class="tableblock">  In case the placeholder has to be replaced by an expression, the Golang expression
-  e.g. `{{ .Chart.Name</p></td>
+  e.g. <code>{{ .Chart.Name | upper }}</code>.</p></td>
 </tr>
 </tbody>
 </table>
+</div>
+<div class="sect3">
+<h4 id="_helm_specific_fragments">4.1.6. Helm-specific fragments</h4>
+<div class="paragraph">
+<p>In addition to the standard Kubernetes <a href="#introduction-examples-resource-fragments">resource fragments</a>, you can also provide fragments for Helm <code>Chart.yaml</code> and <code>values.yaml</code> files.</p>
+</div>
+<div class="paragraph">
+<p>For the <code>Chart.yaml</code> file you can provide a <code>Chart.helm.yaml</code> fragment in the <code>src/main/jkube</code> directory.</p>
+</div>
+<div class="paragraph">
+<p>For the <code>values.yaml</code> file you can provide a <code>values.helm.yaml</code> fragment in the <code>src/main/jkube</code> directory.</p>
+</div>
+<div class="paragraph">
+<p>These fragments will be merged with the opinionated and configured defaults.
+The values provided in the fragments will override any of the generated default values taking precedence over them.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_installing_the_generated_helm_chart">4.1.7. Installing the generated Helm chart</h4>
 <div class="paragraph">
 <p>In a next step you can install this via the <a href="https://github.com/helm/helm/releases">helm command line tool</a> as follows:</p>
 </div>
@@ -1687,7 +1726,7 @@ and <code>${basedir}/build/jkube/helms/${chartName}/openshift</code> for OpenShi
 </div>
 </div>
 <div class="sect3">
-<h4 id="jkubeHelmPush">4.1.6. <strong>k8sHelmPush</strong></h4>
+<h4 id="jkubeHelmPush">4.1.8. <strong>k8sHelmPush</strong></h4>
 <div class="paragraph">
 <p>This goal is for pushing
 <a href="https://helm.sh/docs/topics/charts">Helm charts</a>
@@ -2375,7 +2414,7 @@ then start a redeploy of the Kubernetes pod.</p>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>access</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#cluster-access-configuration"><strong>access</strong></a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Group of configuration parameters to connect to Kubernetes/OpenShift cluster.</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -2580,7 +2619,7 @@ This property can take the following values (case insensitive):</p>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>kubernetesTemplate</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">File or directory containing the Kubernetes YAML files to be included as Chart templates.</p>
+<td class="tableblock halign-left valign-top"><p class="tableblock">File or directory containing YAML files with OpenShift Template resources to be used as Helm parameters.</p>
 <p class="tableblock">Defaults to <code>${basedir}/build/classes/java/main/META-INF/jkube/kubernetes</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.kubernetesTemplate</code></p></td>
 </tr>
@@ -2839,11 +2878,130 @@ if set to <code>true</code>.</p>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>workDirectory</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The JKube working directory. Defaults to <code>${project.build.directory}/jkube</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The JKube working directory. Defaults to <code>${project.build.directory}/jkube-temp</code>.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.workDir</code></p></td>
 </tr>
 </tbody>
 </table>
+<div class="sect3">
+<h4 id="cluster-access-configuration">5.1.1. Kubernetes Access Configuration</h4>
+<div class="paragraph">
+<p>You can configure parameters to define how the plugin connects to the Kubernetes cluster instead of relying on default parameters.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">kubernetes {
+  access {
+    username = ""
+    password = ""
+    masterUrl = ""
+    apiVersion = ""
+  }
+}</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 14.2857%;">
+<col style="width: 71.4285%;">
+<col style="width: 14.2858%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Element</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Property</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>username</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Username on which to operate.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.username</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>password</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Password on which to operate.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.password</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>namespace</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Namespace on which to operate.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.namespace</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>masterUrl</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Master URL on which to operate.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.masterUrl</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>apiVersion</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Api version on which to operate.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.apiVersion</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>caCertFile</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CaCert File on which to operate.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.caCertFile</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>caCertData</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CaCert Data on which to operate.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.caCertData</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>clientCertFile</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Client Cert File on which to operate.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.clientCertFile</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>clientCertData</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Client Cert Data on which to operate.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.clientCertData</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>clientKeyFile</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Client Key File on which to operate.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.clientKeyFile</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>clientKeyData</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Client Key Data on which to operate.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.clientKeyData</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>clientKeyAlgo</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Client Key Algorithm on which to operate.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.clientKeyAlgo</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>clientKeyPassphrase</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Client Key Passphrase on which to operate.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.clientKeyPassphrase</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>trustStoreFile</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Trust Store File on which to operate.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.trustStoreFile</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>trustStorePassphrase</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Trust Store Passphrase on which to operate.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.trustStorePassphrase</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>keyStoreFile</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Key Store File on which to operate.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.keyStoreFile</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>keyStorePassphrase</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Key Store Passphrase on which to operate.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.keyStorePassphrase</code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_image_configuration">5.2. Image Configuration</h3>
@@ -3645,7 +3803,7 @@ or <a href="https://docs.docker.com/reference/builder/#cmd">cmd</a> for a contai
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">entryPoint {
     // Shell Form
-    shell = 'java -jar maven/hello-world-1.14.0.jar'
+    shell = 'java -jar maven/hello-world-1.15.0.jar'
 }</code></pre>
 </div>
 </div>
@@ -3657,7 +3815,7 @@ or <a href="https://docs.docker.com/reference/builder/#cmd">cmd</a> for a contai
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">entryPoint {
     // exec form
-    exec = ['java','-jar','maven/hello-world-1.14.0.jar']
+    exec = ['java','-jar','maven/hello-world-1.15.0.jar']
 }</code></pre>
 </div>
 </div>
@@ -5453,7 +5611,7 @@ In particular, the following steps are performed:</p>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Native</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>registry.access.redhat.com/ubi8/ubi-minimal:8.6</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>registry.access.redhat.com/ubi9/ubi-minimal:9.3</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>quay.io/quarkus/ubi-quarkus-native-binary-s2i</code></p></td>
 </tr>
 <tr>
@@ -5527,8 +5685,8 @@ of its configuration values.</p>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Native</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>registry.access.redhat.com/ubi8/ubi-minimal:8.7</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>registry.access.redhat.com/ubi8/ubi-minimal:8.7</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>registry.access.redhat.com/ubi9/ubi-minimal:9.3</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>registry.access.redhat.com/ubi9/ubi-minimal:9.3</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Normal Build</strong></p></td>
