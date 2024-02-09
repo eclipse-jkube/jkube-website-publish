@@ -99,17 +99,16 @@
 </li>
 <li><a href="#jkube:build">5.2. <strong>oc:build</strong></a>
 <ul class="sectlevel3">
-<li><a href="#build-kubernetes">5.2.1. Kubernetes Build</a></li>
-<li><a href="#build-openshift">5.2.2. OpenShift Build</a></li>
-<li><a href="#build-goal-configuration">5.2.3. Configuration (XML)</a></li>
-<li><a href="#_image_configuration">5.2.4. Image Configuration</a></li>
-<li><a href="#build-configuration">5.2.5. Build Configuration</a></li>
-<li><a href="#build-assembly">5.2.6. Assembly</a></li>
-<li><a href="#build-assembly-layer">5.2.7. Assembly - Inline/Layer</a></li>
-<li><a href="#build-buildargs">5.2.8. Build Args</a></li>
-<li><a href="#build-healthcheck">5.2.9. Healthcheck</a></li>
-<li><a href="#misc-env">5.2.10. Environment and Labels</a></li>
-<li><a href="#misc-startup">5.2.11. Startup Arguments</a></li>
+<li><a href="#setting-quota-openshift-build">5.2.1. Setting Quotas for OpenShift Build</a></li>
+<li><a href="#build-goal-configuration">5.2.2. Configuration (XML)</a></li>
+<li><a href="#_image_configuration">5.2.3. Image Configuration</a></li>
+<li><a href="#build-configuration">5.2.4. Build Configuration</a></li>
+<li><a href="#_assembly">5.2.5. Assembly</a></li>
+<li><a href="#build-assembly-layer">5.2.6. Assembly - Inline/Layer</a></li>
+<li><a href="#_build_args">5.2.7. Build Args</a></li>
+<li><a href="#build-healthcheck">5.2.8. Healthcheck</a></li>
+<li><a href="#misc-env">5.2.9. Environment and Labels</a></li>
+<li><a href="#misc-startup">5.2.10. Startup Arguments</a></li>
 </ul>
 </li>
 <li><a href="#jkube:push">5.3. <strong>oc:push</strong></a></li>
@@ -127,6 +126,7 @@
 </ul>
 </li>
 <li><a href="#jkube:helm-push">5.6. <strong>oc:helm-push</strong></a></li>
+<li><a href="#jkube:helm-lint">5.7. <strong>oc:helm-lint</strong></a></li>
 </ul>
 </li>
 <li><a href="#goals-overview-develop">6. Development Goals</a>
@@ -224,6 +224,11 @@
 <ul class="sectlevel2">
 <li><a href="#integrations.dekorate">15.1. Dekorate</a></li>
 <li><a href="#_jib_java_image_builder">15.2. JIB (Java Image Builder)</a></li>
+<li><a href="#integrations.buildpacks">15.3. Buildpacks</a>
+<ul class="sectlevel3">
+<li><a href="#_buildpack_builder_image">15.3.1. Buildpack Builder Image</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#faq">16. FAQ</a>
@@ -383,7 +388,7 @@ prepared for Kubernetes. The full example can be found in directory
 
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;jkube-maven-sample-zero-config&lt;/artifactId&gt;
-  &lt;version&gt;1.15.0&lt;/version&gt;
+  &lt;version&gt;1.16.0&lt;/version&gt;
   &lt;packaging&gt;jar&lt;/packaging&gt;
 
   &lt;parent&gt;
@@ -408,7 +413,7 @@ prepared for Kubernetes. The full example can be found in directory
       &lt;plugin&gt;
         &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
         &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt; <i class="conum" data-value="4"></i><b>(4)</b>
-        &lt;version&gt;1.15.0&lt;/version&gt;
+        &lt;version&gt;1.16.0&lt;/version&gt;
       &lt;/plugin&gt;
     &lt;/plugins&gt;
   &lt;/build&gt;
@@ -646,23 +651,29 @@ An extract of the plugin configuration is shown below:</p>
       &lt;deployment&gt; <i class="conum" data-value="11"></i><b>(11)</b>
         &lt;my&gt;deployment&lt;/my&gt;
       &lt;/deployment&gt;
+      &lt;service&gt;
+        &lt;property&gt; <i class="conum" data-value="12"></i><b>(12)</b>
+          &lt;name&gt;cloud.google.com/neg&lt;/name&gt;
+          &lt;value&gt;{"ingress":true}&lt;/value&gt;
+        &lt;/property&gt;
+      &lt;/service&gt;
     &lt;/annotations&gt;
 
-    &lt;configMap&gt; <i class="conum" data-value="12"></i><b>(12)</b>
+    &lt;configMap&gt; <i class="conum" data-value="13"></i><b>(13)</b>
       &lt;name&gt;test&lt;/name&gt;
       &lt;entries&gt;
-        &lt;entry&gt; <i class="conum" data-value="13"></i><b>(13)</b>
+        &lt;entry&gt; <i class="conum" data-value="14"></i><b>(14)</b>
           &lt;name&gt;key1&lt;/name&gt;
           &lt;value&gt;value1&lt;/value&gt;
         &lt;/entry&gt;
-        &lt;entry&gt; <i class="conum" data-value="14"></i><b>(14)</b>
+        &lt;entry&gt; <i class="conum" data-value="15"></i><b>(15)</b>
           &lt;name&gt;key3&lt;/name&gt;
           &lt;file&gt;${project.basedir}/src/main/resources/META-INF/resources/index.html&lt;/file&gt;
         &lt;/entry&gt;
       &lt;/entries&gt;
     &lt;/configMap&gt;
 
-    &lt;remotes&gt; <i class="conum" data-value="15"></i><b>(15)</b>
+    &lt;remotes&gt; <i class="conum" data-value="16"></i><b>(16)</b>
        &lt;remote&gt;https://gist.githubusercontent.com/lordofthejars/ac2823cec7831697d09444bbaa76cd50/raw/e4b43f1b6494766dfc635b5959af7730c1a58a93/deployment.yaml&lt;/remote&gt;
     &lt;/remotes&gt;
   &lt;/resources&gt;
@@ -717,18 +728,22 @@ An extract of the plugin configuration is shown below:</p>
 </tr>
 <tr>
 <td><i class="conum" data-value="12"></i><b>12</b></td>
-<td>ConfigMap to be created</td>
+<td>Annotations with a special character, a slash in this case</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="13"></i><b>13</b></td>
-<td>ConfigMap data entry as a string key value pair</td>
+<td>ConfigMap to be created</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="14"></i><b>14</b></td>
-<td>ConfigMap data entry with value as file path, file&#8217;s contents are loaded into ConfigMap as key value</td>
+<td>ConfigMap data entry as a string key value pair</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="15"></i><b>15</b></td>
+<td>ConfigMap data entry with value as file path, file&#8217;s contents are loaded into ConfigMap as key value</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="16"></i><b>16</b></td>
 <td>Remote files used as resource fragments.</td>
 </tr>
 </table>
@@ -891,7 +906,7 @@ Welcome! See 'oc help' to get started.</code></pre>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
     &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.15.0&lt;/version&gt;
+    &lt;version&gt;1.16.0&lt;/version&gt;
 &lt;/plugin&gt;</code></pre>
 </div>
 </div>
@@ -945,7 +960,7 @@ Welcome! See 'oc help' to get started.</code></pre>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
     &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.15.0&lt;/version&gt;
+    &lt;version&gt;1.16.0&lt;/version&gt;
 &lt;/plugin&gt;</code></pre>
 </div>
 </div>
@@ -1027,7 +1042,7 @@ Welcome! See 'oc help' to get started.</code></pre>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
     &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.15.0&lt;/version&gt;
+    &lt;version&gt;1.16.0&lt;/version&gt;
 &lt;/plugin&gt;</code></pre>
 </div>
 </div>
@@ -1118,7 +1133,7 @@ Welcome! See 'oc help' to get started.</code></pre>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
     &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.15.0&lt;/version&gt;
+    &lt;version&gt;1.16.0&lt;/version&gt;
 &lt;/plugin&gt;</code></pre>
 </div>
 </div>
@@ -1273,7 +1288,7 @@ available goals are described below.</p>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.15.0&lt;/version&gt;
+  &lt;version&gt;1.16.0&lt;/version&gt;
 
   &lt;configuration&gt;
      ....
@@ -1523,7 +1538,15 @@ Generated resources are in <code>target/classes/META-INF/jkube/openshift</code> 
       &lt;/labels&gt;
 
       &lt;annotations&gt; <i class="conum" data-value="8"></i><b>(8)</b>
-         &lt;!-- ... --&gt;
+        &lt;deployment&gt; <i class="conum" data-value="9"></i><b>(9)</b>
+          &lt;my&gt;deployment&lt;/my&gt;
+        &lt;/deployment&gt;
+        &lt;service&gt;
+          &lt;property&gt; <i class="conum" data-value="10"></i><b>(10)</b>
+            &lt;name&gt;cloud.google.com/neg&lt;/name&gt;
+            &lt;value&gt;{"ingress":true}&lt;/value&gt;
+          &lt;/property&gt;
+        &lt;/service&gt;
       &lt;/annotations&gt;
     &lt;/resource&gt;
   &lt;/configuration&gt;
@@ -1562,7 +1585,15 @@ Generated resources are in <code>target/classes/META-INF/jkube/openshift</code> 
 </tr>
 <tr>
 <td><i class="conum" data-value="8"></i><b>8</b></td>
-<td>The subelements are also available for specifying annotations.</td>
+<td>The subelements are also available for specifying annotations</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="9"></i><b>9</b></td>
+<td>An annotation for a deployment. The key equals the tag and the value its child element</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="10"></i><b>10</b></td>
+<td>Instead of a self defined tag, the tag <code>&lt;property&gt;</code> can be used to handle complex cases. This case shows the usage to handle special characters that aren&#8217;t possible in xml-tags</td>
 </tr>
 </table>
 </div>
@@ -2800,7 +2831,7 @@ While each router may make its own decisions on which ports to expose, this is n
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.15.0&lt;/version&gt;
+  &lt;version&gt;1.16.0&lt;/version&gt;
   &lt;configuration&gt;
     &lt;enricher&gt;
       &lt;config&gt;
@@ -2827,7 +2858,7 @@ While each router may make its own decisions on which ports to expose, this is n
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.15.0&lt;/version&gt;
+  &lt;version&gt;1.16.0&lt;/version&gt;
   &lt;configuration&gt;
     &lt;enricher&gt;
       &lt;config&gt;
@@ -2981,29 +3012,14 @@ spec:
 <div class="sect2">
 <h3 id="jkube:build">5.2. <strong>oc:build</strong></h3>
 <div class="paragraph">
-<p>This goal is for building Docker images.</p>
+<p>This task is for building container images for your application.</p>
 </div>
-<div class="sect3">
-<h4 id="build-kubernetes">5.2.1. Kubernetes Build</h4>
-<div class="paragraph">
-<p>A normal Docker build is performed by default. The connection configuration to
-access the Docker daemon is described in <a href="#access-configuration">Access Configuration</a>.</p>
-</div>
-<div class="paragraph">
-<p>In order to make the generated images available to the Kubernetes cluster the generated images need to be pushed to a
-registry with the goal <a href="#jkube:push"><strong>oc:push</strong></a>. This is not necessary for single node clusters, though as there is no need to
-distribute images.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="build-openshift">5.2.2. OpenShift Build</h4>
-<div class="paragraph">
+<div id="build-openshift" class="paragraph">
 <p>For the <code>openshift</code> mode, OpenShift specific
-<a href="https://docs.openshift.com/enterprise/latest/architecture/core_concepts/builds_and_image_streams.html">builds</a> will be
-performed. These are so called
+<a href="https://docs.openshift.com/enterprise/latest/architecture/core_concepts/builds_and_image_streams.html">builds</a> will be performed.
+These are so called
 <a href="https://docs.openshift.com/enterprise/latest/architecture/core_concepts/builds_and_image_streams.html">Binary Source</a>
-builds ("binary builds" in short), where the data specified with the <a href="#build-configuration">build configuration</a>  is
-sent directly to OpenShift as a binary archive.</p>
+builds ("binary builds" in short), where the data specified with the <a href="#build-configuration">build configuration</a>  is sent directly to OpenShift as a binary archive.</p>
 </div>
 <div class="paragraph">
 <p>There are two kind of binary builds supported by this plugin, which can be selected with the <code>buildStrategy</code> configuration option (<code>jkube.build.strategy</code> property)</p>
@@ -3023,11 +3039,14 @@ sent directly to OpenShift as a binary archive.</p>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>s2i</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The <a href="https://docs.openshift.com/enterprise/latest/architecture/core_concepts/builds_and_image_streams.html#source-build">Source-to-Image</a> (S2I) build strategy uses so called builder images for creating new application images from binary build data. The builder image to use is taken from the base image configuration specified with <a href="#build-config-from">from</a> in the image build configuration. See below for a list of builder images which can be used with this plugin.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The <a href="https://docs.openshift.com/enterprise/latest/architecture/core_concepts/builds_and_image_streams.html#source-build">Source-to-Image</a> (S2I) build strategy uses so called builder images for creating new application images from binary build data.
+The builder image to use is taken from the base image configuration specified with <a href="#build-config-from">from</a> in the image build configuration.
+See below for a list of builder images which can be used with this plugin.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>docker</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A <a href="https://docs.openshift.com/enterprise/latest/architecture/core_concepts/builds_and_image_streams.html#docker-build">Docker Build</a> is similar to a normal Docker build except that it is done by the OpenShift cluster and not by a Docker daemon. In addition this build pushes the generated image to the OpenShift internal registry so that it is accessbile in the whole cluster.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A <a href="https://docs.openshift.com/enterprise/latest/architecture/core_concepts/builds_and_image_streams.html#docker-build">Docker Build</a> is similar to a normal Docker build except that it is done by the OpenShift cluster and not by a Docker daemon.
+In addition this build pushes the generated image to the OpenShift internal registry so that it is accessbile in the whole cluster.</p></td>
 </tr>
 </tbody>
 </table>
@@ -3039,24 +3058,24 @@ after the image creation.</p>
 <div class="paragraph">
 <p>The <a href="https://docs.openshift.com/enterprise/latest/dev_guide/builds.html#defining-a-buildconfig">Build Config</a> and
 <a href="https://docs.openshift.com/enterprise/latest/architecture/core_concepts/builds_and_image_streams.html#image-streams">Image streams</a>
-can be managed by this plugin. If they do not exist, they will be automatically created by <code>oc:build</code>.
-If they do already exist, they are reused, except when the <code>buildRecreate</code> configuration option
-(property <code>jkube.build.recreate</code>) is set to a value as described in <a href="#build-goal-configuration">Configuration</a>.
-Also if the provided build strategy is different than the one defined in the existing build configuration, the Build
-Config is edited to reflect the new type (which in turn removes all build associated with the previous build).</p>
+can be managed by this plugin.
+If they do not exist, they will be automatically created by <code>oc:build</code>.</p>
+</div>
+<div class="paragraph">
+<p>If they do already exist, they are reused, except when the <code>buildRecreate</code> configuration option (property <code>jkube.build.recreate</code>) is set to a value as described in <a href="#global-configuration">Global Configuration</a>.
+Also if the provided build strategy is different than the one defined in the existing build configuration, the Build Config is edited to reflect the new type (which in turn removes all build associated with the previous build).</p>
 </div>
 <div class="paragraph">
 <p>This image stream created can then be directly referenced from
 <a href="https://docs.openshift.com/enterprise/latest/architecture/core_concepts/deployments.html#deployments-and-deployment-configurations">Deployment Configuration</a>
-objects created by <a href="#jkube:resource"><strong>oc:resource</strong></a>.
-By default, image streams are created with a local lookup policy, so that they can be used also by other resources such
-as Deployments or StatefulSets.
-This behavior can be turned off by setting the <code>jkube.s2i.imageStreamLookupPolicyLocal</code> property to <code>false</code> when building
-the project.</p>
+objects created by <a href="#jkube:resource">oc:resource</a>.</p>
 </div>
 <div class="paragraph">
-<p>In order to be able to create these OpenShift resource objects access to an OpenShift installation is required.
-The access parameters are described in <a href="#access-configuration">Access Configuration</a>.</p>
+<p>By default, image streams are created with a local lookup policy, so that they can be used also by other resources such as Deployments or StatefulSets.
+This behavior can be turned off by setting the <code>jkube.s2i.imageStreamLookupPolicyLocal</code> property to <code>false</code> when building the project.</p>
+</div>
+<div class="paragraph">
+<p>In order to be able to create these OpenShift resource objects access to an OpenShift installation is required.</p>
 </div>
 <div class="paragraph">
 <p>Regardless of which build mode is used, the images are configured in the same way.</p>
@@ -3070,7 +3089,7 @@ The access parameters are described in <a href="#access-configuration">Access Co
 <p>a global section which defines the overall behaviour of this plugin</p>
 </li>
 <li>
-<p>and an <code>&lt;images&gt;</code> section which defines how the images should be build</p>
+<p>and an <code>images</code> section which defines how the images should be build</p>
 </li>
 </ul>
 </div>
@@ -3078,12 +3097,14 @@ The access parameters are described in <a href="#access-configuration">Access Co
 <p>Many of the options below are relevant for the <a href="#build-kubernetes">Kubernetes Workflow</a> or the <a href="#build-openshift">OpenShift Workflow</a> with Docker builds as they influence how the Docker image is build.</p>
 </div>
 <div class="paragraph">
-<p>For an S2I binary build, on the other hand, the most relevant section is the <a href="#build-assembly">Assembly</a> one because the build depends on which buider/base image is used and how it interprets the content of the uploaded <code>docker.tar</code>.</p>
+<p>For an S2I binary build, on the other hand, the most relevant section is the <a href="#config-image-build-assembly">Assembly</a> one because the build depends on which buider/base image is used and how it interprets the content of the uploaded <code>docker.tar</code>.</p>
 </div>
-<div class="sect4">
-<h5 id="setting-quota-openshift-build">Setting Quotas for OpenShift Build</h5>
+<div class="sect3">
+<h4 id="setting-quota-openshift-build">5.2.1. Setting Quotas for OpenShift Build</h4>
 <div class="paragraph">
-<p>You can also limit resource use by specifying resource limits as part of the build configuration. You can do this by providing <code>&lt;openshiftBuildConfig&gt;</code> field in <code>&lt;resource&gt;</code> configuration. Below is an example on how to do this:</p>
+<p>You can also limit resource use by specifying resource limits as part of the build configuration.
+You can do this by providing <code>openshiftBuildConfig</code> field in <code>resource</code> configuration.
+Below is an example on how to do this:</p>
 </div>
 <div class="listingblock">
 <div class="title">Example of OpenShift S2I Build resource/limit Configuration</div>
@@ -3149,21 +3170,20 @@ The access parameters are described in <a href="#access-configuration">Access Co
 </div>
 </div>
 </div>
-</div>
 <div class="sect3">
-<h4 id="build-goal-configuration">5.2.3. Configuration (XML)</h4>
+<h4 id="build-goal-configuration">5.2.2. Configuration (XML)</h4>
 <div class="paragraph">
 <p>The following sections describe the usual configuration, which is similar to the build configuration used in the
- <a href="https://dmp.fabric8.io">docker-maven-plugin</a>.</p>
+<a href="https://dmp.fabric8.io">docker-maven-plugin</a>.</p>
 </div>
 <div class="paragraph">
-<p>In addition a more automatic way for creating predefined build configuration can be performed with so called <a href="#generators">Generators</a>. Generators are very flexible and can be easily created. These are described in an extra <a href="#generators">section</a>. Note that if you&#8217;re providing your own XML image configuration, it would be given more precedence. Generators won&#8217;t be used in case you&#8217;re already using your own custom image configuration.</p>
+<p>In addition, a more automatic way for creating predefined build configuration can be performed with so called <a href="#generators">Generators</a>. Generators are very flexible and can be easily created. These are described in an extra <a href="#generators">section</a>. Note that if you&#8217;re providing your own XML image configuration, it would be given more precedence. Generators won&#8217;t be used in case you&#8217;re already using your own custom image configuration.</p>
 </div>
 <div class="paragraph">
 <p>Global configuration parameters specify overall behavior common for all images to build. Some of the configuration options are shared with other goals.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 22. Global configuration</caption>
+<caption class="title">Table 22. Global build configuration options</caption>
 <colgroup>
 <col style="width: 14.2857%;">
 <col style="width: 71.4285%;">
@@ -3181,7 +3201,7 @@ The access parameters are described in <a href="#access-configuration">Access Co
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>buildStrategy</strong></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Defines what build strategy to choose while building container image.
-Possible values are <code>docker</code> and <code>jib</code> out of which <code>docker</code> is default.</p>
+Possible values are <code>docker</code>, <code>buildpacks</code> and <code>jib</code> out of which <code>docker</code> is default.</p>
 </div>
 <div class="paragraph">
 <p>If the build is performed in an OpenShift cluster an additional <code>s2i</code> option is available
@@ -3203,9 +3223,15 @@ and selected by default.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.build.strategy</code></p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>buildSourceDirectory</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Default directory that contains the assembly descriptor(s) used by the plugin. The default value is <code>src/main/docker</code>.
+This option is only relevant for the <code>{task-prefix}Build</code> task.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.build.source.dir</code></p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>authConfig</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Authentication information when pulling from or pushing to Docker registry. There is a dedicated section
-  <a href="#authentication">Authentication</a> for how to do security.</p></td>
+<a href="#authentication">Authentication</a> for how to do security.</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
@@ -3232,41 +3258,6 @@ and selected by default.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.docker.autoPull</code></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>buildRecreate</strong></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>If the build is performed in an OpenShift cluster then this option decides how the OpenShift resource objects
-   associated with the build should be treated when they already exist:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>buildConfig</code> or <code>bc</code> : Only the BuildConfig is recreated</p>
-</li>
-<li>
-<p><code>imageStream</code> or <code>is</code> : Only the ImageStream is recreated</p>
-</li>
-<li>
-<p><code>all</code> : Both, BuildConfig and ImageStream are recreated</p>
-</li>
-<li>
-<p><code>none</code> : Neither BuildConfig nor ImageStream is recreated</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>The default is <code>none</code>. If you provide the property without value then <code>all</code> is assumed, so everything gets recreated.</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.build.recreate</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>forcePull</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Applicable only for OpenShift, S2I build strategy.</p>
-<p class="tableblock">While creating a BuildConfig, By default, if the builder image specified in the
-build configuration is available locally on the node, that image will be used.</p>
-<p class="tableblock">Using forcePull will override the local image and refresh it from the registry the image stream points to.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.build.forcePull</code></p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="image-pull-policy"></a> <strong>imagePullPolicy</strong></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Specify whether images should be pull when looking for base images while building or images for starting.
@@ -3286,18 +3277,18 @@ This property can take the following values (case insensitive):</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>By default a progress meter is printed out on the console, which is omitted when using Maven in batch mode (option <code>-B</code>). A very simplified progress meter is provided when using no color output (i.e. with <code>-Djkube.useColor=false</code>).</p>
+<p>By default, a progress meter is printed out on the console, which is omitted when using maven in batch mode (option <code>-B</code>). A very simplified progress meter is provided when using no color output (i.e. with <code>-Djkube.useColor=false</code>).</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.docker.imagePullPolicy</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>certPath</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Path to SSL certificate when SSL is used for communicating with the Docker daemon. These certificates are normally
-  stored in <code>~/.docker/</code>. With this configuration the path can be set explicitly. If not set, the fallback is first
-  taken from the environment variable <code>DOCKER_CERT_PATH</code> and then as last resort <code>~/.docker/</code>. The keys in this are
-  expected with it standard names <code>ca.pem</code>, <code>cert.pem</code> and <code>key.pem</code>.
-  Please refer to the <a href="https://docs.docker.com/articles/https">Docker documentation</a> for more information about SSL
-  security with Docker.</p></td>
+stored in <code>~/.docker/</code>. With this configuration the path can be set explicitly. If not set, the fallback is first
+taken from the environment variable <code>DOCKER_CERT_PATH</code> and then as last resort <code>~/.docker/</code>. The keys in this are
+expected with it standard names <code>ca.pem</code>, <code>cert.pem</code> and <code>key.pem</code>.
+Please refer to the <a href="https://docs.docker.com/articles/https">Docker documentation</a> for more information about SSL
+security with Docker.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.docker.certPath</code></p></td>
 </tr>
 <tr>
@@ -3336,9 +3327,9 @@ the URL is:</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>filter</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">In order to temporarily restrict the operation of plugin goals this configuration option can be used.
-  Typically this will be set via the system property <code>jkube.image.filter</code> when Maven is called. The value can be a single
-  image name (either its alias or full name) or it can be a comma separated list with multiple image names. Any name
-  which doesn&#8217;t refer an image in the configuration will be ignored.</p></td>
+Typically, this will be set via the system property <code>jkube.image.filter</code> when maven is called. The value can be a single
+image name (either its alias or full name) or it can be a comma separated list with multiple image names. Any name
+which doesn&#8217;t refer an image in the configuration will be ignored.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.image.filter</code></p></td>
 </tr>
 <tr>
@@ -3349,19 +3340,14 @@ the URL is:</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>maxConnections</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Number of parallel connections are allowed to be opened to the Docker Host. For parsing log output, a connection needs
-  to be kept open (as well for the wait features), so don&#8217;t put that number to low. Default is 100 which should be
-  suitable for most of the cases.</p></td>
+to be kept open (as well for the wait features), so don&#8217;t put that number to low. Default is 100 which should be
+suitable for most of the cases.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.docker.maxConnections</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>access</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Group of configuration parameters to connect to Kubernetes/OpenShift cluster.</p></td>
-<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>outputDirectory</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Default output directory to be used by this plugin.
-  The default value is <code>target/docker</code> and is only used for the goal <code>oc:build</code>.</p></td>
+The default value is <code>target/docker</code> and is only used for the goal <code>oc:build</code>.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.build.target.dir</code></p></td>
 </tr>
 <tr>
@@ -3370,25 +3356,60 @@ the URL is:</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.profile</code></p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>forcePull</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Applicable only for OpenShift, S2I build strategy.</p>
+<p class="tableblock">While creating a BuildConfig, By default, if the builder image specified in the
+build configuration is available locally on the node, that image will be used.</p>
+<p class="tableblock">Using forcePull will override the local image and refresh it from the registry the image stream points to.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.build.forcePull</code></p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>openshiftPullSecret</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The name to use for naming pullSecret to be created to pull the base image in case pulling from a private registry
-   which requires authentication for OpenShift.</p>
+which requires authentication for OpenShift.</p>
 <p class="tableblock">  The default value for pull registry will be picked from <code>jkube.docker.pull.registry</code>/<code>jkube.docker.registry</code>.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.build.pullSecret</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>openshiftPushSecret</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The name of pushSecret to be used to push the final image in case pushing from a
-  protected registry which requires authentication.</p></td>
+protected registry which requires authentication.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.build.pushSecret</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>buildOutputKind</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Allow to specify in which registry to push the container image at the end of the build.
-   If the output kind is ImageStreamTag, then the image will be pushed to the internal OpenShift registry.
-   If the output is of type DockerImage, then the name of the output reference will be used as a Docker push specification.
-   The default value is <code>ImageStreamTag</code></p></td>
+If the output kind is ImageStreamTag, then the image will be pushed to the internal OpenShift registry.
+If the output is of type DockerImage, then the name of the output reference will be used as a Docker push specification.
+The default value is <code>ImageStreamTag</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.build.buildOutput.kind</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>buildRecreate</strong></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>If the build is performed in an OpenShift cluster then this option decides how the OpenShift resource objects
+associated with the build should be treated when they already exist:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>buildConfig</code> or <code>bc</code> : Only the BuildConfig is recreated</p>
+</li>
+<li>
+<p><code>imageStream</code> or <code>is</code> : Only the ImageStream is recreated</p>
+</li>
+<li>
+<p><code>all</code> : Both, BuildConfig and ImageStream are recreated</p>
+</li>
+<li>
+<p><code>none</code> : Neither BuildConfig nor ImageStream is recreated</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The default is <code>none</code>. If you provide the property without value then <code>all</code> is assumed, so everything gets recreated.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.build.recreate</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>registry</strong></p></td>
@@ -3408,7 +3429,7 @@ the URL is:</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>skipBuildPom</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">If set the build step will be skipped for modules of type <code>pom</code>. If not set, then by default projects of type <code>pom</code>
-  will be skipped if there are no image configurations contained.</p></td>
+will be skipped if there are no image configurations contained.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.skip.build.pom</code></p></td>
 </tr>
 <tr>
@@ -3424,7 +3445,7 @@ the URL is:</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>sourceDirectory</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Default directory that contains the assembly descriptor(s) used by the plugin. The default value is <code>src/main/docker</code>.
-  This option is only relevant for the <code>oc:build</code> goal.</p></td>
+This option is only relevant for the <code>oc:build</code> goal.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.build.source.dir</code></p></td>
 </tr>
 <tr>
@@ -3446,13 +3467,13 @@ the URL is:</p>
 </table>
 </div>
 <div class="sect3">
-<h4 id="_image_configuration">5.2.4. Image Configuration</h4>
+<h4 id="_image_configuration">5.2.3. Image Configuration</h4>
 <div class="paragraph">
-<p>The configuration how images should be created a defined in a dedicated <code>&lt;images&gt;</code> sections. These are specified for
-each image within the <code>&lt;images&gt;</code> element of the configuration with one <code>&lt;image&gt;</code> element per image to use.</p>
+<p>The configuration how images should be created a defined in a dedicated <code>images</code> sections. These are specified for
+each image within the <code>images</code> element of the configuration with one <code>image</code> element per image to use.</p>
 </div>
 <div class="paragraph">
-<p>The <code>&lt;image&gt;</code> element can contain the following sub elements:</p>
+<p>The <code>image</code> element can contain the following sub elements:</p>
 </div>
 <table id="config-image" class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 23. Image Configuration</caption>
@@ -3469,7 +3490,7 @@ each image within the <code>&lt;images&gt;</code> element of the configuration w
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#image-name"><strong>name</strong></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Each <code>&lt;image&gt;</code> configuration has a mandatory, unique docker
+<td class="tableblock halign-left valign-top"><p class="tableblock">Each <code>image</code> configuration has a mandatory, unique docker
 repository <em>name</em>. This can include registry and tag parts, but also placeholder parameters. See below for a detailed explanation.</p></td>
 </tr>
 <tr>
@@ -3484,12 +3505,13 @@ linking images together or for specifying it with the global <strong>image</stro
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#config-image-build"><strong>build</strong></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Element which contains all the configuration aspects when doing a <a href="#jkube:build"><strong>oc:build</strong></a>. This element can be omitted if the image is only pulled from a registry e.g. as support for integration tests like database images.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Element which contains all the configuration aspects when doing a <a href="#jkube:build">oc:build</a>.</p>
+<p class="tableblock">This element can be omitted if the image is only pulled from a registry e.g. as support for integration tests like database images.</p></td>
 </tr>
 </tbody>
 </table>
 <div class="paragraph">
-<p>The <code>&lt;build&gt;</code> section is mandatory and is explained in <a href="#build-configuration">below</a>.</p>
+<p>The <code>build</code> section is mandatory and is explained in <a href="#build-configuration">below</a>.</p>
 </div>
 <div id="image-name" class="paragraph">
 <p>When specifying the image name in the configuration with the <code>name</code> field, then you can use several placeholders.
@@ -3578,13 +3600,13 @@ For example, the project version <code>1.2.3-SNAPSHOT+internal</code> becomes th
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>A <code>&lt;build&gt;</code> section as described in <a href="#buid-configuration">Build Configuration</a></td>
+<td>A <code>&lt;build&gt;</code> section as described in <a href="#build-configuration">Build Configuration</a></td>
 </tr>
 </table>
 </div>
 </div>
 <div class="sect3">
-<h4 id="build-configuration">5.2.5. Build Configuration</h4>
+<h4 id="build-configuration">5.2.4. Build Configuration</h4>
 <div id="build-overview" class="paragraph">
 <p>Here are different modes how images can be built:</p>
 </div>
@@ -3695,7 +3717,7 @@ FileSystem#getPathMatcher</a> <code>glob</code> syntax.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Except for the <a href="#build-assembly">assembly configuration</a> all other configuration options are ignored for now.</p>
+<p>Except for the <a href="#config-image-build-assembly">assembly configuration</a> all other configuration options are ignored for now.</p>
 </div>
 <div id="simple-dockerfile-build" class="paragraph">
 <div class="title">Simple Dockerfile build</div>
@@ -3724,7 +3746,7 @@ If you specify a single character for <code>filter</code> then this delimiter is
 E.g a <code>filter='@'</code> triggers on parameters in the format <code>@&#8230;&#8203;@</code>.
 Use something like this if you want to clearly separate from Docker builds args.
 This form of property replacement works for Dockerfile only.
-For replacing other data in other files targeted for the Docker image, please use the <a href="#build-assembly">assembly configuration</a> with filtering to make them available in the docker build context.</p>
+For replacing other data in other files targeted for the Docker image, please use the <a href="#config-image-build-assembly">assembly configuration</a> with filtering to make them available in the docker build context.</p>
 </div>
 <div class="paragraph">
 <div class="title">Example</div>
@@ -3766,14 +3788,14 @@ of an image configuration. The following configuration options are supported:</p
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#config-image-build-assembly"><strong>assembly</strong></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the assembly configuration as described in <a href="#build-assembly">Build Assembly</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the assembly configuration as described in <a href="#config-image-build-assembly">Build Assembly</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#build-buildargs"><strong>args</strong></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#property-buildargs"><strong>args</strong></a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Map specifying the value of <a href="https://docs.docker.com/engine/reference/commandline/build/#set-build-time-variables-build-arg">Docker build args</a>
 which should be used when building the image with an external Dockerfile which uses build arguments. The key-value syntax is the same as when defining maven properties (or <code>labels</code> or <code>env</code>).
 This argument is ignored when no external Dockerfile is used. Build args can also be specified as properties as
-described in <a href="#build-buildargs">Build Args</a></p></td>
+described in <a href="#property-buildargs">Build Args</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>buildOptions</strong></p></td>
@@ -3973,7 +3995,7 @@ remote API.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="build-assembly">5.2.6. Assembly</h4>
+<h4 id="_assembly">5.2.5. Assembly</h4>
 <div class="paragraph">
 <p>The <code>assembly</code> element within <code>build</code> element defines how build artifacts and other files
 can be added to the Docker image. The files which are supposed to be added via <code>assembly</code> should be
@@ -4103,7 +4125,7 @@ assembly configuration</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="build-assembly-layer">5.2.7. Assembly - Inline/Layer</h4>
+<h4 id="build-assembly-layer">5.2.6. Assembly - Inline/Layer</h4>
 <div class="paragraph">
 <p>Inlined assembly description with a format very similar to
 <a href="https://maven.apache.org/plugins/maven-assembly-plugin/assembly.html">Maven Assembly Plugin</a>.</p>
@@ -4239,7 +4261,7 @@ FileSystem#getPathMatcher</a> <code>glob</code> syntax.</p>
 </table>
 </div>
 <div class="sect3">
-<h4 id="build-buildargs">5.2.8. Build Args</h4>
+<h4 id="_build_args">5.2.7. Build Args</h4>
 <div id="property-buildargs" class="paragraph">
 <p>As described in section <a href="#build-configuration">Configuration</a> for external Dockerfiles <a href="https://docs.docker.com/engine/reference/commandline/build/#set-build-time-variables-build-arg">Docker build arg</a> can be used. In addition to the
 configuration within the plugin configuration you can also use properties to specify them:</p>
@@ -4267,7 +4289,7 @@ external Dockerfile must contain an <code>ARGS</code> instruction.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="build-healthcheck">5.2.9. Healthcheck</h4>
+<h4 id="build-healthcheck">5.2.8. Healthcheck</h4>
 <div class="paragraph">
 <p>Healthchecks has been introduced since Docker 1.12 and are a way to tell Docker how to test a container to check that it&#8217;s still working. With a health check you specify a command which is periodically executed and checked for its return value. If the healtcheck return with an exit 0 the container is considered to be healthy, if it returns with 1 then the container is not working correctly.</p>
 </div>
@@ -4335,7 +4357,7 @@ external Dockerfile must contain an <code>ARGS</code> instruction.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="misc-env">5.2.10. Environment and Labels</h4>
+<h4 id="misc-env">5.2.9. Environment and Labels</h4>
 <div class="paragraph">
 <p>When creating a container one or more environment variables can be set via configuration with the <code>env</code> parameter</p>
 </div>
@@ -4369,7 +4391,7 @@ external Dockerfile must contain an <code>ARGS</code> instruction.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="misc-startup">5.2.11. Startup Arguments</h4>
+<h4 id="misc-startup">5.2.10. Startup Arguments</h4>
 <div class="paragraph">
 <p>Using <code>entryPoint</code> and <code>cmd</code> it is possible to specify the <a href="https://docs.docker.com/reference/builder/#entrypoint">entry point</a>
 or <a href="https://docs.docker.com/reference/builder/#cmd">cmd</a> for a container.</p>
@@ -4407,7 +4429,7 @@ or <a href="https://docs.docker.com/reference/builder/#cmd">cmd</a> for a contai
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>exec</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">List of arguments (with inner <code>&lt;args&gt;</code>) arguments which will be given to the <code>exec</code> call directly without any shell interpretation.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of arguments (with inner <code>args</code>) arguments which will be given to the <code>exec</code> call directly without any shell interpretation.</p></td>
 </tr>
 </tbody>
 </table>
@@ -4779,11 +4801,11 @@ more details.</p></td>
 <div class="sect2">
 <h3 id="jkube:helm">5.5. <strong>oc:helm</strong></h3>
 <div class="paragraph">
-<p>This goal is for creating
-<a href="https://helm.sh/docs/topics/charts">Helm charts</a>
-for your Maven project so that you can install, update, or delete your app in Kubernetes
-using <a href="https://github.com/helm/helm">Helm</a>.
-To generate the Helm chart you simply need to call <code>oc:helm</code> goal on the command line:</p>
+<p>This feature allows you to create <a href="https://helm.sh/docs/topics/charts">Helm charts</a> from the Kubernetes resources Eclipse JKube generates for your project.
+You can then use the generated charts to leverage <a href="https://github.com/helm/helm">Helm</a>'s capabilities to install, update, or delete your app in Kubernetes.</p>
+</div>
+<div class="paragraph">
+<p>To generate the Helm chart you need to invoke the`oc:helm` Maven goal on the command line:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4868,46 +4890,51 @@ JKube will take care of merging this fragment with the opinionated and configure
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>chart</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The Chart name
-, which is <code>${project.artifactId}</code> if not provided.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Chart name.</p>
+<p class="tableblock">Defaults to <code>${project.artifactId}</code>.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.helm.chart</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>version</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The Chart SemVer version
-, which is <code>${project.version}</code> if not provided.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Chart SemVer version.</p>
+<p class="tableblock">Defaults to <code>${project.version}</code>.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.helm.version</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>description</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The Chart single-sentence description
-, which is <code>${project.description}</code> if not provided.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Chart single-sentence description.</p>
+<p class="tableblock">Defaults to <code>${project.description}</code>.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.helm.description</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>home</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The Chart URL for this project&#8217;s home page
-, which is <code>${project.url}</code> if not provided.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Chart URL for this project&#8217;s home page.</p>
+<p class="tableblock">Defaults to <code>${project.url}</code>.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.helm.home</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>sources</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The Chart list of URLs to source code for this project
-, defaults to the list of <code>${project.scm.url}</code> if not provided.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Chart list of URLs to source code for this project.</p>
+<p class="tableblock">Defaults to the list of <code>${project.scm.url}</code>.</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong><a href="#helm-maintainers">maintainers</a></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The Chart list of maintainers (name+email)
-, defaults to the list of
-<code>${project.developers.name}:${project.developers.name}</code> if not provided.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Chart list of maintainers (name+email).</p>
+<p class="tableblock">Defaults to the list of <code>${project.developers.name}:${project.developers.name}</code>.</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>icon</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The Chart URL to an SVG or PNG image to be used as an icon , default is extracted from the kubernetes manifest
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Chart URL to an SVG or PNG image to be used as an icon, default is extracted from the kubernetes manifest
 (<code>kubernetes.yml</code>) <code>jkube.eclipse.org/iconUrl</code> annotation if not provided.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.helm.icon</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>appVersion</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The version of the application that Chart contains.</p>
+<p class="tableblock">Defaults to <code>${project.version}</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.helm.appVersion</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>keywords</strong></p></td>
@@ -4921,7 +4948,7 @@ JKube will take care of merging this fragment with the opinionated and configure
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>additionalFiles</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The list of additional files to be included in the Chart archive. Any file named <code>README</code> or <code>LICENSE</code> will <strong>always</strong>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The list of additional files to be included in the Chart archive. Any file named <code>README</code> or <code>LICENSE</code> or <code>values.schema.json</code> will <strong>always</strong>
 be included by default.</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -4934,8 +4961,8 @@ OpenShift specific resources in the chart. You can also add both values as a com
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>sourceDir</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Where to find the resource descriptors generated with <code>oc:resource</code>.
-By default this is <code>${basedir}/target/classes/META-INF/jkube., which is also the output directory used by `oc:resource</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Where to find the resource descriptors generated with <code>oc:resource</code>.</p>
+<p class="tableblock">By default, this is <code>${basedir}/target/classes/META-INF/jkube., which is also the output directory used by `oc:resource</code>.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.helm.sourceDir</code></p></td>
 </tr>
 <tr>
@@ -4946,7 +4973,7 @@ and <code>${basedir}/target/jkube/helm/${chartName}/openshift</code> for OpenShi
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>tarballOutputDir</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Where to create the the Helm chart archive, which is same as <code>outputDir</code> if not provided.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Where to create the Helm chart archive, which is same as <code>outputDir</code> if not provided.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.helm.tarballOutputDir</code></p></td>
 </tr>
 <tr>
@@ -4990,7 +5017,7 @@ and <code>${basedir}/target/jkube/helm/${chartName}/openshift</code> for OpenShi
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>name</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The maintainer user name or organization.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The maintainer&#8217;s name or organization.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>email</strong></p></td>
@@ -4998,7 +5025,7 @@ and <code>${basedir}/target/jkube/helm/${chartName}/openshift</code> for OpenShi
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>url</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The maintainer URL address.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The maintainer&#8217;s URL address.</p></td>
 </tr>
 </tbody>
 </table>
@@ -5216,21 +5243,30 @@ in the <strong>child</strong> module:</p>
 <div class="sect2">
 <h3 id="jkube:helm-push">5.6. <strong>oc:helm-push</strong></h3>
 <div class="paragraph">
-<p>This goal is for pushing
+<p>This feature allows you to upload your Eclipse JKube-generated
 <a href="https://helm.sh/docs/topics/charts">Helm charts</a>
-in a remote repository [Artifactory, Chartmuseum, Nexus].</p>
+to one of the supported repositories: Artifactory, Chartmuseum, Nexus, and OCI.</p>
 </div>
 <div class="paragraph">
-<p>To publish a Helm chart you simply call <code>oc:helm-push</code> goal on the command line:</p>
+<p>To publish a Helm chart you need to invoke the <code>oc:helm-push</code> Maven goal on the command line:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-sh" data-lang="sh">mvn oc:resource oc:helm oc:helm-push</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>The <code>oc:resource</code> and the <code>oc:helm</code> goals are required to create the resource descriptors which are included in the Helm chart and the Helm chart itself.
-If you have already built the resource and create the chart, then you can omit these goals.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The <code>oc:resource</code> and the <code>oc:helm</code> goals are required to create the resource descriptors which are included in the Helm chart and the Helm chart itself.
+If you have already built the resource and created the chart, then you can omit these goals.
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>The configuration is defined in a <code>helm</code> section within the plugin&#8217;s configuration:</p>
@@ -5347,7 +5383,7 @@ need to add a server entry for your repo like this:</p>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>type</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The type of the repository. One of ARTIFACTORY, NEXUS, CHARTMUSEUM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The type of the repository. One of ARTIFACTORY, NEXUS, CHARTMUSEUM, OCI</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.helm.stableRepository.type</code></p></td>
 </tr>
 </tbody>
@@ -5422,6 +5458,77 @@ section of the <code>openshift-maven-plugin</code> section of your <code>pom.xml
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="jkube:helm-lint">5.7. <strong>oc:helm-lint</strong></h3>
+<div class="paragraph">
+<p>This feature allows you to lint your Eclipse JKube-generated
+<a href="https://helm.sh/docs/topics/charts">Helm charts</a> and examine it for possible issues.</p>
+</div>
+<div class="paragraph">
+<p>It provides the same output as the <a href="https://helm.sh/docs/helm/helm_lint"><code>helm lint</code></a> command.</p>
+</div>
+<div class="paragraph">
+<p>To lint a Helm chart you need to invoke the <code>oc:helm-lint</code> Maven goal on the command line:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-sh" data-lang="sh">mvn oc:resource oc:helm oc:helm-lint</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The <code>oc:resource</code> and the <code>oc:helm</code> goals are required to create the resource descriptors which are included in the Helm chart and the Helm chart itself.
+If you have already built the resource and created the chart, then you can omit these goals.
+</td>
+</tr>
+</table>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 39. Helm lint configuration</caption>
+<colgroup>
+<col style="width: 14.2857%;">
+<col style="width: 71.4285%;">
+<col style="width: 14.2858%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Element</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Property</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>lintStrict</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable strict mode, fails on lint warnings.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.helm.lint.strict</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>lintQuiet</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable quiet mode, only shows warnings and errors.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.helm.lint.quiet</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="title">Example Helm lint configuration</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
+  &lt;configuration&gt;
+    &lt;helm&gt;
+      &lt;lintStrict&gt;true&lt;/lintStrict&gt;
+      &lt;lintQuiet&gt;true&lt;/lintQuiet&gt;
+    &lt;/helm&gt;
+  &lt;/configuration&gt;
+&lt;/plugin&gt;</code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -5445,7 +5552,7 @@ section of the <code>openshift-maven-plugin</code> section of your <code>pom.xml
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.15.0&lt;/version&gt;
+  &lt;version&gt;1.16.0&lt;/version&gt;
 
   &lt;!-- Connect oc:resource, oc:build and oc:helm to lifecycle phases --&gt;
   &lt;executions&gt;
@@ -5483,7 +5590,7 @@ section of the <code>openshift-maven-plugin</code> section of your <code>pom.xml
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
     &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.15.0&lt;/version&gt;
+    &lt;version&gt;1.16.0&lt;/version&gt;
     &lt;configuration&gt;
         &lt;enricher&gt;
             &lt;excludes&gt;
@@ -5511,7 +5618,7 @@ section of the <code>openshift-maven-plugin</code> section of your <code>pom.xml
 <div class="sect3">
 <h4 id="Supported-Properties-Undeploy">6.2.1. Supported Properties For Undeploy Goal</h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 39. Options available with undeploy goal</caption>
+<caption class="title">Table 40. Options available with undeploy goal</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -5595,7 +5702,7 @@ section of the <code>openshift-maven-plugin</code> section of your <code>pom.xml
 <div class="sect3">
 <h4 id="Supported-Properties-Log">6.3.1. Supported Properties for Log goal</h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 40. Options available with log goal</caption>
+<caption class="title">Table 41. Options available with log goal</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -5746,7 +5853,7 @@ The <code>jkube.debug.suspend</code> flag will disable readiness probes in the K
 <div class="sect3">
 <h4 id="Supported-Properties-Debug">6.4.3. Supported Properties For Debug Goal</h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 41. Options available with debug goal</caption>
+<caption class="title">Table 42. Options available with debug goal</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -5831,7 +5938,7 @@ The <code>jkube.debug.suspend</code> flag will disable readiness probes in the K
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.15.0&lt;/version&gt;
+  &lt;version&gt;1.16.0&lt;/version&gt;
   &lt;configuration&gt;
     &lt;remoteDevelopment&gt;
       &lt;localServices&gt;
@@ -5887,7 +5994,7 @@ The <code>jkube.debug.suspend</code> flag will disable readiness probes in the K
 </div>
 </div>
 <table id="remote-dev-remote-development" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 42. Options available for the <code>remoteDevelopment</code> configuration element</caption>
+<caption class="title">Table 43. Options available for the <code>remoteDevelopment</code> configuration element</caption>
 <colgroup>
 <col style="width: 14.2857%;">
 <col style="width: 85.7143%;">
@@ -5910,7 +6017,7 @@ The <code>jkube.debug.suspend</code> flag will disable readiness probes in the K
 </tbody>
 </table>
 <table id="remote-dev-local-services" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 43. Options available for the <code>localServices</code> configuration element</caption>
+<caption class="title">Table 44. Options available for the <code>localServices</code> configuration element</caption>
 <colgroup>
 <col style="width: 14.2857%;">
 <col style="width: 85.7143%;">
@@ -5937,7 +6044,7 @@ The <code>jkube.debug.suspend</code> flag will disable readiness probes in the K
 </tbody>
 </table>
 <table id="remote-dev-remote-services" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 44. Options available for the <code>remoteServices</code> configuration element</caption>
+<caption class="title">Table 45. Options available for the <code>remoteServices</code> configuration element</caption>
 <colgroup>
 <col style="width: 14.2857%;">
 <col style="width: 85.7143%;">
@@ -6148,7 +6255,7 @@ then start a redeploy of the Kubernetes pod.</p>
 <div class="sect3">
 <h4 id="Supported-Properties-Watch">6.6.3. Supported Properties for Watch goal</h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 45. Options available with watch goal</caption>
+<caption class="title">Table 46. Options available with watch goal</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -6204,12 +6311,6 @@ then start a redeploy of the Kubernetes pod.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.watch.interval</code></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>keepRunning</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">If set to true all containers will be kept running after oc:watch has been stopped.</p>
-<p class="tableblock">  Defaults to <code>false</code>.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.watch.keepRunning</code></p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>watchPostGoal</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A maven goal which should be called if a rebuild or a restart has been performed.</p>
 <p class="tableblock">  This goal must have the format <code>&lt;pluginGroupId&gt;:&lt;pluginArtifactId&gt;:&lt;goal&gt;</code> and the plugin must be
@@ -6223,32 +6324,6 @@ then start a redeploy of the Kubernetes pod.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A command which is executed within the container after files are copied into this container
   when watchMode is copy. Note that this container must be running.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.watch.postExec</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>keepContainer</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">If this is set to <code>false</code> (and <code>keepRunning</code> is disabled) then all containers will be removed after
-  they have been stopped.</p>
-<p class="tableblock">  Defaults to <code>false</code>.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.watch.keepContainer</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>removeVolumes</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">If set to <code>true</code> remove any volumes associated with the container as well.</p>
-<p class="tableblock">  This option will be ignored if either <code>keepContainer</code> or <code>keepRunning</code> is <code>true</code>.</p>
-<p class="tableblock">  Defaults to <code>false</code>.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.watch.removeVolumes</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>watchShowLogs</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">If set to <code>true</code>, logs will be shown for watched container.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.watch.showLogs</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>watchFollow</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">If <code>watchShowLogs</code> is set to <code>false</code>, and there is a run image configuration, logs are followed
-  if set to <code>true</code>.</p>
-<p class="tableblock">  Defaults to <code>false</code>.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.watch.follow</code></p></td>
 </tr>
 </tbody>
 </table>
@@ -6317,7 +6392,7 @@ The following sub-elements are supported:</td>
 </table>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 46. Generator configuration</caption>
+<caption class="title">Table 47. Generator configuration</caption>
 <colgroup>
 <col style="width: 14.2857%;">
 <col style="width: 85.7143%;">
@@ -6387,7 +6462,7 @@ The following sub-elements are supported:</td>
 <p>All default generators examine the build information for certain aspects and generate a Docker build configuration on the fly. They can be configured to a certain degree, where the configuration is generator specific.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 47. Default Generators</caption>
+<caption class="title">Table 48. Default Generators</caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 16.6666%;">
@@ -6462,7 +6537,7 @@ The following sub-elements are supported:</td>
 <p>There are some configuration options which are shared by all generators:</p>
 </div>
 <table id="generator-options-common" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 48. Common generator options</caption>
+<caption class="title">Table 49. Common generator options</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -6548,7 +6623,7 @@ If no main class is configured as well as no fat jar being detected, then this <
 <p>It will use the following base image by default, but as explained <a href="#generator-options-common">above</a> and can be changed with the <code>from</code> configuration.</p>
 </div>
 <table id="generator-java-exec-from" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 49. Java Base Images</caption>
+<caption class="title">Table 50. Java Base Images</caption>
 <colgroup>
 <col style="width: 7.6923%;">
 <col style="width: 30.7692%;">
@@ -6585,7 +6660,7 @@ By default, <code>fromMode = "docker"</code> which use the a plain Docker image 
 the following additional configuration options are recognized:</p>
 </div>
 <table id="generator-java-exec-options" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 50. Java Application configuration options</caption>
+<caption class="title">Table 51. Java Application configuration options</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -6656,7 +6731,7 @@ These will be added with mode <code>0644</code>, while everything in <code>src/m
 <p>Beside the  <a href="#generator-options-common">common generator options</a> and the <a href="#generator-java-exec-options">java-exec options</a> the following additional configuration is recognized:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 51. Spring-Boot configuration options</caption>
+<caption class="title">Table 52. Spring-Boot configuration options</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -6790,7 +6865,7 @@ In particular, the following steps are performed:</p>
 <p>The base images chosen are:</p>
 </div>
 <table id="generator-webapp-from" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 52. Webapp Base Images</caption>
+<caption class="title">Table 53. Webapp Base Images</caption>
 <colgroup>
 <col style="width: 11.1111%;">
 <col style="width: 44.4444%;">
@@ -6825,7 +6900,7 @@ In particular, the following steps are performed:</p>
 <p>In addition to the  <a href="#generator-options-common">common generator options</a> this generator can be configured with the following options:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 53. Webapp configuration options</caption>
+<caption class="title">Table 54. Webapp configuration options</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -6917,7 +6992,7 @@ In particular, the following steps are performed:</p>
 <p>The base images chosen are:</p>
 </div>
 <table id="generator-quarkus-from" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 54. Webapp Base Images</caption>
+<caption class="title">Table 55. Webapp Base Images</caption>
 <colgroup>
 <col style="width: 11.1111%;">
 <col style="width: 44.4444%;">
@@ -6978,7 +7053,7 @@ of its configuration values.</p>
 <p>The base images chosen are the following, however, these can be overridden using <code>jkube.generator.from</code> property:</p>
 </div>
 <table id="generator-helidon-from" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 55. Webapp Base Images</caption>
+<caption class="title">Table 56. Webapp Base Images</caption>
 <colgroup>
 <col style="width: 11.1111%;">
 <col style="width: 44.4444%;">
@@ -7011,7 +7086,7 @@ of its configuration values.</p>
 <p>This generator named <code>karaf</code> kicks in when the build uses a <code>karaf-maven-plugin</code>. By default the following base images are used:</p>
 </div>
 <table id="generator-karaf-from" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 56. Karaf Base Images</caption>
+<caption class="title">Table 57. Karaf Base Images</caption>
 <colgroup>
 <col style="width: 7.6923%;">
 <col style="width: 30.7692%;">
@@ -7043,7 +7118,7 @@ of its configuration values.</p>
 <p>In addition to the  <a href="#generator-options-common">common generator options</a> this generator can be configured with the following options:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 57. Karaf configuration options</caption>
+<caption class="title">Table 58. Karaf configuration options</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -7163,7 +7238,7 @@ Interface; You can create new generators by implementing this interface. Please 
 <p>The <a href="#generator-example">Generator example</a> is a good blueprint, simply replace <code>generator</code> with <code>enricher</code>. The configuration is structural identical:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 58. Enricher configuration</caption>
+<caption class="title">Table 59. Enricher configuration</caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 75%;">
@@ -7210,7 +7285,7 @@ metadata extracted from the given build information.</p>
 </ul>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 59. Default Enrichers Overview</caption>
+<caption class="title">Table 60. Default Enrichers Overview</caption>
 <colgroup>
 <col style="width: 22.2222%;">
 <col style="width: 77.7778%;">
@@ -7356,6 +7431,10 @@ by other enrichers, XML configuration or fragment.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#jkube-prometheus">jkube-prometheus</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Add Prometheus annotations.</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#jkube-well-known-labels">jkube-well-known-labels</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Add <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/#labels">Kubernetes Recommended Well Known labels</a>.</p></td>
+</tr>
 </tbody>
 </table>
 <div class="sect3">
@@ -7422,7 +7501,7 @@ If you set <code>name</code> tag then this is used as key instead of the filenam
 <p>Here are the supported options while providing <code>configMap</code> in XML configuration</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 60. XML configmap configuration <code>configMap</code></caption>
+<caption class="title">Table 61. XML configmap configuration <code>configMap</code></caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -7451,7 +7530,7 @@ If you set <code>name</code> tag then this is used as key instead of the filenam
 <p><code>entries</code> is a list of <code>entry</code> configuration objects. Here are the supported options while providing <code>entry</code> in XML configuration</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 61. XML configmap entry configuration <code>entry</code></caption>
+<caption class="title">Table 62. XML configmap entry configuration <code>entry</code></caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -7519,7 +7598,7 @@ See <a href="https://kubernetes.io/docs/concepts/workloads/controllers/">Kuberne
 <p>The following configuration parameters can be used to influence the behaviour of this enricher:</p>
 </div>
 <table id="enricher-jkube-controller" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 62. Default controller enricher</caption>
+<caption class="title">Table 63. Default controller enricher</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -7678,7 +7757,7 @@ XML configuration or YAML fragment will override the one defined by the generato
 </ul>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 63. Configuration options</caption>
+<caption class="title">Table 64. Configuration options</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -7713,7 +7792,7 @@ XML configuration or YAML fragment will override the one defined by the generato
 <p>Enricher that adds info from <code>.git</code> directory as annotations. These are explained in the table below:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 64. Annotations added via Git enricher</caption>
+<caption class="title">Table 65. Annotations added via Git enricher</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -7761,7 +7840,7 @@ XML configuration or YAML fragment will override the one defined by the generato
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 65. Supported Configuration options</caption>
+<caption class="title">Table 66. Supported Configuration options</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -7810,7 +7889,7 @@ configuration is set, the default is <code>IfNotPresent</code> for release versi
 <p>Any already configured container in the pod spec is updated if the property is not set.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 66. Configuration options</caption>
+<caption class="title">Table 67. Configuration options</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -7843,7 +7922,7 @@ JKube generates Ingress only for Services which have either <code>expose=true</c
 <p>For more information, check out <a href="#ingress-generation">Ingress Generation</a> section.</p>
 </div>
 <table id="enricher-jkube-ingress" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 67. Ingress enricher</caption>
+<caption class="title">Table 68. Ingress enricher</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -7903,7 +7982,7 @@ resources in case they don&#8217;t already have one configured (see the <code>fo
 <p>The following configuration parameters can be used to influence the behaviour of this enricher:</p>
 </div>
 <table id="enricher-jkube-namespace" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 68. Default namespace enricher</caption>
+<caption class="title">Table 69. Default namespace enricher</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -7955,7 +8034,7 @@ resources in case they don&#8217;t already have one configured (see the <code>fo
 <p>Enricher for adding a "name" to the metadata to various objects we create.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 69. Supported Configuration options</caption>
+<caption class="title">Table 70. Supported Configuration options</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -7993,7 +8072,7 @@ a JKS-format Java keystore ready for consumption in Java services.</p>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.15.0&lt;/version&gt;
+  &lt;version&gt;1.16.0&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;goals&gt;
@@ -8108,7 +8187,7 @@ a JKS-format Java keystore ready for consumption in Java services.</p>
 <p>Note that this won&#8217;t be enabled if you&#8217;ve set <code>jkube.build.switchToDeployment</code> to <code>true</code> or you&#8217;ve configured <a href="#jkube-controller">DefaultControllerEnricher</a> to generate a controller of type <code>DeploymentConfig</code></p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 70. Supported configuration options for this enricher</caption>
+<caption class="title">Table 71. Supported configuration options for this enricher</caption>
 <colgroup>
 <col style="width: 14.2857%;">
 <col style="width: 85.7143%;">
@@ -8142,7 +8221,7 @@ a JKS-format Java keystore ready for consumption in Java services.</p>
 <p>It is only applicable in case of OpenShift.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 71. Supported configuration options for this enricher</caption>
+<caption class="title">Table 72. Supported configuration options for this enricher</caption>
 <colgroup>
 <col style="width: 14.2857%;">
 <col style="width: 85.7143%;">
@@ -8196,7 +8275,7 @@ a JKS-format Java keystore ready for consumption in Java services.</p>
 <p>This is only applicable to OpenShift.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 72. Supported configuration options for this enricher</caption>
+<caption class="title">Table 73. Supported configuration options for this enricher</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -8247,7 +8326,7 @@ container Pod template spec&#8217;s metadata.</p>
 <p>This enricher uses a given set of well known ports:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 73. Default Port Mappings</caption>
+<caption class="title">Table 74. Default Port Mappings</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -8344,7 +8423,7 @@ been replaced by the <code>app</code> label in newer versions of the plugin.</p>
 <p>Enricher which fixes adds name of StorageClass required by PersistentVolumeClaim either in metadata or in spec.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 74. Supported properties</caption>
+<caption class="title">Table 75. Supported properties</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -8413,7 +8492,7 @@ For more information read <a href="https://kubernetes.io/docs/concepts/workloads
 <p>The following configuration parameters can be used to influence the behaviour of this enricher:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 75. Default revision history enricher</caption>
+<caption class="title">Table 76. Default revision history enricher</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 40%;">
@@ -8533,7 +8612,7 @@ An explicit configuration always takes precedence over auto detection. For enric
 <p>The following configuration parameters can be used to influence the behaviour of this enricher:</p>
 </div>
 <table id="enricher-jkube-service" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 76. Default service enricher</caption>
+<caption class="title">Table 77. Default service enricher</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -8765,7 +8844,7 @@ Assuming that the image exposes ports <code>8080</code> and <code>8778</code> (e
 <p>This enricher is also used by <code>resources</code> XML configuration to generate Service configured via XML. Here are the fields supported in <code>resources</code> which work with this enricher:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 77. Fields supported in <code>resources</code></caption>
+<caption class="title">Table 78. Fields supported in <code>resources</code></caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -8787,7 +8866,7 @@ Assuming that the image exposes ports <code>8080</code> and <code>8778</code> (e
 <p><code>services</code> is a list of <code>service</code> configuration objects. Here are the supported options while providing <code>service</code> in XML configuration</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 78. XML <code>service</code> configuration</caption>
+<caption class="title">Table 79. XML <code>service</code> configuration</caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -8832,7 +8911,7 @@ Assuming that the image exposes ports <code>8080</code> and <code>8778</code> (e
 <p><code>ports</code> is a list of <code>port</code> configuration objects. Here are the supported options while providing <code>port</code> in XML configuration</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 79. XML service port configuration</caption>
+<caption class="title">Table 80. XML service port configuration</caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -8877,7 +8956,7 @@ Assuming that the image exposes ports <code>8080</code> and <code>8778</code> (e
 <p>The following configuration parameters can be used to influence the behaviour of this enricher:</p>
 </div>
 <table id="enricher-jkube-serviceaccount" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 80. ServiceAccountEnricher configuration options</caption>
+<caption class="title">Table 81. ServiceAccountEnricher configuration options</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -8931,7 +9010,7 @@ Assuming that the image exposes ports <code>8080</code> and <code>8778</code> (e
 <p>Enricher which fixes the permission of persistent volume mount with the help of an init container.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 81. Supported properties</caption>
+<caption class="title">Table 82. Supported properties</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -8948,7 +9027,7 @@ Assuming that the image exposes ports <code>8080</code> and <code>8778</code> (e
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>imageName</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Image name for PersistentVolume init container</p>
-<p class="tableblock">  Defaults to <code>busybox</code>.</p></td>
+<p class="tableblock">  Defaults to <code>quay.io/quay/busybox</code>.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.enricher.jkube-volume-permission.imageName</code></p></td>
 </tr>
 <tr>
@@ -8994,6 +9073,75 @@ Assuming that the image exposes ports <code>8080</code> and <code>8778</code> (e
 </table>
 </div>
 <div class="sect4">
+<h5 id="jkube-well-known-labels">jkube-well-known-labels</h5>
+<div class="paragraph">
+<p>Enricher that adds <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/#labels">Well Known Labels</a> recommended by Kubernetes.</p>
+</div>
+<div class="paragraph">
+<p>The <code>jkube-well-known-labels</code> enricher supports the following configuration options:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 12.5%;">
+<col style="width: 75%;">
+<col style="width: 12.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Option</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Property</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Add Kubernetes Well Known labels to generated resources.</p>
+<p class="tableblock">Defaults to <code>true</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.kubernetes.well-known-labels</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>enabled</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable this flag to turn on addition of Kubernetes Well Known labels.</p>
+<p class="tableblock">  Defaults to <code>true</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.enricher.jkube-well-known-labels.enabled</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>name</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The name of the application (<code>app.kubernetes.io/name</code>).</p>
+<p class="tableblock">Defaults to the Maven <code>project.artifactId</code> property.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.enricher.jkube-well-known-labels.name</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>version</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The current version of the application (<code>app.kubernetes.io/version</code>).</p>
+<p class="tableblock">Defaults to the Maven <code>project.version</code> property.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.enricher.jkube-well-known-labels.version</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>component</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The component within the architecture (<code>app.kubernetes.io/component</code>).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.enricher.jkube-well-known-labels.component</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>partOf</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The name of a higher level application this one is part of (<code>app.kubernetes.io/part-of</code>).</p>
+<p class="tableblock">Defaults to the Maven <code>project.groupId</code> property.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.enricher.jkube-well-known-labels.partOf</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>managedBy</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The tool being used to manage the operation of an application (<code>app.kubernetes.io/managed-by</code>).</p>
+<p class="tableblock">Defaults to <code>jkube</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.enricher.jkube-well-known-labels.managedBy</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The Well Known Labels which are already specified in the input fragments are not overridden by the enricher.</p>
+</div>
+</div>
+<div class="sect4">
 <h5 id="jkube-docker-registry-secret">jkube-docker-registry-secret</h5>
 <div class="paragraph">
 <p>This enricher enables oc:resource Secret generation feature. You can read more about it <a href="#resource-secrets">Secrets</a>.</p>
@@ -9012,7 +9160,7 @@ These metadata will be added only if <a href="https://maven.apache.org/pom.html#
 <p>The following annotations will be added to the objects that supports annotations,</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 82. Maven SCM Enrichers Annotation Mapping</caption>
+<caption class="title">Table 83. Maven SCM Enrichers Annotation Mapping</caption>
 <colgroup>
 <col style="width: 28.5714%;">
 <col style="width: 28.5714%;">
@@ -9113,7 +9261,7 @@ information is available in the <code>pom.xml</code> of the Maven project.</p>
 <p>The following annotations will be added to the objects that support these annotations,</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 83. Maven Issue Tracker Enrichers Annotation Mapping</caption>
+<caption class="title">Table 84. Maven Issue Tracker Enrichers Annotation Mapping</caption>
 <colgroup>
 <col style="width: 28.5714%;">
 <col style="width: 28.5714%;">
@@ -9227,7 +9375,7 @@ You can force the plugin to add annotations by setting enricher&#8217;s config <
 <p>You can configure the different aspects of the probes.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 84. OpenLiberty HealthCheck Enricher probe configuration</caption>
+<caption class="title">Table 85. OpenLiberty HealthCheck Enricher probe configuration</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 62.5%;">
@@ -9404,7 +9552,7 @@ The scheme will use HTTPS if <code>server.ssl.key-store</code> option is in use,
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.15.0&lt;/version&gt;
+  &lt;version&gt;1.16.0&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;id&gt;jkube&lt;/id&gt;
@@ -9475,7 +9623,7 @@ has been enabled in Thorntail</p>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.15.0&lt;/version&gt;
+  &lt;version&gt;1.16.0&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;id&gt;jkube&lt;/id&gt;
@@ -9594,7 +9742,7 @@ configuration file. JKube uses the following properties to resolve the health ch
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.15.0&lt;/version&gt;
+  &lt;version&gt;1.16.0&lt;/version&gt;
   &lt;configuration&gt;
     &lt;enricher&gt;
       &lt;config&gt;
@@ -9634,7 +9782,7 @@ configuration file. JKube uses the following properties to resolve the health ch
 <p>You can configure the different aspects of the probes.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 85. Micronaut HealthCheck Enricher probe configuration</caption>
+<caption class="title">Table 86. Micronaut HealthCheck Enricher probe configuration</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 62.5%;">
@@ -9739,7 +9887,7 @@ However, by default, no health check will be added to your deployment unless con
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.15.0&lt;/version&gt;
+  &lt;version&gt;1.16.0&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;id&gt;jkube&lt;/id&gt;
@@ -9798,7 +9946,7 @@ path <code>/health</code>. The defaults are:</p>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.15.0&lt;/version&gt;
+  &lt;version&gt;1.16.0&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;id&gt;jkube&lt;/id&gt;
@@ -9843,7 +9991,7 @@ vertx.health.liveness.path = /ready</code></pre>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.15.0&lt;/version&gt;
+  &lt;version&gt;1.16.0&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;id&gt;jkube&lt;/id&gt;
@@ -9932,7 +10080,7 @@ The overriding rules are:
 liveness probes or be specific to one.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 86. Vert.x HealthCheck Enricher probe configuration</caption>
+<caption class="title">Table 87. Vert.x HealthCheck Enricher probe configuration</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 62.5%;">
@@ -9995,7 +10143,7 @@ liveness probes or be specific to one.</p>
 <p>When using HTTP <code>GET</code> requests to determine readiness or liveness, several aspects can be configured. HTTP probes are used by default. To be more specific set the <code>type</code> attribute to <code>http</code>.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 87. Vert.x HealthCheck Enricher HTTP probe configuration</caption>
+<caption class="title">Table 88. Vert.x HealthCheck Enricher HTTP probe configuration</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 62.5%;">
@@ -10077,7 +10225,7 @@ liveness probes or be specific to one.</p>
 <p>You can also configure the probes to just open a socket on a specific port. The <code>type</code> attribute must be set to <code>tcp</code>.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 88. Vert.x HealthCheck Enricher TCP probe configuration</caption>
+<caption class="title">Table 89. Vert.x HealthCheck Enricher TCP probe configuration</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 62.5%;">
@@ -10201,7 +10349,7 @@ configured using project&#8217;s properties. An empty command disables the check
 <p>You can configure the different aspects of the probes.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 89. SmallRye HealthCheck Enricher probe configuration</caption>
+<caption class="title">Table 90. SmallRye HealthCheck Enricher probe configuration</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 62.5%;">
@@ -10344,7 +10492,7 @@ configured using project&#8217;s properties. An empty command disables the check
 <p>You can configure the different aspects of the probes.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 90. Helidon HealthCheck Enricher probe configuration</caption>
+<caption class="title">Table 91. Helidon HealthCheck Enricher probe configuration</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 62.5%;">
@@ -10534,7 +10682,7 @@ configured using project&#8217;s properties. An empty command disables the check
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.15.0&lt;/version&gt;
+  &lt;version&gt;1.16.0&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;id&gt;jkube&lt;/id&gt;
@@ -10628,7 +10776,7 @@ If <em>&lt;cloud&gt;</em> item has not been defined, you can still enforce the g
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.15.0&lt;/version&gt;
+  &lt;version&gt;1.16.0&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;id&gt;jkube&lt;/id&gt;
@@ -10695,7 +10843,7 @@ label and annotations:</p>
 <p>The following configuration parameters can be used to override the behavior of this enricher:</p>
 </div>
 <table id="enricher-jkube-service-discovery" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 91. JKube service discovery enricher</caption>
+<caption class="title">Table 92. JKube service discovery enricher</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -10869,7 +11017,7 @@ Deployment and a Service:</p>
 <p>Each <code>profiles.yml</code> has a list of profiles which are defined with these elements:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 92. Profile elements</caption>
+<caption class="title">Table 93. Profile elements</caption>
 <colgroup>
 <col style="width: 14.2857%;">
 <col style="width: 85.7143%;">
@@ -10911,7 +11059,7 @@ Deployment and a Service:</p>
 <p>The definition of generators and enrichers in the profile follows the same format:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 93. Generator and Enricher definition</caption>
+<caption class="title">Table 94. Generator and Enricher definition</caption>
 <colgroup>
 <col style="width: 14.2857%;">
 <col style="width: 85.7143%;">
@@ -11080,7 +11228,7 @@ This is an easy way how you can fine tune enrichment for different object set.</
 <p>This plugin comes with the following predefined profiles:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 94. Predefined Profiles</caption>
+<caption class="title">Table 95. Predefined Profiles</caption>
 <colgroup>
 <col style="width: 14.2857%;">
 <col style="width: 85.7143%;">
@@ -11658,7 +11806,7 @@ For a more complete, robust and reliable authentication experience, you can add 
 <p>openshift-maven-plugin supports volume configuration in XML format in pom.xml. These are the volume types which are supported:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 95. Supported Volume Types</caption>
+<caption class="title">Table 96. Supported Volume Types</caption>
 <colgroup>
 <col style="width: 4.3478%;">
 <col style="width: 95.6522%;">
@@ -11822,6 +11970,53 @@ into any docker daemon afterwards. You may also push the image to your specified
 </div>
 <div class="paragraph">
 <p>You can find more details at <a href="https://github.com/eclipse/jkube/tree/master/quickstarts/maven/spring-boot-with-jib">Spring Boot JIB Quickstart</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="integrations.buildpacks">15.3. Buildpacks</h3>
+<div class="paragraph">
+<p><strong>openshift-maven-plugin</strong> provides the required features for users to leverage <a href="https://buildpacks.io/">Cloud Native Buildpacks</a> for building container images.
+You can enable this build strategy by setting the <code>jkube.build.strategy</code> property to <code>buildpacks</code>.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Access to a Docker daemon is required in order to use Buildpacks as mentioned in <a href="https://buildpacks.io/docs/app-developer-guide/#prerequisites">Buildpack Prerequisites</a>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-shell" data-lang="shell">  mvn oc:build -Djkube.build.strategy=buildpacks</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>openshift-maven-plugin downloads <a href="https://buildpacks.io/docs/tools/pack/">Pack CLI</a> to the user&#8217;s <code>$HOME/.jkube</code> folder and starts the
+<code>pack build</code> process. If the download for the <a href="https://buildpacks.io/docs/tools/pack/">Pack CLI</a> binary fails, openshift-maven-plugin looks for any locally installed <a href="https://buildpacks.io/docs/tools/pack/">Pack CLI</a> version.</p>
+</div>
+<div class="sect3">
+<h4 id="_buildpack_builder_image">15.3.1. Buildpack Builder Image</h4>
+<div class="paragraph">
+<p>By default openshift-maven-plugin uses the <a href="https://buildpacks.io/docs/concepts/components/builder/">builder image</a> specified in the <a href="https://buildpacks.io/docs/tools/pack/cli/pack_config/">Pack Config</a> file for building the container image using <a href="https://buildpacks.io/docs/tools/pack/">Pack CLI</a>.</p>
+</div>
+<div class="paragraph">
+<p>For example, if the user has this image set in the <code>$HOME/.pack/config.toml</code> file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-toml" data-lang="toml">  default-builder-image = "testuser/buildpacks-quarkus-builder:latest"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>openshift-maven-plugin uses <code>testuser/buildpacks-quarkus-builder:latest</code> as Buildpacks builder image. If no image is configured, then openshift-maven-plugin uses <code>paketobuildpacks/builder:base</code> as the default builder image.</p>
+</div>
 </div>
 </div>
 </div>
