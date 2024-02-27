@@ -388,7 +388,7 @@ prepared for Kubernetes. The full example can be found in directory
 
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;jkube-maven-sample-zero-config&lt;/artifactId&gt;
-  &lt;version&gt;1.16.0&lt;/version&gt;
+  &lt;version&gt;1.16.1&lt;/version&gt;
   &lt;packaging&gt;jar&lt;/packaging&gt;
 
   &lt;parent&gt;
@@ -413,7 +413,7 @@ prepared for Kubernetes. The full example can be found in directory
       &lt;plugin&gt;
         &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
         &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt; <i class="conum" data-value="4"></i><b>(4)</b>
-        &lt;version&gt;1.16.0&lt;/version&gt;
+        &lt;version&gt;1.16.1&lt;/version&gt;
       &lt;/plugin&gt;
     &lt;/plugins&gt;
   &lt;/build&gt;
@@ -906,7 +906,7 @@ Welcome! See 'oc help' to get started.</code></pre>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
     &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.16.0&lt;/version&gt;
+    &lt;version&gt;1.16.1&lt;/version&gt;
 &lt;/plugin&gt;</code></pre>
 </div>
 </div>
@@ -960,7 +960,7 @@ Welcome! See 'oc help' to get started.</code></pre>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
     &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.16.0&lt;/version&gt;
+    &lt;version&gt;1.16.1&lt;/version&gt;
 &lt;/plugin&gt;</code></pre>
 </div>
 </div>
@@ -1042,7 +1042,7 @@ Welcome! See 'oc help' to get started.</code></pre>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
     &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.16.0&lt;/version&gt;
+    &lt;version&gt;1.16.1&lt;/version&gt;
 &lt;/plugin&gt;</code></pre>
 </div>
 </div>
@@ -1133,7 +1133,7 @@ Welcome! See 'oc help' to get started.</code></pre>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
     &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.16.0&lt;/version&gt;
+    &lt;version&gt;1.16.1&lt;/version&gt;
 &lt;/plugin&gt;</code></pre>
 </div>
 </div>
@@ -1288,7 +1288,7 @@ available goals are described below.</p>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.16.0&lt;/version&gt;
+  &lt;version&gt;1.16.1&lt;/version&gt;
 
   &lt;configuration&gt;
      ....
@@ -2831,7 +2831,7 @@ While each router may make its own decisions on which ports to expose, this is n
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.16.0&lt;/version&gt;
+  &lt;version&gt;1.16.1&lt;/version&gt;
   &lt;configuration&gt;
     &lt;enricher&gt;
       &lt;config&gt;
@@ -2858,7 +2858,7 @@ While each router may make its own decisions on which ports to expose, this is n
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.16.0&lt;/version&gt;
+  &lt;version&gt;1.16.1&lt;/version&gt;
   &lt;configuration&gt;
     &lt;enricher&gt;
       &lt;config&gt;
@@ -4988,6 +4988,11 @@ and <code>${basedir}/target/jkube/helm/${chartName}/openshift</code> for OpenShi
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.helm.chartExtension</code></p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>security</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Maven security dispatcher configuration file. If you use the default security dispatcher, you need to point this to the file containing your master password. If you followed the <a href="http://maven.apache.org/guides/mini/guide-encryption.html">Maven Password Encryption guide</a>, this is <code>${user.home}/.m2/settings-security.xml</code>, so that is what this setting defaults to when you do not set it explicitly.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong><a href="#helm-dependencies">dependencies</a></strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The list of dependencies for this chart.</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -5298,7 +5303,7 @@ If you have already built the resource and created the chart, then you can omit 
 <p>You can provide helm repository authentication credentials either via properties or using environment variables. It&#8217;s also possible to specify credentials in maven settings as well. You just
 need to add a server entry for your repo like this:</p>
 </div>
-<div class="listingblock">
+<div id="helm-repository-authentication-credentials-in-settings-xml" class="listingblock">
 <div class="title">Helm Repository Authentication credentials in settings.xml</div>
 <div class="content">
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
@@ -5314,6 +5319,21 @@ need to add a server entry for your repo like this:</p>
   &lt;/servers&gt;
 
 &lt;/settings&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you have encrypted your password with a master password (as outlined in the <a href="http://maven.apache.org/guides/mini/guide-encryption.html">Maven Password Encryption guide</a>), your master password is encrypted somewhere in a file. By default this is <code>~/.m2/security-settings.xml</code>. If you&#8217;ve chosen another location, make sure to configure the <code>security</code> setting:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
+  &lt;configuration&gt;
+    &lt;helm&gt;
+      &lt;security&gt;~/work/.m2/work-security-settings.xml&lt;/security&gt;
+      ...
+    &lt;/helm&gt;
+  &lt;/configuration&gt;
+&lt;/plugin&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -5552,7 +5572,7 @@ If you have already built the resource and created the chart, then you can omit 
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.16.0&lt;/version&gt;
+  &lt;version&gt;1.16.1&lt;/version&gt;
 
   &lt;!-- Connect oc:resource, oc:build and oc:helm to lifecycle phases --&gt;
   &lt;executions&gt;
@@ -5590,7 +5610,7 @@ If you have already built the resource and created the chart, then you can omit 
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
     &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.16.0&lt;/version&gt;
+    &lt;version&gt;1.16.1&lt;/version&gt;
     &lt;configuration&gt;
         &lt;enricher&gt;
             &lt;excludes&gt;
@@ -5938,7 +5958,7 @@ The <code>jkube.debug.suspend</code> flag will disable readiness probes in the K
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.16.0&lt;/version&gt;
+  &lt;version&gt;1.16.1&lt;/version&gt;
   &lt;configuration&gt;
     &lt;remoteDevelopment&gt;
       &lt;localServices&gt;
@@ -8072,7 +8092,7 @@ a JKS-format Java keystore ready for consumption in Java services.</p>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.16.0&lt;/version&gt;
+  &lt;version&gt;1.16.1&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;goals&gt;
@@ -9552,7 +9572,7 @@ The scheme will use HTTPS if <code>server.ssl.key-store</code> option is in use,
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.16.0&lt;/version&gt;
+  &lt;version&gt;1.16.1&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;id&gt;jkube&lt;/id&gt;
@@ -9623,7 +9643,7 @@ has been enabled in Thorntail</p>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.16.0&lt;/version&gt;
+  &lt;version&gt;1.16.1&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;id&gt;jkube&lt;/id&gt;
@@ -9742,7 +9762,7 @@ configuration file. JKube uses the following properties to resolve the health ch
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.16.0&lt;/version&gt;
+  &lt;version&gt;1.16.1&lt;/version&gt;
   &lt;configuration&gt;
     &lt;enricher&gt;
       &lt;config&gt;
@@ -9887,7 +9907,7 @@ However, by default, no health check will be added to your deployment unless con
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.16.0&lt;/version&gt;
+  &lt;version&gt;1.16.1&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;id&gt;jkube&lt;/id&gt;
@@ -9946,7 +9966,7 @@ path <code>/health</code>. The defaults are:</p>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.16.0&lt;/version&gt;
+  &lt;version&gt;1.16.1&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;id&gt;jkube&lt;/id&gt;
@@ -9991,7 +10011,7 @@ vertx.health.liveness.path = /ready</code></pre>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.16.0&lt;/version&gt;
+  &lt;version&gt;1.16.1&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;id&gt;jkube&lt;/id&gt;
@@ -10682,7 +10702,7 @@ configured using project&#8217;s properties. An empty command disables the check
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.16.0&lt;/version&gt;
+  &lt;version&gt;1.16.1&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;id&gt;jkube&lt;/id&gt;
@@ -10776,7 +10796,7 @@ If <em>&lt;cloud&gt;</em> item has not been defined, you can still enforce the g
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.16.0&lt;/version&gt;
+  &lt;version&gt;1.16.1&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;id&gt;jkube&lt;/id&gt;
@@ -11718,7 +11738,7 @@ Password:
 </div>
 <div class="paragraph">
 <p>This password then can be used in <code>authConfig</code>, <code>docker.password</code>
-and/or the <code>&lt;server&gt;</code> setting configuration. However, putting an
+and/or the <a href="#helm-repository-authentication-credentials-in-settings-xml"><code>&lt;server&gt;</code> setting configuration</a>. However, putting an
 encrypted password into <code>authConfig</code> in the <code>pom.xml</code> doesn&#8217;t make
 much sense, since this password is encrypted with an individual master
 password.</p>
