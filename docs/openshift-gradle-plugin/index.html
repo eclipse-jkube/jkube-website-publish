@@ -102,7 +102,8 @@
 <li><a href="#jkubeHelmLint">4.1.7. <strong>ocHelmLint</strong></a></li>
 <li><a href="#jkubeHelmDependencyUpdate">4.1.8. <strong>ocHelmDependencyUpdate</strong></a></li>
 <li><a href="#jkubeHelmInstall">4.1.9. <strong>ocHelmInstall</strong></a></li>
-<li><a href="#jkubeHelmUninstall">4.1.10. <strong>ocHelmUninstall</strong></a></li>
+<li><a href="#jkubeHelmTest">4.1.10. <strong>ocHelmTest</strong></a></li>
+<li><a href="#jkubeHelmUninstall">4.1.11. <strong>ocHelmUninstall</strong></a></li>
 </ul>
 </li>
 <li><a href="#task-overview-develop">4.2. Development Tasks</a>
@@ -314,7 +315,7 @@ Welcome! See 'oc help' to get started.</code></pre>
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">plugins {
    id 'java'
    id 'io.quarkus'
-   id 'org.eclipse.jkube.openshift' version '1.17.0'
+   id 'org.eclipse.jkube.openshift' version '1.18.0'
 }</code></pre>
 </div>
 </div>
@@ -368,7 +369,7 @@ Welcome! See 'oc help' to get started.</code></pre>
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">plugins {
    id 'java'
    id 'io.quarkus'
-   id 'org.eclipse.jkube.openshift' version '1.17.0'
+   id 'org.eclipse.jkube.openshift' version '1.18.0'
 }</code></pre>
 </div>
 </div>
@@ -447,7 +448,7 @@ Welcome! See 'oc help' to get started.</code></pre>
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">plugins {
    id 'java'
    id 'io.quarkus'
-   id 'org.eclipse.jkube.openshift' version '1.17.0'
+   id 'org.eclipse.jkube.openshift' version '1.18.0'
 }</code></pre>
 </div>
 </div>
@@ -539,7 +540,7 @@ Welcome! See 'oc help' to get started.</code></pre>
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">plugins {
    id 'java'
    id 'io.quarkus'
-   id 'org.eclipse.jkube.openshift' version '1.17.0'
+   id 'org.eclipse.jkube.openshift' version '1.18.0'
 }</code></pre>
 </div>
 </div>
@@ -1130,7 +1131,7 @@ You can get started simply by adding the plugin to your build.gradle file:</p>
 <div class="title">Example for setting up the openshift-gradle-plugin in build.gradle</div>
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">plugins {
-  id 'org.eclipse.jkube.openshift' version '1.17.0'
+  id 'org.eclipse.jkube.openshift' version '1.18.0'
 }</code></pre>
 </div>
 </div>
@@ -1771,9 +1772,10 @@ and <code>${basedir}/build/jkube/helms/${chartName}/openshift</code> for OpenShi
 <p>These fragments will be merged with the opinionated and configured defaults.
 The values provided in the fragments will override any of the generated default values taking precedence over them.</p>
 </div>
+<div class="paragraph">
+<p>For providing <a href="https://helm.sh/docs/topics/chart_tests/">Helm Chart Test</a> files, you can provide a fragment ending with <code>.test.helm.yaml</code> suffix in <code>src/main/jkube</code> directory.
+==== Installing the generated Helm chart</p>
 </div>
-<div class="sect4">
-<h5 id="_installing_the_generated_helm_chart">Installing the generated Helm chart</h5>
 <div class="paragraph">
 <p>In a next step you can install this via <a href="#jkubeHelmInstall">ocHelmInstall</a> task as follows:</p>
 </div>
@@ -1794,6 +1796,21 @@ The values provided in the fragments will override any of the generated default 
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-sh" data-lang="sh">./gradlew ocHelmUninstall</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_testing_the_installed_helm_release">Testing the installed Helm release</h5>
+<div class="paragraph">
+<p>It&#8217;s possible to provide Helm test fragments by placing them in <code>src/main/jkube</code> directory with <code>.test.helm.yaml</code> file extension. openshift-gradle-plugin would
+automatically place them in Helm Chart&#8217;s <code>templates/tests/</code> directory.</p>
+</div>
+<div class="paragraph">
+<p>You can run the Helm release test from OpenShift  via <a href="#jkubeHelmTest">ocHelmTest</a> task as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-sh" data-lang="sh">./gradlew ocHelmTest</code></pre>
 </div>
 </div>
 </div>
@@ -2182,7 +2199,74 @@ If you have already built the resource and created the chart, then you can omit 
 </div>
 </div>
 <div class="sect3">
-<h4 id="jkubeHelmUninstall">4.1.10. <strong>ocHelmUninstall</strong></h4>
+<h4 id="jkubeHelmTest">4.1.10. <strong>ocHelmTest</strong></h4>
+<div class="paragraph">
+<p>This feature allows you to run tests on a Helm release installed on OpenShift</p>
+</div>
+<div class="paragraph">
+<p>To run tests on a Helm release you need to invoke the <code>ocHelmTest</code> gradle task on the command line:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-sh" data-lang="sh">gradle ocResource ocHelm ocHelmInstall ocHelmTest</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The <code>ocResource</code>, <code>ocHelm</code> and <code>ocHelmInstall</code> tasks are required to ensure that Helm release gets installed in OpenShift.
+If you already have the Helm release installed on OpenShift, then you can omit these tasks. You also need to make sure that you&#8217;ve a helm test template inside your
+helm chart.
+</td>
+</tr>
+</table>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 15. Helm Test configuration</caption>
+<colgroup>
+<col style="width: 14.2857%;">
+<col style="width: 71.4285%;">
+<col style="width: 14.2858%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Element</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Property</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>releaseName</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name of Helm Release (instance of a chart running in a OpenShift cluster).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.helm.release.name</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>testTimeout</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">time (in seconds) to wait for test operation to complete on OpenShift cluster</p>
+<p class="tableblock">Defaults to <code>300</code> seconds.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.helm.test.timeout</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="title">Example Helm Test configuration</div>
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">kubernetes {
+  helm {
+    releaseName = "test-release"
+    testTimeout = 100
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="jkubeHelmUninstall">4.1.11. <strong>ocHelmUninstall</strong></h4>
 <div class="paragraph">
 <p>This feature allows you to remove Helm release from OpenShift</p>
 </div>
@@ -2208,7 +2292,7 @@ If you already have the Helm release installed on OpenShift, then you can omit t
 </table>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 15. Helm Uninstall configuration</caption>
+<caption class="title">Table 16. Helm Uninstall configuration</caption>
 <colgroup>
 <col style="width: 14.2857%;">
 <col style="width: 71.4285%;">
@@ -2496,7 +2580,7 @@ The <code>jkube.debug.suspend</code> flag will disable readiness probes in the K
 </div>
 </div>
 <table id="remote-dev-remote-development" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 16. Options available for the <code>remoteDevelopment</code> configuration element</caption>
+<caption class="title">Table 17. Options available for the <code>remoteDevelopment</code> configuration element</caption>
 <colgroup>
 <col style="width: 14.2857%;">
 <col style="width: 85.7143%;">
@@ -2519,7 +2603,7 @@ The <code>jkube.debug.suspend</code> flag will disable readiness probes in the K
 </tbody>
 </table>
 <table id="remote-dev-local-services" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 17. Options available for the <code>localServices</code> configuration element</caption>
+<caption class="title">Table 18. Options available for the <code>localServices</code> configuration element</caption>
 <colgroup>
 <col style="width: 14.2857%;">
 <col style="width: 85.7143%;">
@@ -2546,7 +2630,7 @@ The <code>jkube.debug.suspend</code> flag will disable readiness probes in the K
 </tbody>
 </table>
 <table id="remote-dev-remote-services" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 18. Options available for the <code>remoteServices</code> configuration element</caption>
+<caption class="title">Table 19. Options available for the <code>remoteServices</code> configuration element</caption>
 <colgroup>
 <col style="width: 14.2857%;">
 <col style="width: 85.7143%;">
@@ -2750,7 +2834,7 @@ then start a redeploy of the Kubernetes pod.</p>
 <div class="sect2">
 <h3 id="global-configuration">5.1. Global Configuration</h3>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 19. Global configuration</caption>
+<caption class="title">Table 20. Global configuration</caption>
 <colgroup>
 <col style="width: 14.2857%;">
 <col style="width: 71.4285%;">
@@ -3431,7 +3515,7 @@ when watchMode is copy. Note that this container must be running.</p></td>
 <p>The <code>image</code> element can contain the following sub elements:</p>
 </div>
 <table id="config-image" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 20. Image Configuration</caption>
+<caption class="title">Table 21. Image Configuration</caption>
 <colgroup>
 <col style="width: 14.2857%;">
 <col style="width: 71.4285%;">
@@ -3490,7 +3574,7 @@ These placeholders are replaced during the execution by this plugin.</p>
 These properties are resolved by Gradle itself.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 21. Image Names</caption>
+<caption class="title">Table 22. Image Names</caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -3704,7 +3788,7 @@ For replacing other data in other files targeted for the Docker image, please us
 of an image configuration. The following configuration options are supported:</p>
 </div>
 <table id="config-image-build" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 22. Build configuration (<a href="#config-image">image</a>)</caption>
+<caption class="title">Table 23. Build configuration (<a href="#config-image">image</a>)</caption>
 <colgroup>
 <col style="width: 14.2857%;">
 <col style="width: 71.4285%;">
@@ -3950,7 +4034,7 @@ present in project directory. It&#8217;s also possible to add file from external
 logic (see <a href="#jkube-plugin">JKube Plugin</a> for more details).</p>
 </div>
 <table id="config-image-build-assembly" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 23. Assembly Configuration (<a href="#config-image">image </a> : <a href="#config-image-build">build </a>)</caption>
+<caption class="title">Table 24. Assembly Configuration (<a href="#config-image">image </a> : <a href="#config-image-build">build </a>)</caption>
 <colgroup>
 <col style="width: 14.2857%;">
 <col style="width: 71.4285%;">
@@ -4108,7 +4192,7 @@ assembly configuration</p>
 <code>layer</code> elements with a Groovy DSL structure that supports the following configuration options:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 24. Assembly - Inline/Layer (<a href="#config-image">image </a> : <a href="#config-image-build">build </a> : <a href="#config-image-build-assembly">assembly </a>)</caption>
+<caption class="title">Table 25. Assembly - Inline/Layer (<a href="#config-image">image </a> : <a href="#config-image-build">build </a> : <a href="#config-image-build-assembly">assembly </a>)</caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -4310,7 +4394,7 @@ or <a href="https://docs.docker.com/reference/builder/#cmd">cmd</a> for a contai
 <p>An entry point or command can be specified in two alternative formats:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 25. Entrypoint and Command Configuration</caption>
+<caption class="title">Table 26. Entrypoint and Command Configuration</caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -4458,7 +4542,7 @@ or <a href="https://docs.docker.com/reference/builder/#cmd">cmd</a> for a contai
 <p>The following subelements are possible for <code>labels</code> and <code>annotations</code> :</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 26. Label and annotation configuration</caption>
+<caption class="title">Table 27. Label and annotation configuration</caption>
 <colgroup>
 <col style="width: 14.2857%;">
 <col style="width: 85.7143%;">
@@ -4645,7 +4729,7 @@ or <a href="https://docs.docker.com/reference/builder/#cmd">cmd</a> for a contai
 <p>Here are the fields available in <code>resources</code> Groovy DSL configuration that would work with ocResource:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 27. resources fields for configuring generated controllers</caption>
+<caption class="title">Table 28. resources fields for configuring generated controllers</caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -4677,7 +4761,7 @@ or <a href="https://docs.docker.com/reference/builder/#cmd">cmd</a> for a contai
 <p>This configuration field is focused only on changing various elements of Controller (mainly fields specified in PodTemplateSpec). Here are available configuration fields within this object:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 28. controller fields for configuring generated controllers</caption>
+<caption class="title">Table 29. controller fields for configuring generated controllers</caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -4756,7 +4840,7 @@ or <a href="https://docs.docker.com/reference/builder/#cmd">cmd</a> for a contai
 <div class="sect4">
 <h5 id="initcontainer-configuration">InitContainer Groovy DSL configuration</h5>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 29. initContainer fields for specifying initContainers</caption>
+<caption class="title">Table 30. initContainer fields for specifying initContainers</caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -4798,7 +4882,7 @@ or <a href="https://docs.docker.com/reference/builder/#cmd">cmd</a> for a contai
 <div class="sect4">
 <h5 id="container-resources-configuration">Container Resource Groovy DSL configuration</h5>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 30. containerResources fields for specifying compute resource requirements</caption>
+<caption class="title">Table 31. containerResources fields for specifying compute resource requirements</caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -4828,7 +4912,7 @@ or <a href="https://docs.docker.com/reference/builder/#cmd">cmd</a> for a contai
 <p>Probe configuration is used for configuring <a href="https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#configure-probes">liveness and readiness probes</a> for containers. Both <code>liveness</code> and <code>readiness</code> probes the following options:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 31. Groovy DSL Probe configuration</caption>
+<caption class="title">Table 32. Groovy DSL Probe configuration</caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -4893,7 +4977,7 @@ or <a href="https://docs.docker.com/reference/builder/#cmd">cmd</a> for a contai
 <p>Here are the options supported by a single <code>volume</code> :</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 32. Groovy DSL <code>volume</code> configuration</caption>
+<caption class="title">Table 33. Groovy DSL <code>volume</code> configuration</caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -5164,7 +5248,7 @@ type: kubernetes.io/dockercfg</code></pre>
 <p><strong>Groovy DSL Configuration</strong></p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 33. Fields supported in <code>resources</code></caption>
+<caption class="title">Table 34. Fields supported in <code>resources</code></caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -5253,7 +5337,7 @@ type: kubernetes.io/dockercfg</code></pre>
 <p>Here are the supported options while providing <code>ingress</code> in Groovy DSL configuration</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 34. <code>ingress</code> configuration</caption>
+<caption class="title">Table 35. <code>ingress</code> configuration</caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -5282,7 +5366,7 @@ type: kubernetes.io/dockercfg</code></pre>
 <p>Here are the supported options while providing <code>ingressRules</code> in Groovy DSL configuration</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 35. <code>ingressRule</code> configuration</caption>
+<caption class="title">Table 36. <code>ingressRule</code> configuration</caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -5311,7 +5395,7 @@ type: kubernetes.io/dockercfg</code></pre>
 <p>Here are the supported options while providing <code>paths</code> in Groovy DSL configuration</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 36. IngressRule <code>path</code> Groovy DSL configuration</caption>
+<caption class="title">Table 37. IngressRule <code>path</code> Groovy DSL configuration</caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -5352,7 +5436,7 @@ type: kubernetes.io/dockercfg</code></pre>
 <p>Here are the supported options while providing <code>resource</code> in IngressRule&#8217;s path Groovy DSL configuration</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 37. IngressRule Path <code>resource</code> Groovy DSL configuration</caption>
+<caption class="title">Table 38. IngressRule Path <code>resource</code> Groovy DSL configuration</caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -5385,7 +5469,7 @@ type: kubernetes.io/dockercfg</code></pre>
 <p>Here are the supported options while providing <code>ingressTlsConfigs</code> in IngressRule&#8217;s path Groovy DSL configuration</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 38. IngressTls <code>ingressTlsConfig</code> Groovy DSL configuration</caption>
+<caption class="title">Table 39. IngressTls <code>ingressTlsConfig</code> Groovy DSL configuration</caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -5508,7 +5592,7 @@ metadata:
 <p>Resource goal also validates the generated resource descriptors using API specification of <a href="https://raw.githubusercontent.com/kubernetes/kubernetes/master/api/openapi-spec/swagger.json">Kubernetes</a>.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 39. Validation Configuration</caption>
+<caption class="title">Table 40. Validation Configuration</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -5594,7 +5678,7 @@ The following sub-elements are supported:</td>
 </table>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 40. Generator configuration</caption>
+<caption class="title">Table 41. Generator configuration</caption>
 <colgroup>
 <col style="width: 14.2857%;">
 <col style="width: 85.7143%;">
@@ -5661,7 +5745,7 @@ The following sub-elements are supported:</td>
 <p>All default generators examine the build information for certain aspects and generate a Docker build configuration on the fly. They can be configured to a certain degree, where the configuration is generator specific.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 41. Default Generators</caption>
+<caption class="title">Table 42. Default Generators</caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 16.6666%;">
@@ -5726,7 +5810,7 @@ The following sub-elements are supported:</td>
 <p>There are some configuration options which are shared by all generators:</p>
 </div>
 <table id="generator-options-common" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 42. Common generator options</caption>
+<caption class="title">Table 43. Common generator options</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -5845,7 +5929,7 @@ If no main class is configured as well as no fat jar being detected, then this <
 <p>It will use the following base image by default, but as explained <a href="#generator-options-common">above</a> and can be changed with the <code>from</code> configuration.</p>
 </div>
 <table id="generator-java-exec-from" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 43. Java Base Images</caption>
+<caption class="title">Table 44. Java Base Images</caption>
 <colgroup>
 <col style="width: 7.6923%;">
 <col style="width: 30.7692%;">
@@ -5882,7 +5966,7 @@ By default, <code>fromMode = "docker"</code> which use the a plain Docker image 
 the following additional configuration options are recognized:</p>
 </div>
 <table id="generator-java-exec-options" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 44. Java Application configuration options</caption>
+<caption class="title">Table 45. Java Application configuration options</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -5953,7 +6037,7 @@ These will be added with mode <code>0644</code>, while everything in <code>src/m
 <p>Beside the  <a href="#generator-options-common">common generator options</a> and the <a href="#generator-java-exec-options">java-exec options</a> the following additional configuration is recognized:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 45. Spring-Boot configuration options</caption>
+<caption class="title">Table 46. Spring-Boot configuration options</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -6086,7 +6170,7 @@ In particular, the following steps are performed:</p>
 <p>The base images chosen are:</p>
 </div>
 <table id="generator-webapp-from" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 46. Webapp Base Images</caption>
+<caption class="title">Table 47. Webapp Base Images</caption>
 <colgroup>
 <col style="width: 11.1111%;">
 <col style="width: 44.4444%;">
@@ -6121,7 +6205,7 @@ In particular, the following steps are performed:</p>
 <p>In addition to the  <a href="#generator-options-common">common generator options</a> this generator can be configured with the following options:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 47. Webapp configuration options</caption>
+<caption class="title">Table 48. Webapp configuration options</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -6213,7 +6297,7 @@ In particular, the following steps are performed:</p>
 <p>The base images chosen are:</p>
 </div>
 <table id="generator-quarkus-from" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 48. Webapp Base Images</caption>
+<caption class="title">Table 49. Webapp Base Images</caption>
 <colgroup>
 <col style="width: 11.1111%;">
 <col style="width: 44.4444%;">
@@ -6281,7 +6365,7 @@ of its configuration values.</p>
 <p>The base images chosen are the following, however, these can be overridden using <code>jkube.generator.from</code> property:</p>
 </div>
 <table id="generator-micronaut-from" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 49. Webapp Base Images</caption>
+<caption class="title">Table 50. Webapp Base Images</caption>
 <colgroup>
 <col style="width: 11.1111%;">
 <col style="width: 44.4444%;">
@@ -6317,7 +6401,7 @@ of its configuration values.</p>
 <p>The base images chosen are the following, however, these can be overridden using <code>jkube.generator.from</code> property:</p>
 </div>
 <table id="generator-helidon-from" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 50. Webapp Base Images</caption>
+<caption class="title">Table 51. Webapp Base Images</caption>
 <colgroup>
 <col style="width: 11.1111%;">
 <col style="width: 44.4444%;">
@@ -6380,7 +6464,7 @@ Interface; You can create new generators by implementing this interface. Please 
 <p>The <a href="#generator-example">Generator example</a> is a good blueprint, simply replace <code>generator</code> with <code>enricher</code>. The configuration is structural identical:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 51. Enricher configuration</caption>
+<caption class="title">Table 52. Enricher configuration</caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 75%;">
@@ -6426,7 +6510,7 @@ metadata extracted from the given build information.</p>
 </ul>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 52. Default Enrichers Overview</caption>
+<caption class="title">Table 53. Default Enrichers Overview</caption>
 <colgroup>
 <col style="width: 22.2222%;">
 <col style="width: 77.7778%;">
@@ -6622,7 +6706,7 @@ If you set <code>name</code> tag then this is used as key instead of the filenam
 <p>Here are the supported options while providing <code>configMap</code> in Groovy DSL configuration</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 53. Groovy DSL configmap configuration <code>configMap</code></caption>
+<caption class="title">Table 54. Groovy DSL configmap configuration <code>configMap</code></caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -6651,7 +6735,7 @@ If you set <code>name</code> tag then this is used as key instead of the filenam
 <p><code>entries</code> is a list of <code>entry</code> configuration objects. Here are the supported options while providing <code>entry</code> in Groovy DSL configuration</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 54. Groovy DSL configmap entry configuration <code>entry</code></caption>
+<caption class="title">Table 55. Groovy DSL configmap entry configuration <code>entry</code></caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -6719,7 +6803,7 @@ See <a href="https://kubernetes.io/docs/concepts/workloads/controllers/">Kuberne
 <p>The following configuration parameters can be used to influence the behaviour of this enricher:</p>
 </div>
 <table id="enricher-jkube-controller" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 55. Default controller enricher</caption>
+<caption class="title">Table 56. Default controller enricher</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -6869,7 +6953,7 @@ Groovy DSL configuration or YAML fragment will override the one defined by the g
 </ul>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 56. Configuration options</caption>
+<caption class="title">Table 57. Configuration options</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -6904,7 +6988,7 @@ Groovy DSL configuration or YAML fragment will override the one defined by the g
 <p>Enricher that adds info from <code>.git</code> directory as annotations. These are explained in the table below:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 57. Annotations added via Git enricher</caption>
+<caption class="title">Table 58. Annotations added via Git enricher</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -6952,7 +7036,7 @@ Groovy DSL configuration or YAML fragment will override the one defined by the g
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 58. Supported Configuration options</caption>
+<caption class="title">Table 59. Supported Configuration options</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -7001,7 +7085,7 @@ configuration is set, the default is <code>IfNotPresent</code> for release versi
 <p>Any already configured container in the pod spec is updated if the property is not set.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 59. Configuration options</caption>
+<caption class="title">Table 60. Configuration options</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -7034,7 +7118,7 @@ JKube generates Ingress only for Services which have either <code>expose=true</c
 <p>For more information, check out <a href="#ingress-generation">Ingress Generation</a> section.</p>
 </div>
 <table id="enricher-jkube-ingress" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 60. Ingress enricher</caption>
+<caption class="title">Table 61. Ingress enricher</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -7094,7 +7178,7 @@ resources in case they don&#8217;t already have one configured (see the <code>fo
 <p>The following configuration parameters can be used to influence the behaviour of this enricher:</p>
 </div>
 <table id="enricher-jkube-namespace" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 61. Default namespace enricher</caption>
+<caption class="title">Table 62. Default namespace enricher</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -7146,7 +7230,7 @@ resources in case they don&#8217;t already have one configured (see the <code>fo
 <p>Enricher for adding a "name" to the metadata to various objects we create.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 62. Supported Configuration options</caption>
+<caption class="title">Table 63. Supported Configuration options</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -7285,7 +7369,7 @@ Defaults to <code>&lt;name&gt;-tls</code>.</p></td>
 <p>Note that this won&#8217;t be enabled if you&#8217;ve set <code>jkube.build.switchToDeployment</code> to <code>true</code> or you&#8217;ve configured <a href="#jkube-controller">DefaultControllerEnricher</a> to generate a controller of type <code>DeploymentConfig</code></p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 63. Supported configuration options for this enricher</caption>
+<caption class="title">Table 64. Supported configuration options for this enricher</caption>
 <colgroup>
 <col style="width: 14.2857%;">
 <col style="width: 85.7143%;">
@@ -7319,7 +7403,7 @@ Defaults to <code>&lt;name&gt;-tls</code>.</p></td>
 <p>It is only applicable in case of OpenShift.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 64. Supported configuration options for this enricher</caption>
+<caption class="title">Table 65. Supported configuration options for this enricher</caption>
 <colgroup>
 <col style="width: 14.2857%;">
 <col style="width: 85.7143%;">
@@ -7373,7 +7457,7 @@ Defaults to <code>&lt;name&gt;-tls</code>.</p></td>
 <p>This is only applicable to OpenShift.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 65. Supported configuration options for this enricher</caption>
+<caption class="title">Table 66. Supported configuration options for this enricher</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -7424,7 +7508,7 @@ container Pod template spec&#8217;s metadata.</p>
 <p>This enricher uses a given set of well known ports:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 66. Default Port Mappings</caption>
+<caption class="title">Table 67. Default Port Mappings</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -7521,7 +7605,7 @@ been replaced by the <code>app</code> label in newer versions of the plugin.</p>
 <p>Enricher which fixes adds name of StorageClass required by PersistentVolumeClaim either in metadata or in spec.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 67. Supported properties</caption>
+<caption class="title">Table 68. Supported properties</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -7585,7 +7669,7 @@ For more information read <a href="https://kubernetes.io/docs/concepts/workloads
 <p>The following configuration parameters can be used to influence the behaviour of this enricher:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 68. Default revision history enricher</caption>
+<caption class="title">Table 69. Default revision history enricher</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 40%;">
@@ -7705,7 +7789,7 @@ An explicit configuration always takes precedence over auto detection. For enric
 <p>The following configuration parameters can be used to influence the behaviour of this enricher:</p>
 </div>
 <table id="enricher-jkube-service" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 69. Default service enricher</caption>
+<caption class="title">Table 70. Default service enricher</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -7934,7 +8018,7 @@ Assuming that the image exposes ports <code>8080</code> and <code>8778</code> (e
 <p>This enricher is also used by <code>resources</code> Groovy DSL configuration to generate Service configured via Groovy DSL. Here are the fields supported in <code>resources</code> which work with this enricher:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 70. Fields supported in <code>resources</code></caption>
+<caption class="title">Table 71. Fields supported in <code>resources</code></caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -7956,7 +8040,7 @@ Assuming that the image exposes ports <code>8080</code> and <code>8778</code> (e
 <p><code>services</code> is a list of <code>service</code> configuration objects. Here are the supported options while providing <code>service</code> in Groovy DSL configuration</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 71. Groovy DSL <code>service</code> configuration</caption>
+<caption class="title">Table 72. Groovy DSL <code>service</code> configuration</caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -8001,7 +8085,7 @@ Assuming that the image exposes ports <code>8080</code> and <code>8778</code> (e
 <p><code>ports</code> is a list of <code>port</code> configuration objects. Here are the supported options while providing <code>port</code> in Groovy DSL configuration</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 72. Groovy DSL service port configuration</caption>
+<caption class="title">Table 73. Groovy DSL service port configuration</caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 83.3334%;">
@@ -8046,7 +8130,7 @@ Assuming that the image exposes ports <code>8080</code> and <code>8778</code> (e
 <p>The following configuration parameters can be used to influence the behaviour of this enricher:</p>
 </div>
 <table id="enricher-jkube-serviceaccount" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 73. ServiceAccountEnricher configuration options</caption>
+<caption class="title">Table 74. ServiceAccountEnricher configuration options</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -8100,7 +8184,7 @@ Assuming that the image exposes ports <code>8080</code> and <code>8778</code> (e
 <p>Enricher which fixes the permission of persistent volume mount with the help of an init container.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 74. Supported properties</caption>
+<caption class="title">Table 75. Supported properties</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 75%;">
@@ -8246,7 +8330,7 @@ Assuming that the image exposes ports <code>8080</code> and <code>8778</code> (e
 <p>You can configure the different aspects of the probes.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 75. OpenLiberty HealthCheck Enricher probe configuration</caption>
+<caption class="title">Table 76. OpenLiberty HealthCheck Enricher probe configuration</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 62.5%;">
@@ -8376,6 +8460,9 @@ has been enabled in Spring Boot</p>
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">implementation 'org.springframework.boot:spring-boot-starter-actuator'</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>If you&#8217;re using Spring Boot WebFlux, this enricher would automatically read <code>spring.webflux.base-path</code> property to infer base path for health check endpoints.</p>
 </div>
 <div class="paragraph">
 <p>The enricher will try to discover the settings from the <code>application.properties</code> / <code>application.yaml</code> Spring Boot configuration file.</p>
@@ -8620,7 +8707,7 @@ configuration file. JKube uses the following properties to resolve the health ch
 <p>You can configure the different aspects of the probes.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 76. Micronaut HealthCheck Enricher probe configuration</caption>
+<caption class="title">Table 77. Micronaut HealthCheck Enricher probe configuration</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 62.5%;">
@@ -8877,7 +8964,7 @@ The overriding rules are:
 liveness probes or be specific to one.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 77. Vert.x HealthCheck Enricher probe configuration</caption>
+<caption class="title">Table 78. Vert.x HealthCheck Enricher probe configuration</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 62.5%;">
@@ -8940,7 +9027,7 @@ liveness probes or be specific to one.</p>
 <p>When using HTTP <code>GET</code> requests to determine readiness or liveness, several aspects can be configured. HTTP probes are used by default. To be more specific set the <code>type</code> attribute to <code>http</code>.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 78. Vert.x HealthCheck Enricher HTTP probe configuration</caption>
+<caption class="title">Table 79. Vert.x HealthCheck Enricher HTTP probe configuration</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 62.5%;">
@@ -9023,7 +9110,7 @@ liveness probes or be specific to one.</p>
 <p>You can also configure the probes to just open a socket on a specific port. The <code>type</code> attribute must be set to <code>tcp</code>.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 79. Vert.x HealthCheck Enricher TCP probe configuration</caption>
+<caption class="title">Table 80. Vert.x HealthCheck Enricher TCP probe configuration</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 62.5%;">
@@ -9150,7 +9237,7 @@ configured using project&#8217;s properties. An empty command disables the check
 <p>You can configure the different aspects of the probes.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 80. SmallRye HealthCheck Enricher probe configuration</caption>
+<caption class="title">Table 81. SmallRye HealthCheck Enricher probe configuration</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 62.5%;">
@@ -9284,7 +9371,7 @@ configured using project&#8217;s properties. An empty command disables the check
 <p>You can configure the different aspects of the probes.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 81. Helidon HealthCheck Enricher probe configuration</caption>
+<caption class="title">Table 82. Helidon HealthCheck Enricher probe configuration</caption>
 <colgroup>
 <col style="width: 12.5%;">
 <col style="width: 62.5%;">
@@ -9492,7 +9579,7 @@ Deployment and a Service:</p>
 <p>Each <code>profiles.yml</code> has a list of profiles which are defined with these elements:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 82. Profile elements</caption>
+<caption class="title">Table 83. Profile elements</caption>
 <colgroup>
 <col style="width: 14.2857%;">
 <col style="width: 85.7143%;">
@@ -9534,7 +9621,7 @@ Deployment and a Service:</p>
 <p>The definition of generators and enrichers in the profile follows the same format:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 83. Generator and Enricher definition</caption>
+<caption class="title">Table 84. Generator and Enricher definition</caption>
 <colgroup>
 <col style="width: 14.2857%;">
 <col style="width: 85.7143%;">
@@ -9698,7 +9785,7 @@ This is an easy way how you can fine tune enrichment for different object set.</
 <p>This plugin comes with the following predefined profiles:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 84. Predefined Profiles</caption>
+<caption class="title">Table 85. Predefined Profiles</caption>
 <colgroup>
 <col style="width: 14.2857%;">
 <col style="width: 85.7143%;">
