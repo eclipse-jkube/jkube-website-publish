@@ -304,7 +304,7 @@ Open the <code>build.gradle</code> file and add the plugin in the <code>plugins<
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">plugins {
    id 'java'
    id 'io.quarkus'
-   id 'org.eclipse.jkube.kubernetes' version '1.18.0'
+   id 'org.eclipse.jkube.kubernetes' version '1.18.1'
 }</code></pre>
 </div>
 </div>
@@ -430,7 +430,7 @@ Hello RESTEasy</code></pre>
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">plugins {
    id 'java'
    id 'io.quarkus'
-   id 'org.eclipse.jkube.kubernetes' version '1.18.0'
+   id 'org.eclipse.jkube.kubernetes' version '1.18.1'
 }</code></pre>
 </div>
 </div>
@@ -525,7 +525,7 @@ Hello RESTEasy</code></pre>
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">plugins {
    id 'java'
    id 'io.quarkus'
-   id 'org.eclipse.jkube.kubernetes' version '1.18.0'
+   id 'org.eclipse.jkube.kubernetes' version '1.18.1'
 }</code></pre>
 </div>
 </div>
@@ -639,7 +639,7 @@ Hello RESTEasy</code></pre>
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">plugins {
    id 'java'
    id 'io.quarkus'
-   id 'org.eclipse.jkube.kubernetes' version '1.18.0'
+   id 'org.eclipse.jkube.kubernetes' version '1.18.1'
 }</code></pre>
 </div>
 </div>
@@ -766,7 +766,7 @@ Hello RESTEasy</code></pre>
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">plugins {
    id 'java'
    id 'io.quarkus'
-   id 'org.eclipse.jkube.kubernetes' version '1.18.0'
+   id 'org.eclipse.jkube.kubernetes' version '1.18.1'
 }</code></pre>
 </div>
 </div>
@@ -1227,7 +1227,7 @@ You can get started simply by adding the plugin to your build.gradle file:</p>
 <div class="title">Example for setting up the kubernetes-gradle-plugin in build.gradle</div>
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">plugins {
-  id 'org.eclipse.jkube.kubernetes' version '1.18.0'
+  id 'org.eclipse.jkube.kubernetes' version '1.18.1'
 }</code></pre>
 </div>
 </div>
@@ -4186,8 +4186,16 @@ configuration within the plugin configuration you can also use properties to spe
 </div>
 </div>
 <div class="paragraph">
-<p>Please note that the system property setting will always override the project property. Also note that for all
-properties which are not Docker <a href="https://docs.docker.com/engine/reference/builder/#arg">predefined</a> properties, the
+<p>The following order of precedence will be used for resolving Docker Build Args specified across multiple sources:</p>
+</div>
+<div class="paragraph">
+<p><strong>System Properties</strong> (highest precedence) &gt; <strong>Project Properties</strong> &gt; <strong>Plugin Configuration</strong> (lowest precedence)</p>
+</div>
+<div class="paragraph">
+<p><strong>Note</strong>: Image Configuration has higher precedence than all the sources for Build Args and overrides all the Build Args values in properties.</p>
+</div>
+<div class="paragraph">
+<p>Also note that for all properties which are not Docker <a href="https://docs.docker.com/engine/reference/builder/#arg">predefined</a> properties, the
 external Dockerfile must contain an <code>ARGS</code> instruction.</p>
 </div>
 </div>
