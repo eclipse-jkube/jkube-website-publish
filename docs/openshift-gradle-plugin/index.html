@@ -315,7 +315,7 @@ Welcome! See 'oc help' to get started.</code></pre>
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">plugins {
    id 'java'
    id 'io.quarkus'
-   id 'org.eclipse.jkube.openshift' version '1.18.1'
+   id 'org.eclipse.jkube.openshift' version '1.18.2'
 }</code></pre>
 </div>
 </div>
@@ -369,7 +369,7 @@ Welcome! See 'oc help' to get started.</code></pre>
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">plugins {
    id 'java'
    id 'io.quarkus'
-   id 'org.eclipse.jkube.openshift' version '1.18.1'
+   id 'org.eclipse.jkube.openshift' version '1.18.2'
 }</code></pre>
 </div>
 </div>
@@ -448,7 +448,7 @@ Welcome! See 'oc help' to get started.</code></pre>
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">plugins {
    id 'java'
    id 'io.quarkus'
-   id 'org.eclipse.jkube.openshift' version '1.18.1'
+   id 'org.eclipse.jkube.openshift' version '1.18.2'
 }</code></pre>
 </div>
 </div>
@@ -540,7 +540,7 @@ Welcome! See 'oc help' to get started.</code></pre>
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">plugins {
    id 'java'
    id 'io.quarkus'
-   id 'org.eclipse.jkube.openshift' version '1.18.1'
+   id 'org.eclipse.jkube.openshift' version '1.18.2'
 }</code></pre>
 </div>
 </div>
@@ -1131,7 +1131,7 @@ You can get started simply by adding the plugin to your build.gradle file:</p>
 <div class="title">Example for setting up the openshift-gradle-plugin in build.gradle</div>
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">plugins {
-  id 'org.eclipse.jkube.openshift' version '1.18.1'
+  id 'org.eclipse.jkube.openshift' version '1.18.2'
 }</code></pre>
 </div>
 </div>
@@ -4177,15 +4177,31 @@ assembly configuration</p>
 <div class="title">Partial configuration example of an inline/layer element</div>
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">assembly {
-    targetDir = "/deployments"
-    layers = [{
+    targetDir = "/deployments" <i class="conum" data-value="1"></i><b>(1)</b>
+    layers = [{ <i class="conum" data-value="2"></i><b>(2)</b>
         fileSets = [{
             directory = file("${project.rootDir}/build/dependencies")
-            outputDirectory = "static"
+            outputDirectory = "static" <i class="conum" data-value="3"></i><b>(3)</b>
        }]
     }]
 }</code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The target directory in the container where assembly files will be copied</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Each layer will be treated as a separate layer in the container image</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The <code>outputDirectory</code> will be created under the target directory (e.g., <code>/deployments/static</code>). Use a specific folder name like <code>static</code>, <code>certs</code>, or <code>config</code>. Do not use existing system directories like <code>/tmp</code> or <code>/var</code>.</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>The <code>layers</code> element within the <code>assembly</code> element can have one or more
