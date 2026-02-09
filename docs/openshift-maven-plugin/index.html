@@ -223,6 +223,11 @@
 <li><a href="#_openshift_authentication">13.2. OpenShift Authentication</a></li>
 <li><a href="#password-encryption">13.3. Password encryption</a></li>
 <li><a href="#extended-authentication">13.4. Extended Authentication</a></li>
+<li><a href="#_google_artifact_registry_authentication">13.5. Google Artifact Registry Authentication</a>
+<ul class="sectlevel3">
+<li><a href="#_authentication_methods">13.5.1. Authentication Methods</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#volume-configuration">14. Volume Configuration</a></li>
@@ -394,7 +399,7 @@ prepared for Kubernetes. The full example can be found in directory
 
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;jkube-maven-sample-zero-config&lt;/artifactId&gt;
-  &lt;version&gt;1.18.2&lt;/version&gt;
+  &lt;version&gt;1.19.0&lt;/version&gt;
   &lt;packaging&gt;jar&lt;/packaging&gt;
 
   &lt;parent&gt;
@@ -419,7 +424,7 @@ prepared for Kubernetes. The full example can be found in directory
       &lt;plugin&gt;
         &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
         &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt; <i class="conum" data-value="4"></i><b>(4)</b>
-        &lt;version&gt;1.18.2&lt;/version&gt;
+        &lt;version&gt;1.19.0&lt;/version&gt;
       &lt;/plugin&gt;
     &lt;/plugins&gt;
   &lt;/build&gt;
@@ -912,7 +917,7 @@ Welcome! See 'oc help' to get started.</code></pre>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
     &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.18.2&lt;/version&gt;
+    &lt;version&gt;1.19.0&lt;/version&gt;
 &lt;/plugin&gt;</code></pre>
 </div>
 </div>
@@ -966,7 +971,7 @@ Welcome! See 'oc help' to get started.</code></pre>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
     &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.18.2&lt;/version&gt;
+    &lt;version&gt;1.19.0&lt;/version&gt;
 &lt;/plugin&gt;</code></pre>
 </div>
 </div>
@@ -1048,7 +1053,7 @@ Welcome! See 'oc help' to get started.</code></pre>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
     &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.18.2&lt;/version&gt;
+    &lt;version&gt;1.19.0&lt;/version&gt;
 &lt;/plugin&gt;</code></pre>
 </div>
 </div>
@@ -1139,7 +1144,7 @@ Welcome! See 'oc help' to get started.</code></pre>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
     &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.18.2&lt;/version&gt;
+    &lt;version&gt;1.19.0&lt;/version&gt;
 &lt;/plugin&gt;</code></pre>
 </div>
 </div>
@@ -1294,7 +1299,7 @@ available goals are described below.</p>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.18.2&lt;/version&gt;
+  &lt;version&gt;1.19.0&lt;/version&gt;
 
   &lt;configuration&gt;
      ....
@@ -2387,8 +2392,9 @@ type: kubernetes.io/dockercfg</code></pre>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;configuration&gt;
     &lt;resources&gt;
         &lt;ingress&gt;
+          &lt;ingressClassName&gt;nginx&lt;/ingressClassName&gt; <i class="conum" data-value="1"></i><b>(1)</b>
           &lt;ingressTlsConfigs&gt;
-            &lt;ingressTlsConfig&gt; <i class="conum" data-value="1"></i><b>(1)</b>
+            &lt;ingressTlsConfig&gt; <i class="conum" data-value="2"></i><b>(2)</b>
                &lt;hosts&gt;
                  &lt;host&gt;foo.bar.com&lt;/host&gt;
                &lt;/hosts&gt;
@@ -2397,13 +2403,13 @@ type: kubernetes.io/dockercfg</code></pre>
           &lt;/ingressTlsConfigs&gt;
           &lt;ingressRules&gt;
             &lt;ingressRule&gt;
-              &lt;host&gt;foo.bar.com&lt;/host&gt; <i class="conum" data-value="2"></i><b>(2)</b>
+              &lt;host&gt;foo.bar.com&lt;/host&gt; <i class="conum" data-value="3"></i><b>(3)</b>
               &lt;paths&gt;
                 &lt;path&gt;
-                  &lt;pathType&gt;Prefix&lt;/pathType&gt; <i class="conum" data-value="3"></i><b>(3)</b>
-                  &lt;path&gt;/foo&lt;/path&gt;  <i class="conum" data-value="4"></i><b>(4)</b>
-                  &lt;serviceName&gt;service1&lt;/serviceName&gt; <i class="conum" data-value="5"></i><b>(5)</b>
-                  &lt;servicePort&gt;8080&lt;/servicePort&gt; <i class="conum" data-value="6"></i><b>(6)</b>
+                  &lt;pathType&gt;Prefix&lt;/pathType&gt; <i class="conum" data-value="4"></i><b>(4)</b>
+                  &lt;path&gt;/foo&lt;/path&gt;  <i class="conum" data-value="5"></i><b>(5)</b>
+                  &lt;serviceName&gt;service1&lt;/serviceName&gt; <i class="conum" data-value="6"></i><b>(6)</b>
+                  &lt;servicePort&gt;8080&lt;/servicePort&gt; <i class="conum" data-value="7"></i><b>(7)</b>
                 &lt;/path&gt;
               &lt;/paths&gt;
             &lt;/ingressRule&gt;
@@ -2417,26 +2423,30 @@ type: kubernetes.io/dockercfg</code></pre>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td><a href="https://kubernetes.io/docs/concepts/services-networking/ingress/#tls">Ingress TLS</a> Configuration to specify Secret that contains TLS private key and certificate</td>
+<td>Name of the IngressClass to use (e.g., nginx, traefik, haproxy). This determines which Ingress controller handles the Ingress resource</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Host names, can be precise matches or a wildcard. See <a href="https://kubernetes.io/docs/concepts/services-networking/ingress/#hostname-wildcards">Kubernetes Ingress Hostname</a> documentation for more details</td>
+<td><a href="https://kubernetes.io/docs/concepts/services-networking/ingress/#tls">Ingress TLS</a> Configuration to specify Secret that contains TLS private key and certificate</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td><a href="https://kubernetes.io/docs/concepts/services-networking/ingress/#path-types">Ingress Path Type</a>, Can be one of <code>ImplementationSpecific</code>, <code>Exact</code> or <code>Prefix</code></td>
+<td>Host names, can be precise matches or a wildcard. See <a href="https://kubernetes.io/docs/concepts/services-networking/ingress/#hostname-wildcards">Kubernetes Ingress Hostname</a> documentation for more details</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>Ingress path corresponding to provided <code>service.name</code></td>
+<td><a href="https://kubernetes.io/docs/concepts/services-networking/ingress/#path-types">Ingress Path Type</a>, Can be one of <code>ImplementationSpecific</code>, <code>Exact</code> or <code>Prefix</code></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>Service Name corresponding to path</td>
+<td>Ingress path corresponding to provided <code>service.name</code></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Service Name corresponding to path</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
 <td>Service Port corresponding to path</td>
 </tr>
 </table>
@@ -2459,6 +2469,10 @@ type: kubernetes.io/dockercfg</code></pre>
 </tr>
 </thead>
 <tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ingressClassName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name of the IngressClass to use for this Ingress. Useful for selecting a specific Ingress controller in clusters with multiple controllers (e.g., nginx, traefik, HAProxy).</p></td>
+</tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#ingress-rule-resource-configuration"><code>ingressRules</code></a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">IngressRule configuration</p></td>
@@ -2615,6 +2629,7 @@ kind: Ingress
 metadata:
   name: tls-example-ingress
 spec:
+  ingressClassName: nginx
   tls:
   - hosts:
     - https-example.foo.com
@@ -2853,7 +2868,7 @@ While each router may make its own decisions on which ports to expose, this is n
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.18.2&lt;/version&gt;
+  &lt;version&gt;1.19.0&lt;/version&gt;
   &lt;configuration&gt;
     &lt;enricher&gt;
       &lt;config&gt;
@@ -2880,7 +2895,7 @@ While each router may make its own decisions on which ports to expose, this is n
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.18.2&lt;/version&gt;
+  &lt;version&gt;1.19.0&lt;/version&gt;
   &lt;configuration&gt;
     &lt;enricher&gt;
       &lt;config&gt;
@@ -6034,7 +6049,7 @@ If you already have the Helm release installed on Kubernetes, then you can omit 
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.18.2&lt;/version&gt;
+  &lt;version&gt;1.19.0&lt;/version&gt;
 
   &lt;!-- Connect oc:resource, oc:build and oc:helm to lifecycle phases --&gt;
   &lt;executions&gt;
@@ -6072,7 +6087,7 @@ If you already have the Helm release installed on Kubernetes, then you can omit 
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
     &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
     &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.18.2&lt;/version&gt;
+    &lt;version&gt;1.19.0&lt;/version&gt;
     &lt;configuration&gt;
         &lt;enricher&gt;
             &lt;excludes&gt;
@@ -6420,7 +6435,7 @@ The <code>jkube.debug.suspend</code> flag will disable readiness probes in the K
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.18.2&lt;/version&gt;
+  &lt;version&gt;1.19.0&lt;/version&gt;
   &lt;configuration&gt;
     &lt;remoteDevelopment&gt;
       &lt;localServices&gt;
@@ -7273,8 +7288,43 @@ These will be added with mode <code>0644</code>, while everything in <code>src/m
 </tbody>
 </table>
 <div class="paragraph">
-<p>The generator adds Kubernetes liveness and readiness probes pointing to either the management or server port as read from the <code>application.properties</code>.
-If the <code>management.port</code> (for Spring Boot 1) or <code>management.server.port</code> (for Spring Boot 2) and <code>management.ssl.key-store</code> (for Spring Boot 1) or <code>management.server.ssl.key-store</code> (for Spring Boot 2) properties are set in <code>application.properties</code> otherwise or <code>server.ssl.key-store</code> property is set in <code>application.properties</code> then the probes are automatically set to use <code>https</code>.</p>
+<p>The generator adds Kubernetes liveness and readiness probes pointing to either the management or server port as read from the <code>application.properties</code>.</p>
+</div>
+<div class="paragraph">
+<p>The probe scheme (<code>http</code> or <code>https</code>) is determined as follows:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>For probes targeting the management port:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>If <code>management.server.ssl.enabled</code> (Spring Boot 2+) or <code>management.ssl.enabled</code> (Spring Boot 1) is explicitly set, this value determines whether HTTPS is used</p>
+</li>
+<li>
+<p>Otherwise, HTTPS is used if <code>management.server.ssl.key-store</code> (Spring Boot 2+) or <code>management.ssl.key-store</code> (Spring Boot 1) is configured</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>For probes targeting the server port:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>If <code>server.ssl.enabled</code> is explicitly set, this value determines whether HTTPS is used</p>
+</li>
+<li>
+<p>Otherwise, HTTPS is used if <code>server.ssl.key-store</code> is configured</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This allows you to disable SSL for health probes even when a keystore is configured by setting the appropriate <code>ssl.enabled</code> property to <code>false</code>.</p>
 </div>
 <div class="paragraph">
 <p>The generator works differently when called together with <code>oc:watch</code>.
@@ -7529,7 +7579,7 @@ In particular, the following steps are performed:</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Native</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>registry.access.redhat.com/ubi9/ubi-minimal:9.3</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quay.io/quarkus/ubi-quarkus-native-binary-s2i</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>quay.io/quarkus/ubi9-quarkus-native-binary-s2i:2.0</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Normal Build</strong></p></td>
@@ -8502,6 +8552,13 @@ JKube generates Ingress only for Services which have either <code>expose=true</c
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.enricher.jkube-ingress.host</code></p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>ingressClassName</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IngressClassName specifies the name of the IngressClass to use for this Ingress.
+  This is useful in Kubernetes clusters with multiple Ingress controllers (e.g., nginx, traefik, HAProxy).
+  If not specified, the cluster&#8217;s default IngressClass will be used.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jkube.enricher.jkube-ingress.ingressClassName</code></p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>targetApiVersion</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Whether to generate <code>extensions/v1beta1</code> Ingress or <code>networking.k8s.io/v1</code> Ingress.</p>
 <p class="tableblock">  Defaults to <code>networking.k8s.io/v1</code>.</p></td>
@@ -8632,7 +8689,7 @@ a JKS-format Java keystore ready for consumption in Java services.</p>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.18.2&lt;/version&gt;
+  &lt;version&gt;1.19.0&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;goals&gt;
@@ -10060,22 +10117,67 @@ has been enabled in Spring Boot</p>
 <p>If you&#8217;re using Spring Boot WebFlux, this enricher would automatically read <code>spring.webflux.base-path</code> property to infer base path for health check endpoints.</p>
 </div>
 <div class="paragraph">
-<p>The enricher will try to discover the settings from the <code>application.properties</code> / <code>application.yaml</code> Spring Boot configuration file.</p>
+<p>The enricher will try to discover the settings from the <code>application.properties</code> / <code>application.yaml</code> Spring Boot configuration file. The configuration properties are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>management.endpoints.web.base-path</code>: The prefix for the health endpoint. The default is <code>/actuator</code></p>
+</li>
+<li>
+<p><code>management.endpoint.health.probes.enabled</code>: Enable the container liveness and readiness probe endpoints.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p><code>/actuator/health</code> is the default endpoint for the liveness and readiness probes.</p>
+<p><code>/actuator/health</code> is the default endpoint for the liveness and readiness probes, you can change it by setting the property <code>management.endpoints.web.base-path</code>.</p>
 </div>
 <div class="paragraph">
-<p>If the user has enabled the <code>management.health.probes.enabled</code> property this Enricher uses the <code>/actuator/health/liveness</code> as liveness and <code>/actuator/health/readiness</code> as readiness probe endpoints instead.</p>
+<p>If the user has enabled the <code>management.endpoint.health.probes.enabled</code> property this Enricher uses the <code>/actuator/health/liveness</code> as liveness and <code>/actuator/health/readiness</code> as readiness probe endpoints instead.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-properties" data-lang="properties">management.health.probes.enabled=true</code></pre>
+<pre class="highlight"><code class="language-properties" data-lang="properties">management.endpoint.health.probes.enabled=true</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The port number is read from the <code>management.port</code> option, and will use the default value of <code>8080</code>
-The scheme will use HTTPS if <code>server.ssl.key-store</code> option is in use, and fallback to use <code>HTTP</code> otherwise.</p>
+<p>The port number is read from the <code>management.port</code> (Spring Boot 1) or <code>management.server.port</code> (Spring Boot 2+) option, and will use the default value of <code>8080</code>.</p>
+</div>
+<div class="paragraph">
+<p>The probe scheme (<code>http</code> or <code>https</code>) is determined as follows:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>For probes targeting the management port:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>If <code>management.server.ssl.enabled</code> (Spring Boot 2+) or <code>management.ssl.enabled</code> (Spring Boot 1) is explicitly set, this value determines whether HTTPS is used</p>
+</li>
+<li>
+<p>Otherwise, HTTPS is used if <code>management.server.ssl.key-store</code> (Spring Boot 2+) or <code>management.ssl.key-store</code> (Spring Boot 1) is configured</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>For probes targeting the server port:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>If <code>server.ssl.enabled</code> is explicitly set, this value determines whether HTTPS is used</p>
+</li>
+<li>
+<p>Otherwise, HTTPS is used if <code>server.ssl.key-store</code> is configured</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This allows you to disable SSL for health probes even when a keystore is configured by setting the appropriate <code>ssl.enabled</code> property to <code>false</code>.</p>
 </div>
 <div class="paragraph">
 <p>The enricher will use the following settings by default:</p>
@@ -10103,6 +10205,9 @@ The scheme will use HTTPS if <code>server.ssl.key-store</code> option is in use,
 <li>
 <p><code>successThreshold</code>: <code>1</code></p>
 </li>
+<li>
+<p><code>actuatorDefaultBasePath</code>: <code>/actuator</code></p>
+</li>
 </ul>
 </div>
 <div class="paragraph">
@@ -10113,7 +10218,7 @@ The scheme will use HTTPS if <code>server.ssl.key-store</code> option is in use,
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.18.2&lt;/version&gt;
+  &lt;version&gt;1.19.0&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;id&gt;jkube&lt;/id&gt;
@@ -10184,7 +10289,7 @@ has been enabled in Thorntail</p>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.18.2&lt;/version&gt;
+  &lt;version&gt;1.19.0&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;id&gt;jkube&lt;/id&gt;
@@ -10303,7 +10408,7 @@ configuration file. JKube uses the following properties to resolve the health ch
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.18.2&lt;/version&gt;
+  &lt;version&gt;1.19.0&lt;/version&gt;
   &lt;configuration&gt;
     &lt;enricher&gt;
       &lt;config&gt;
@@ -10448,7 +10553,7 @@ However, by default, no health check will be added to your deployment unless con
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.18.2&lt;/version&gt;
+  &lt;version&gt;1.19.0&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;id&gt;jkube&lt;/id&gt;
@@ -10507,7 +10612,7 @@ path <code>/health</code>. The defaults are:</p>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.18.2&lt;/version&gt;
+  &lt;version&gt;1.19.0&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;id&gt;jkube&lt;/id&gt;
@@ -10552,7 +10657,7 @@ vertx.health.liveness.path = /ready</code></pre>
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.18.2&lt;/version&gt;
+  &lt;version&gt;1.19.0&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;id&gt;jkube&lt;/id&gt;
@@ -11243,7 +11348,7 @@ configured using project&#8217;s properties. An empty command disables the check
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.18.2&lt;/version&gt;
+  &lt;version&gt;1.19.0&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;id&gt;jkube&lt;/id&gt;
@@ -11337,7 +11442,7 @@ If <em>&lt;cloud&gt;</em> item has not been defined, you can still enforce the g
 <pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
   &lt;groupId&gt;org.eclipse.jkube&lt;/groupId&gt;
   &lt;artifactId&gt;openshift-maven-plugin&lt;/artifactId&gt;
-  &lt;version&gt;1.18.2&lt;/version&gt;
+  &lt;version&gt;1.19.0&lt;/version&gt;
   &lt;executions&gt;
     &lt;execution&gt;
       &lt;id&gt;jkube&lt;/id&gt;
@@ -12356,6 +12461,139 @@ For a more complete, robust and reliable authentication experience, you can add 
 </div>
 <div class="paragraph">
 <p>If the AWS SDK is found in the classpath, it takes precedence over the custom AWS credentials lookup mechanisms listed above.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_google_artifact_registry_authentication">13.5. Google Artifact Registry Authentication</h3>
+<div class="paragraph">
+<p><a href="https://cloud.google.com/artifact-registry/docs">Google Artifact Registry</a> is Google Cloud&#8217;s container image registry service that requires authentication to push and pull container images.
+The <a href="#jkube:push"><strong>oc:push</strong></a> and <a href="#jkube:build"><strong>oc:build</strong></a> goals support several authentication methods for Google Artifact Registry.</p>
+</div>
+<div class="paragraph">
+<p>For Artifact Registry repositories with URI like <code>us-central1-docker.pkg.dev/my-project/my-repo/my-image</code>, set <code>jkube.docker.registry</code> to <code>us-central1-docker.pkg.dev</code> and <code>my-project/my-repo/my-image</code> is the <code>&lt;name&gt;</code> of the image.</p>
+</div>
+<div class="sect3">
+<h4 id="_authentication_methods">13.5.1. Authentication Methods</h4>
+<div class="sect4">
+<h5 id="_1_access_token_authentication_recommended">1. Access Token Authentication (Recommended)</h5>
+<div class="paragraph">
+<p>This method uses short-lived OAuth tokens (valid for 60 minutes) and provides the best balance between security and compatibility.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Username: <code>oauth2accesstoken</code></p>
+</li>
+<li>
+<p>Password: Output from <code>gcloud auth print-access-token</code></p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="title">Example using system properties</div>
+<div class="content">
+<pre class="highlight"><code class="language-sh" data-lang="sh">mvn oc:push \
+  -Djkube.docker.username=oauth2accesstoken \
+  -Djkube.docker.password="$(gcloud auth print-access-token)"</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Example using authConfig in pom.xml</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
+  &lt;configuration&gt;
+    &lt;authConfig&gt;
+      &lt;username&gt;oauth2accesstoken&lt;/username&gt;
+      &lt;password&gt;${gcloud.access.token}&lt;/password&gt;
+    &lt;/authConfig&gt;
+  &lt;/configuration&gt;
+&lt;/plugin&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then run:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-sh" data-lang="sh">mvn oc:push -Dgcloud.access.token="$(gcloud auth print-access-token)"</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_2_service_account_key_authentication">2. Service Account Key Authentication</h5>
+<div class="paragraph">
+<p>This method uses a service account JSON key file for authentication.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Username: <code>_json_key</code></p>
+</li>
+<li>
+<p>Password: Contents of the service account JSON key file</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="title">Example using system properties</div>
+<div class="content">
+<pre class="highlight"><code class="language-sh" data-lang="sh">mvn oc:push \
+  -Djkube.docker.username=_json_key \
+  -Djkube.docker.password="$(cat /path/to/key.json)"</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Example using settings.xml</div>
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;servers&gt;
+  &lt;server&gt;
+    &lt;id&gt;us-central1-docker.pkg.dev&lt;/id&gt;
+    &lt;username&gt;_json_key&lt;/username&gt;
+    &lt;password&gt;{
+  "type": "service_account",
+  "project_id": "my-project",
+  ...
+}&lt;/password&gt;
+  &lt;/server&gt;
+&lt;/servers&gt;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_3_docker_credential_helper_docker_credential_gcr">3. Docker Credential Helper (docker-credential-gcr)</h5>
+<div class="paragraph">
+<p>The standalone <a href="https://cloud.google.com/artifact-registry/docs/docker/authentication#standalone-helper">docker-credential-gcr helper</a> can be used for authentication and provides better performance than the gcloud CLI method.</p>
+</div>
+<div class="paragraph">
+<p>After installing and configuring <code>docker-credential-gcr</code>, JKube will automatically use it when credentials are available through Docker&#8217;s credential store.</p>
+</div>
+<div class="listingblock">
+<div class="title">Installation</div>
+<div class="content">
+<pre class="highlight"><code class="language-sh" data-lang="sh">gcloud components install docker-credential-gcr
+docker-credential-gcr configure-docker</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This configures <code>~/.docker/config.json</code> to use the credential helper, and JKube will automatically pick up the credentials.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The access token method (option 1) is recommended for CI/CD pipelines and temporary access, as it provides short-lived credentials that are automatically rotated.
+The service account key method (option 2) is useful for long-running services or when you need programmatic access without user interaction.
+The credential helper method (option 3) provides the best developer experience for local development.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
 </div>
 </div>
 </div>
